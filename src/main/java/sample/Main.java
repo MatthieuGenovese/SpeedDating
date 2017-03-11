@@ -1,5 +1,6 @@
 package sample;
 
+import cplex.Carseq;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -13,6 +14,12 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+        Carseq testCplex = new Carseq();
+        try {
+            testCplex.exec();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         primaryStage.setTitle("Hello World");
         Group root = new Group();
         Scene scene = new Scene(root, 300, 250, Color.LIGHTGREEN);
