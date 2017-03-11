@@ -14,12 +14,14 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        Carseq testCplex = new Carseq();
+
+        //// A debugger
+        /*
         try {
             testCplex.exec();
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
         primaryStage.setTitle("Hello World");
         Group root = new Group();
         Scene scene = new Scene(root, 300, 250, Color.LIGHTGREEN);
