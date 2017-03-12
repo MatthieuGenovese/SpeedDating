@@ -22,3 +22,5 @@ Apply puis ok
 
 Lancez la configuration clean package, quand elle est terminer lancez la config exec:java
 Normalement le hello world s'execute :)
+
+Si quand vous pullez vous n'avez pas la lib opl-12.6.3.0.jar, enlevez les .jar de votre gitignore ;)
