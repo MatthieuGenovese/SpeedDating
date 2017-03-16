@@ -8,23 +8,20 @@
     <artifactId>TER</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
+        <opl.lib>${env.OPL_LIB_PATH}</opl.lib>
     </properties>
-
-    <repositories>
-        <repository>
-            <id>localrepository</id>
-            <url>file:\\${basedir}\repo</url>
-        </repository>
-    </repositories>
 
     <dependencies>
         <dependency>
-            <groupId>lib</groupId>
+            <groupId>com.ibm</groupId>
             <artifactId>opl</artifactId>
             <version>12.6.3.0</version>
+            <scope>system</scope>
+            <systemPath>${opl.lib}/oplall.jar</systemPath>
         </dependency>
     </dependencies>
 

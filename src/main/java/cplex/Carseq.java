@@ -15,7 +15,7 @@ package cplex;
 
 
 import cplex.AssignmentConstraint;
-import ilog.concert.IloException;
+import ilog.concert.*;
 import ilog.cp.IloCP;
 import ilog.opl.*;
 
@@ -32,6 +32,7 @@ public class Carseq
 		{
 			int _nbConfs = 7;
 			int _nbOptions = 5;
+
 
 			IloOplDataHandler handler = getDataHandler();
 			handler.startElement("nbConfs");
@@ -91,7 +92,6 @@ public class Carseq
 			IloOplModelDefinition def=oplF.createOplModelDefinition(modelSource,settings);
 			IloCP cp = oplF.createCP();
 			IloOplModel opl=oplF.createOplModel(def,cp);
-
 			IloOplDataSource dataSource=new MyData(oplF);
 			opl.addDataSource(dataSource);
 			opl.generate();
