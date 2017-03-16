@@ -12,21 +12,22 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
-        <opl.lib>${env.OPL_LIB_PATH}</opl.lib>
     </properties>
-
     <dependencies>
         <dependency>
             <groupId>com.ibm</groupId>
             <artifactId>opl</artifactId>
             <version>12.6.3.0</version>
             <scope>system</scope>
-            <systemPath>${opl.lib}/oplall.jar</systemPath>
+            <systemPath>${env.OPL_LIB_PATH}/oplall.jar</systemPath>
         </dependency>
     </dependencies>
 
+
     <build>
+
         <plugins>
+
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>

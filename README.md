@@ -17,10 +17,15 @@ Apply puis ok
 
 Recréez encore une configuration
 Sélectionnez Maven
-dans 'command line' écrivez : exec:java
+dans 'command line' écrivez : compile exec:java
 Apply puis ok
+
+Ensuite pour ceux qui sont sur windows, click droit sur poste de travail > propriétés > Paramètres système avancés > variables d'environement
+
+La dans la liste des variables SYSTEMES (et non pas utilisateur) vous faite nouvelle vous l'appellez OPL_LIB_PATH
+Comme chemin vous cherchez le chemin du fichier oplall.jar de votre installation cplex
+(par exemple le mien était E:\ilog\opl\lib\oplall.jar)
+
 
 Lancez la configuration clean package, quand elle est terminer lancez la config exec:java
 Normalement le hello world s'execute :)
-
-Si quand vous pullez vous n'avez pas la lib opl-12.6.3.0.jar, enlevez les .jar de votre gitignore ;)

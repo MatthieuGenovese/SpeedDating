@@ -14,9 +14,11 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        Carseq testCplex = new Carseq();
+        Carseq testCplex;
+        testCplex = new Carseq();
         try {
             testCplex.exec();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
