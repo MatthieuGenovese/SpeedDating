@@ -23,7 +23,7 @@ Apply puis ok
 
 Puis créez la derniere configuration
 Sélectionnez Maven
-dans 'command line' ecrivez : install:install-file -DgroupId=com.ibm -DartifactId=opl -Dversion=12.6.3.0 -Dpackaging=jar -Dfile=<chemin de votre lib oplall.jar>
+dans 'command line' ecrivez : install:install-file -DgroupId=com.ibm -DartifactId=opl -Dversion=12.6.3.0 -Dpackaging=jar -Dfile="chemin de votre lib oplall.jar"
 Apply puis ok
 
 Ensuite pour ceux qui sont sur windows, click droit sur poste de travail > propriétés > Paramètres système avancés > variables d'environement
