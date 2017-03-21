@@ -19,22 +19,54 @@
             <artifactId>opl</artifactId>
             <version>12.6.3.0</version>
             <scope>system</scope>
-            <systemPath>${env.OPL_LIB_PATH}/oplall.jar</systemPath>
+            <systemPath>${env.OPL_LIB_PATH}\oplall.jar</systemPath>
         </dependency>
     </dependencies>
-
 
     <build>
 
         <plugins>
+
+
 
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>1.6.0</version>
                 <configuration>
-                    <mainClass>sample.Main</mainClass>
+                    <executable>java</executable>
+                    <arguments>
+                        <argument>-classpath</argument>
+                        <!-- automatically creates the classpath using all project dependencies,
+                             also adding the project build directory -->
+                        <classpath/>
+                        <mainClass>sample.Main</mainClass>
+                    </arguments>
                 </configuration>
+
+            </plugin>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <mainClass>sample.Main</mainClass>
+                        </manifest>
+                    </archive>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-my-jar-with-dependencies</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -46,6 +78,10 @@
                     <showDeprecation>true</showDeprecation>
                     <showWarnings>true</showWarnings>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>jdepend-maven-plugin</artifactId>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
