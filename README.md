@@ -1,5 +1,17 @@
 # TER-M1-Genovese-Lefevre-Ditmann-Curti
 
+
+*** TEMPORAIRE ***
+
+Si vous voulez quand même exécuter correctement le projet en attendant que le maven fonctionne :
+Créer une nouvelle configuration d'éxecution, choisissez "Application" au lieu de "Maven", "Main class" vous mettez sample.Main
+et Working directory le repertoire de votre dossier TER
+Normalement avec cette configuration, le programme s'exécute normalement (modèle OPL + javaFX)
+
+**********************
+
+
+
 Pour initialiser vos environements correctement :
 
 New froject from VCS : vous coller le lien du git
