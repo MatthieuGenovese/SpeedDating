@@ -5,15 +5,72 @@ import java.util.Date;
 /**
  * Created by Matthieu on 21/03/2017.
  */
-public interface Personne {
+public class Personne {
+    private String nom;
+    private int age;
+    private int ageMin;
+    private int ageMax;
+    private String genre;
+    private Date releaseDate;
 
-   String getNom();
+    public Personne(String nom, String genre, int age, int ageMin, int ageMax, Date releaseDate){
+        this.nom = nom;
+        this.genre = genre;
+        this.age = age;
+        this.ageMin = ageMin;
+        this.ageMax = ageMax;
+        this.releaseDate = releaseDate;
+    }
 
-   int getAge();
+    public void setNom(String nom){
+        this.nom = nom;
+    }
 
-   Date getReleaseDate();
+    public String getNom(){
+        return nom;
+    }
 
-   int getAgeMin();
+    public void setGenre(String genre){
+        this.genre = genre;
+    }
 
-   int getAgeMax();
+    public String getGenre(){
+        return genre;
+    }
+
+    public void setAge(int age){
+        this.age = age;
+    }
+
+    public int getAge(){
+        return age;
+    }
+
+    public void setAgeMin(int ageMin){
+        this.ageMin = ageMin;
+    }
+
+    public int getAgeMin(){
+        return ageMin;
+    }
+
+    public void setAgeMax(int ageMax){
+        this.ageMax = ageMax;
+    }
+
+    public int getAgeMax(){
+        return ageMax;
+    }
+
+    public void setReleaseDate(Date releaseDate){
+        this.releaseDate = releaseDate;
+    }
+
+    public Date getReleaseDate(){
+        return releaseDate;
+    }
+
+    public String toString(){
+        return nom + " " + genre + " " + Integer.toString(age) + " " + Integer.toString(ageMin) + " " + Integer.toString(ageMax) + " " + releaseDate.toString();
+     }
 }

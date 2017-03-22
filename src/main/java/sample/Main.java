@@ -16,8 +16,10 @@ import javafx.stage.Stage;
 
 import javax.xml.soap.Text;
 import java.io.File;
+import java.util.ArrayList;
 
 public class Main extends Application {
+    CSVManager csvManager;
 
     @Override
     public void start(Stage primaryStage) {
@@ -41,6 +43,16 @@ public class Main extends Application {
             dialog.getExtensionFilters().setAll(new FileChooser.ExtensionFilter("Fichiers csv", "*.csv"));
             final File file = dialog.showOpenDialog(btnImport.getScene().getWindow());
             if (file != null) {
+                try {
+                    csvManager = new CSVManager(file.getAbsolutePath());
+                    ArrayList<Personne> listeChargee = new ArrayList<>();
+                    listeChargee = csvManager.getPersonnesFromCSV();
+                    for(Personne p : listeChargee){
+                        System.out.println(p);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
             }
         });
