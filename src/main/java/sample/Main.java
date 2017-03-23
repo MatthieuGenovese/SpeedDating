@@ -63,6 +63,7 @@ public class Main extends Application {
         groupImport.getChildren().add(btnImport);
         //assignation du groupe "groupImport" a l'onglet Import
         ongletImport.setContent(groupImport);
+        ongletImport.setClosable(false);
 
         //ajout du gestionnaire d'onglet au root
         root.getChildren().add(gestionnaireDonglet);

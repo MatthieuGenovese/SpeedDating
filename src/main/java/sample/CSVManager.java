@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.IllegalFormatException;
 
 /**
  * Created by Matthieu on 22/03/2017.
@@ -24,9 +25,12 @@ public class CSVManager {
         try {
             while((nextLine = reader.readNext()) != null){
                 try {
-                    listePersonnes.add(new Personne(nextLine[0], nextLine[1], Integer.parseInt(nextLine[2]), Integer.parseInt(nextLine[3]), Integer.parseInt(nextLine[4]), new Date()));
+                    listePersonnes.add(new Personne(nextLine[0], nextLine[1], Integer.parseInt(nextLine[2]), Integer.parseInt(nextLine[3]), Integer.parseInt(nextLine[4]), new Date(nextLine[5])));
                 }
-                catch(NumberFormatException e){
+                catch(IllegalFormatException e){
+                    System.out.println("Mauvaise entrée, personne illisible ! \n");
+                }
+                catch(IllegalArgumentException e){
                     System.out.println("Mauvaise entrée, personne illisible ! \n");
                 }
             }
