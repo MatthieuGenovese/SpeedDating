@@ -33,6 +33,9 @@ public class CSVManager {
                 catch(IllegalArgumentException e){
                     System.out.println("Mauvaise entrée, personne illisible ! \n");
                 }
+                catch(ArrayIndexOutOfBoundsException e) {
+                    System.out.println("Mauvaise entrée, personne illisible ! \n");
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
