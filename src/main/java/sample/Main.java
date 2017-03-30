@@ -156,6 +156,13 @@ public class Main extends Application {
 
                 for(Personne p : listeChargee){
                     System.out.println(p);
+
+                    p.calculerConflits(listeChargee);
+                    // la boucle qui suit est uniquement la pour vous faire comprendre le resultat, et l'utilisation de la classe pair
+                    for(Pair<Personne, Integer> pair : p.getConflits()){
+                        System.out.println("Conflits de : " + p);
+                        System.out.println("Personne : " + pair.getKey() + " " + "Valeur : " + pair.getValue());
+                    }
                     if(p.getGenre().equals("M")){
                         hommes.add(p);
                     }
@@ -168,14 +175,6 @@ public class Main extends Application {
                     hommesList.setItems(hommes);
                     femmesList.setItems(femmes);
                     System.out.println("H : " + hommes + "\nF : " + femmes + "\n");
-                }
-                for(Personne p : listeChargee){
-                    p.calculerConflits(listeChargee);
-                    // la boucle qui suit est uniquement la pour vous faire comprendre le resultat, et l'utilisation de la classe pair
-                    for(Pair<Personne, Integer> pair : p.getConflits()){
-                        System.out.println("Conflits de : " + p);
-                        System.out.println("Personne : " + pair.getKey() + " " + "Valeur : " + pair.getValue());
-                    }
                 }
             } catch (Throwable e) {
                 e.printStackTrace();
