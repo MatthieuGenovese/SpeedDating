@@ -20,6 +20,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.Pair;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -28,6 +29,7 @@ import static javafx.collections.FXCollections.observableArrayList;
 
 public class Main extends Application {
     CSVManager csvManager;
+    ArrayList<Personne> listeChargee;
 
     // le groupe principale
     final StackPane root = new StackPane();
@@ -40,7 +42,7 @@ public class Main extends Application {
     final TabPane gestionnaireDonglet = new TabPane();
     //le bouton ... qui ouvre l'explorer pour chercher les fichiers csv
     final Button btnImport= new Button("...");
-    final Button btnValiderImport = new Button("Valider");
+    final Button btnValiderImport = new Button("Ouvrir");
 
     final Text textImport = new Text("Fichier à importer :");
 
@@ -60,6 +62,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Speed Dating");
+        listeChargee = new ArrayList<>();
         textImport.setLayoutX(scene.getWidth() * 20 / 100);
         textImport.setLayoutY(scene.getHeight() * 10 / 100);
         textFilePath.setMaxWidth(scene.getWidth() * 40 / 100);
@@ -70,8 +73,8 @@ public class Main extends Application {
         textFilePath.setLayoutY(textImport.getLayoutY() - textFilePath.getPrefHeight());
         btnImport.setLayoutX(textFilePath.getLayoutX() + textFilePath.getPrefWidth() + 10);
         btnImport.setLayoutY(textFilePath.getLayoutY());
-        btnValiderImport.setLayoutX(textFilePath.getLayoutX() + textFilePath.getPrefWidth() + 10);
-        btnValiderImport.setLayoutY(textFilePath.getLayoutY() + textFilePath.getPrefHeight()*2);
+        btnValiderImport.setLayoutX(btnImport.getLayoutX() + btnImport.getPrefWidth() + 30);
+        btnValiderImport.setLayoutY(textFilePath.getLayoutY());
         btnValiderImport.setVisible(false);
 
         //Je place le texte du nom de mes deux tableaux hommes et femmes
@@ -147,7 +150,7 @@ public class Main extends Application {
         btnValiderImport.setOnAction(actionEvent -> {
             try {
                 csvManager = new CSVManager(textFilePath.getText());
-                ArrayList<Personne> listeChargee = csvManager.getPersonnesFromCSV();
+                listeChargee = csvManager.getPersonnesFromCSV();
                 ObservableList<Personne> hommes = observableArrayList();
                 ObservableList<Personne> femmes = observableArrayList();
 
@@ -166,6 +169,14 @@ public class Main extends Application {
                     femmesList.setItems(femmes);
                     System.out.println("H : " + hommes + "\nF : " + femmes + "\n");
                 }
+                for(Personne p : listeChargee){
+                    p.calculerConflits(listeChargee);
+                    // la boucle qui suit est uniquement la pour vous faire comprendre le resultat, et l'utilisation de la classe pair
+                    for(Pair<Personne, Integer> pair : p.getConflits()){
+                        System.out.println("Conflits de : " + p);
+                        System.out.println("Personne : " + pair.getKey() + " " + "Valeur : " + pair.getValue());
+                    }
+                }
             } catch (Throwable e) {
                 e.printStackTrace();
             }
@@ -176,7 +187,7 @@ public class Main extends Application {
                 textImport.setLayoutX((Double) newSceneWidth * 20 / 100);
                 textFilePath.setLayoutX(textImport.getLayoutX() + 100);
                 btnImport.setLayoutX(textFilePath.getLayoutX() + textFilePath.getPrefWidth() + 10);
-                btnValiderImport.setLayoutX(textFilePath.getLayoutX() + textFilePath.getPrefWidth() + 10);
+                btnValiderImport.setLayoutX(btnImport.getLayoutX() + btnImport.getPrefWidth() + 30);
             }
         });
         //ajout d'un listener sur le resize de la scene, ecoute le resize du height, mets a jour la position du texte en fonction
@@ -185,7 +196,7 @@ public class Main extends Application {
                 textImport.setLayoutY((Double) newSceneHeight * 10 / 100);
                 textFilePath.setLayoutY(textImport.getLayoutY() - textFilePath.getPrefHeight());
                 btnImport.setLayoutY(textFilePath.getLayoutY());
-                btnValiderImport.setLayoutY(textFilePath.getLayoutY() + textFilePath.getPrefHeight()*2);
+                btnValiderImport.setLayoutY(textFilePath.getLayoutY());
             }
         });
     }

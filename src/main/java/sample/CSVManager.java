@@ -25,7 +25,7 @@ public class CSVManager {
         try {
             while((nextLine = reader.readNext()) != null){
                 try {
-                    listePersonnes.add(new Personne(nextLine[0], nextLine[1], Integer.parseInt(nextLine[2]), Integer.parseInt(nextLine[3]), Integer.parseInt(nextLine[4]), new Date(nextLine[5])));
+                    listePersonnes.add(new Personne(Integer.parseInt(nextLine[0]), nextLine[1], nextLine[2], nextLine[3], Integer.parseInt(nextLine[4]), Integer.parseInt(nextLine[5]), Integer.parseInt(nextLine[6]), new Date(nextLine[7])));
                 }
                 catch(IllegalFormatException e){
                     System.out.println("Mauvaise entrée, personne illisible ! \n");
