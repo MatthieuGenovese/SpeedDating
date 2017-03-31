@@ -57,6 +57,8 @@ public class Main extends Application {
     //Je crée mes colonnes
     TableColumn colNomsHommes = new TableColumn("Noms");
     TableColumn colNomsFemmes = new TableColumn("Noms");
+    TableColumn colPrenomsHommes = new TableColumn("Prenoms");
+    TableColumn colPrenomsFemmes = new TableColumn("Prenoms");
 
 
     @Override
@@ -84,12 +86,16 @@ public class Main extends Application {
         textFemmes.setLayoutY(scene.getWidth() * 20 / 100);
 
         //Je definis la taille de mes colonnes, multiply par 1 = 100% de la taille du tableview, 0.9 = 90% ...
-        colNomsHommes.prefWidthProperty().bind(hommesList.widthProperty().multiply(1));
-        colNomsFemmes.prefWidthProperty().bind(femmesList.widthProperty().multiply(1));
+        colNomsHommes.prefWidthProperty().bind(hommesList.widthProperty().multiply(0.5));
+        colNomsFemmes.prefWidthProperty().bind(femmesList.widthProperty().multiply(0.5));
+        colPrenomsHommes.prefWidthProperty().bind(femmesList.widthProperty().multiply(0.5));
+        colPrenomsFemmes.prefWidthProperty().bind(femmesList.widthProperty().multiply(0.5));
 
         //Je récupère l'élement nom de la classe Personne
         colNomsHommes.setCellValueFactory(new PropertyValueFactory<Personne,String>("nom"));
         colNomsFemmes.setCellValueFactory(new PropertyValueFactory<Personne,String>("nom"));
+        colPrenomsHommes.setCellValueFactory(new PropertyValueFactory<Personne,String>("prenom"));
+        colPrenomsFemmes.setCellValueFactory(new PropertyValueFactory<Personne,String>("prenom"));
 
         //Je règle les propriétés de mon tableview d'hommes
         hommesList.setLayoutX(scene.getWidth() * 10 / 100);
@@ -97,16 +103,21 @@ public class Main extends Application {
         hommesList.setMaxWidth(200.0);
         hommesList.setMaxHeight(300.0);
         hommesList.setEditable(false);
+        //J'autorise la multi selection des items
+        hommesList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        //Je change la couleur CSS de background de selection
+        hommesList.setStyle("-fx-selection-bar-non-focused: pink;");
 
-
-        //Je règle les propriétés de mon tableview d'hommes
+        //Je règle les propriétés de mon tableview de femmes
         femmesList.setLayoutX(scene.getWidth() * 60 / 100);
         femmesList.setLayoutY(scene.getHeight() * 30 / 100);
         femmesList.setMaxWidth(200.0);
         femmesList.setMaxHeight(300.0);
         femmesList.setEditable(false);
-
-        //hommesList.
+        //J'autorise la multiselection des items
+        femmesList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        //Je change la couleur CSS de background de selection
+        femmesList.setStyle("-fx-selection-bar-non-focused: pink;");
 
         //on ajoute au bouton "..." une action : Un file chooser (cela ouvre l'explorer), puis on lui applique un filtre pour qu'il n'affiche que les csv
 
@@ -124,6 +135,8 @@ public class Main extends Application {
         //J'ajoute mes colonnes dans les tablesviews
         hommesList.getColumns().add(colNomsHommes);
         femmesList.getColumns().add(colNomsFemmes);
+        hommesList.getColumns().add(colPrenomsHommes);
+        femmesList.getColumns().add(colPrenomsFemmes);
         //assignation du groupe "groupImport" a l'onglet Import
         ongletImport.setContent(groupImport);
         ongletImport.setClosable(false);
@@ -196,6 +209,28 @@ public class Main extends Application {
                 textFilePath.setLayoutY(textImport.getLayoutY() - textFilePath.getPrefHeight());
                 btnImport.setLayoutY(textFilePath.getLayoutY());
                 btnValiderImport.setLayoutY(textFilePath.getLayoutY());
+            }
+        });
+
+        //ecouteur du clic sur le tableview d'hommes
+        hommesList.setOnMouseClicked(event -> {
+            ArrayList<Pair<Personne, Integer>> listeConflits = hommesList.getSelectionModel().getSelectedItem().getConflits();
+            femmesList.getSelectionModel().clearSelection();
+            for(Pair<Personne, Integer> couple : listeConflits){
+                if(couple.getValue().equals(1)){
+                    femmesList.getSelectionModel().select(couple.getKey());
+                }
+            }
+        });
+
+        //ecouteur du clic sur le tableview des femmes
+        femmesList.setOnMouseClicked(event -> {
+            ArrayList<Pair<Personne, Integer>> listeConflits = femmesList.getSelectionModel().getSelectedItem().getConflits();
+            hommesList.getSelectionModel().clearSelection();
+            for(Pair<Personne, Integer> couple : listeConflits){
+                if(couple.getValue().equals(1)){
+                    hommesList.getSelectionModel().select(couple.getKey());
+                }
             }
         });
     }
