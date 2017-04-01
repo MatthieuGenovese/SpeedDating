@@ -106,7 +106,7 @@ public class Main extends Application {
         //J'autorise la multi selection des items
         hommesList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         //Je change la couleur CSS de background de selection
-        hommesList.setStyle("-fx-selection-bar-non-focused: pink;");
+        hommesList.setStyle("-fx-selection-bar-non-focused: #21c3ff;");
 
         //Je règle les propriétés de mon tableview de femmes
         femmesList.setLayoutX(scene.getWidth() * 60 / 100);
@@ -207,22 +207,28 @@ public class Main extends Application {
 
         //ecouteur du clic sur le tableview d'hommes
         hommesList.setOnMouseClicked(event -> {
-            ArrayList<Pair<Personne, Integer>> listeConflits = hommesList.getSelectionModel().getSelectedItem().getConflits();
-            femmesList.getSelectionModel().clearSelection();
-            for(Pair<Personne, Integer> couple : listeConflits){
-                if(couple.getValue().equals(1)){
-                    femmesList.getSelectionModel().select(couple.getKey());
+            Personne personneFocus = hommesList.getSelectionModel().getSelectedItem();
+            if(personneFocus != null) {
+                femmesList.getSelectionModel().clearSelection();
+                ArrayList<Pair<Personne, Integer>> matriceConflits = personneFocus.getConflits();
+                for(Pair<Personne, Integer> couple : matriceConflits){
+                    if(couple.getValue().equals(1)){
+                        femmesList.getSelectionModel().select(couple.getKey());
+                    }
                 }
             }
         });
 
         //ecouteur du clic sur le tableview des femmes
         femmesList.setOnMouseClicked(event -> {
-            ArrayList<Pair<Personne, Integer>> listeConflits = femmesList.getSelectionModel().getSelectedItem().getConflits();
-            hommesList.getSelectionModel().clearSelection();
-            for(Pair<Personne, Integer> couple : listeConflits){
-                if(couple.getValue().equals(1)){
-                    hommesList.getSelectionModel().select(couple.getKey());
+            Personne personneFocus = femmesList.getSelectionModel().getSelectedItem();
+            if(personneFocus != null) {
+                hommesList.getSelectionModel().clearSelection();
+                ArrayList<Pair<Personne, Integer>> matriceConflits = personneFocus.getConflits();
+                for (Pair<Personne, Integer> couple : matriceConflits) {
+                    if (couple.getValue().equals(1)) {
+                        hommesList.getSelectionModel().select(couple.getKey());
+                    }
                 }
             }
         });
