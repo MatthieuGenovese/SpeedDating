@@ -253,6 +253,7 @@ public class Main extends Application {
             Personne personneFocus = hommesList.getSelectionModel().getSelectedItem();
             if(personneFocus != null) {
                 personneFocus.setRetard(retard.getValue());
+                colRetardHommes.setCellValueFactory(new PropertyValueFactory<Personne,String>("retard"));
                 femmesList.getSelectionModel().clearSelection();
                 ArrayList<Pair<Personne, Integer>> matriceConflits = personneFocus.getConflits();
                 for(Pair<Personne, Integer> couple : matriceConflits){
@@ -268,6 +269,7 @@ public class Main extends Application {
             Personne personneFocus = femmesList.getSelectionModel().getSelectedItem();
             if(personneFocus != null) {
                 personneFocus.setRetard(retard.getValue());
+                colRetardFemmes.setCellValueFactory(new PropertyValueFactory<Personne,String>("retard"));
                 hommesList.getSelectionModel().clearSelection();
                 ArrayList<Pair<Personne, Integer>> matriceConflits = personneFocus.getConflits();
                 for (Pair<Personne, Integer> couple : matriceConflits) {
