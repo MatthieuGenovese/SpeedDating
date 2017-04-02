@@ -66,6 +66,8 @@ public class Main extends Application {
     TableColumn colNomsFemmes = new TableColumn("Noms");
     TableColumn colPrenomsHommes = new TableColumn("Prenoms");
     TableColumn colPrenomsFemmes = new TableColumn("Prenoms");
+    TableColumn colRetardHommes = new TableColumn("Retard");
+    TableColumn colRetardFemmes = new TableColumn("Retard");
 
 
     @Override
@@ -97,12 +99,17 @@ public class Main extends Application {
         colNomsFemmes.prefWidthProperty().bind(femmesList.widthProperty().multiply(0.5));
         colPrenomsHommes.prefWidthProperty().bind(femmesList.widthProperty().multiply(0.5));
         colPrenomsFemmes.prefWidthProperty().bind(femmesList.widthProperty().multiply(0.5));
+        colRetardHommes.prefWidthProperty().bind(femmesList.widthProperty().multiply(0.5));
+        colRetardFemmes.prefWidthProperty().bind(femmesList.widthProperty().multiply(0.5));
 
         //Je récupère l'élement nom de la classe Personne
         colNomsHommes.setCellValueFactory(new PropertyValueFactory<Personne,String>("nom"));
         colNomsFemmes.setCellValueFactory(new PropertyValueFactory<Personne,String>("nom"));
         colPrenomsHommes.setCellValueFactory(new PropertyValueFactory<Personne,String>("prenom"));
         colPrenomsFemmes.setCellValueFactory(new PropertyValueFactory<Personne,String>("prenom"));
+        //Je récupère l'élement retard de la classe Personne
+        colRetardHommes.setCellValueFactory(new PropertyValueFactory<Personne,String>("retard"));
+        colRetardFemmes.setCellValueFactory(new PropertyValueFactory<Personne,String>("retard"));
 
         //Je règle les propriétés de mon tableview d'hommes
         hommesList.setLayoutX(scene.getWidth() * 10 / 100);
@@ -169,6 +176,8 @@ public class Main extends Application {
         femmesList.getColumns().add(colNomsFemmes);
         hommesList.getColumns().add(colPrenomsHommes);
         femmesList.getColumns().add(colPrenomsFemmes);
+        hommesList.getColumns().add(colRetardHommes);
+        femmesList.getColumns().add(colRetardFemmes);
 
 
         //assignation du groupe "groupImport" a l'onglet Import
@@ -243,6 +252,7 @@ public class Main extends Application {
         hommesList.setOnMouseClicked(event -> {
             Personne personneFocus = hommesList.getSelectionModel().getSelectedItem();
             if(personneFocus != null) {
+                personneFocus.setRetard(retard.getValue());
                 femmesList.getSelectionModel().clearSelection();
                 ArrayList<Pair<Personne, Integer>> matriceConflits = personneFocus.getConflits();
                 for(Pair<Personne, Integer> couple : matriceConflits){
@@ -257,6 +267,7 @@ public class Main extends Application {
         femmesList.setOnMouseClicked(event -> {
             Personne personneFocus = femmesList.getSelectionModel().getSelectedItem();
             if(personneFocus != null) {
+                personneFocus.setRetard(retard.getValue());
                 hommesList.getSelectionModel().clearSelection();
                 ArrayList<Pair<Personne, Integer>> matriceConflits = personneFocus.getConflits();
                 for (Pair<Personne, Integer> couple : matriceConflits) {

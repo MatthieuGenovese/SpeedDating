@@ -15,6 +15,7 @@ public class Personne {
     private int age;
     private int ageMin;
     private int ageMax;
+    private double retard;
     private String genre;
     private Date releaseDate;
     private ArrayList<Pair<Personne, Integer>> listeConflits;
@@ -28,6 +29,7 @@ public class Personne {
         this.ageMin = ageMin;
         this.ageMax = ageMax;
         this.releaseDate = releaseDate;
+        this.retard = 0;
         listeConflits = new ArrayList<>();
     }
 
@@ -86,6 +88,10 @@ public class Personne {
     public int getAgeMax(){
         return ageMax;
     }
+
+    public void setRetard(double r) {this.retard = r;}
+
+    public double getRetard() {return this.retard;}
 
     public void setReleaseDate(Date releaseDate){
         this.releaseDate = releaseDate;
