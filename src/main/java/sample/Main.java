@@ -53,7 +53,10 @@ public class Main extends Application {
     final Text textHommes = new Text("Hommes");
     final Text textFemmes = new Text("Femmes");
 
-    final Slider retard = new Slider(0, 127, 60);
+    final Slider retard = new Slider(0, 120, 0);
+    final Label labelR = new Label("Retard");
+    final Label labelT = new Label("0");
+    final Label labelT2 = new Label("min");
 
     //Je crée mes talesviews
     final TableView<Personne> hommesList = new TableView();
@@ -127,6 +130,24 @@ public class Main extends Application {
         retard.setOrientation(Orientation.HORIZONTAL);
         retard.setLayoutX(scene.getWidth() * 39 / 100);
         retard.setLayoutY(scene.getHeight() * 80 / 100);
+        //le label au dessus du slider retard
+        labelR.setLayoutX(scene.getWidth() * 45 / 100);
+        labelR.setLayoutY(scene.getHeight() * 75 / 100);
+        //la valeur du slider retard
+        labelT.setLayoutX(scene.getWidth() * 47 / 100);
+        labelT.setLayoutY(scene.getHeight() * 85 / 100);
+        labelT2.setLayoutX(scene.getWidth() * 50 / 100);
+        labelT2.setLayoutY(scene.getHeight() * 85 / 100);
+
+        retard.valueProperty().addListener(new ChangeListener() {
+
+            @Override
+            public void changed(ObservableValue arg0, Object arg1, Object arg2) {
+                labelT.textProperty().setValue(
+                        String.valueOf((int) retard.getValue()));
+
+            }
+        });
 
         //on ajoute au bouton "..." une action : Un file chooser (cela ouvre l'explorer), puis on lui applique un filtre pour qu'il n'affiche que les csv
 
@@ -142,6 +163,7 @@ public class Main extends Application {
         groupImport.getChildren().add(hommesList);
         groupImport.getChildren().add(femmesList);
         groupImport.getChildren().add(retard);
+        groupImport.getChildren().addAll(labelR, labelT, labelT2);
         //J'ajoute mes colonnes dans les tablesviews
         hommesList.getColumns().add(colNomsHommes);
         femmesList.getColumns().add(colNomsFemmes);
