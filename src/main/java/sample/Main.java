@@ -9,6 +9,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
+import javafx.geometry.Orientation;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -51,6 +52,9 @@ public class Main extends Application {
 
     final Text textHommes = new Text("Hommes");
     final Text textFemmes = new Text("Femmes");
+
+    final Slider retard = new Slider(0, 127, 60);
+
     //Je crée mes talesviews
     final TableView<Personne> hommesList = new TableView();
     final TableView<Personne> femmesList = new TableView();
@@ -119,6 +123,11 @@ public class Main extends Application {
         //Je change la couleur CSS de background de selection
         femmesList.setStyle("-fx-selection-bar-non-focused: pink;");
 
+        //Gestion du retard
+        retard.setOrientation(Orientation.HORIZONTAL);
+        retard.setLayoutX(scene.getWidth() * 39 / 100);
+        retard.setLayoutY(scene.getHeight() * 80 / 100);
+
         //on ajoute au bouton "..." une action : Un file chooser (cela ouvre l'explorer), puis on lui applique un filtre pour qu'il n'affiche que les csv
 
         //ajout de l'onglet "import" au gestionnaire d'onglet
@@ -132,11 +141,14 @@ public class Main extends Application {
         groupImport.getChildren().add(textFemmes);
         groupImport.getChildren().add(hommesList);
         groupImport.getChildren().add(femmesList);
+        groupImport.getChildren().add(retard);
         //J'ajoute mes colonnes dans les tablesviews
         hommesList.getColumns().add(colNomsHommes);
         femmesList.getColumns().add(colNomsFemmes);
         hommesList.getColumns().add(colPrenomsHommes);
         femmesList.getColumns().add(colPrenomsFemmes);
+
+
         //assignation du groupe "groupImport" a l'onglet Import
         ongletImport.setContent(groupImport);
         ongletImport.setClosable(false);
