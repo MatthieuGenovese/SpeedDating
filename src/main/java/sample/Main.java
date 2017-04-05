@@ -44,6 +44,7 @@ public class Main extends Application {
     //le bouton ... qui ouvre l'explorer pour chercher les fichiers csv
     final Button btnImport= new Button("...");
     final Button btnValiderImport = new Button("Ouvrir");
+    final Button btnValiderRetard = new Button("OK");
 
     final Text textImport = new Text("Fichier à importer :");
 
@@ -57,6 +58,7 @@ public class Main extends Application {
     final Label labelR = new Label("Retard");
     final Label labelT = new Label("0");
     final Label labelT2 = new Label("min");
+    private boolean validRetard = false;
 
     //Je crée mes talesviews
     final TableView<Personne> hommesList = new TableView();
@@ -87,6 +89,7 @@ public class Main extends Application {
         btnValiderImport.setLayoutX(btnImport.getLayoutX() + btnImport.getPrefWidth() + 30);
         btnValiderImport.setLayoutY(textFilePath.getLayoutY());
         btnValiderImport.setVisible(false);
+
 
         //Je place le texte du nom de mes deux tableaux hommes et femmes
         textHommes.setLayoutX(scene.getWidth() * 12 / 100);
@@ -141,10 +144,12 @@ public class Main extends Application {
         labelR.setLayoutX(scene.getWidth() * 45 / 100);
         labelR.setLayoutY(scene.getHeight() * 75 / 100);
         //la valeur du slider retard
-        labelT.setLayoutX(scene.getWidth() * 47 / 100);
+        labelT.setLayoutX(scene.getWidth() * 44 / 100);
         labelT.setLayoutY(scene.getHeight() * 85 / 100);
-        labelT2.setLayoutX(scene.getWidth() * 50 / 100);
+        labelT2.setLayoutX(scene.getWidth() * 47 / 100);
         labelT2.setLayoutY(scene.getHeight() * 85 / 100);
+        btnValiderRetard.setLayoutX(scene.getWidth() * 52 / 100);
+        btnValiderRetard.setLayoutY(scene.getHeight() * 85 / 100);
 
         retard.valueProperty().addListener(new ChangeListener() {
 
@@ -164,6 +169,7 @@ public class Main extends Application {
         groupImport.getChildren().add(textImport);
         groupImport.getChildren().add(textFilePath);
         groupImport.getChildren().add(btnValiderImport);
+        groupImport.getChildren().add(btnValiderRetard);
         groupImport.getChildren().add(btnImport);
         groupImport.getChildren().add(textHommes);
         groupImport.getChildren().add(textFemmes);
@@ -229,6 +235,9 @@ public class Main extends Application {
                 e.printStackTrace();
             }
         });
+        btnValiderRetard.setOnAction(actionEvent -> {
+            validRetard = true;
+                });
         //ajout d'un listener sur le resize de la scene, ecoute le resize du width, mets a jour la position du texte en fonction
         scene.widthProperty().addListener(new ChangeListener<Number>() {
             @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
@@ -252,8 +261,10 @@ public class Main extends Application {
         hommesList.setOnMouseClicked(event -> {
             Personne personneFocus = hommesList.getSelectionModel().getSelectedItem();
             if(personneFocus != null) {
-                personneFocus.setRetard(retard.getValue());
-                colRetardHommes.setCellValueFactory(new PropertyValueFactory<Personne,String>("retard"));
+                if(validRetard){
+                    personneFocus.setRetard(retard.getValue());
+                    colRetardHommes.setCellValueFactory(new PropertyValueFactory<Personne,String>("retard"));
+                    validRetard = false;}
                 femmesList.getSelectionModel().clearSelection();
                 ArrayList<Pair<Personne, Integer>> matriceConflits = personneFocus.getConflits();
                 for(Pair<Personne, Integer> couple : matriceConflits){
@@ -268,8 +279,10 @@ public class Main extends Application {
         femmesList.setOnMouseClicked(event -> {
             Personne personneFocus = femmesList.getSelectionModel().getSelectedItem();
             if(personneFocus != null) {
-                personneFocus.setRetard(retard.getValue());
-                colRetardFemmes.setCellValueFactory(new PropertyValueFactory<Personne,String>("retard"));
+                if(validRetard){
+                    personneFocus.setRetard(retard.getValue());
+                    colRetardFemmes.setCellValueFactory(new PropertyValueFactory<Personne,String>("retard"));
+                    validRetard = false;}
                 hommesList.getSelectionModel().clearSelection();
                 ArrayList<Pair<Personne, Integer>> matriceConflits = personneFocus.getConflits();
                 for (Pair<Personne, Integer> couple : matriceConflits) {
