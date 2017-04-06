@@ -95,7 +95,8 @@ public class Carseq
 			IloOplDataSource dataSource=new MyData(oplF);
 			opl.addDataSource(dataSource);
 			opl.generate();
-
+			opl.getElement("demand").asIntMap().set(1,1);
+			System.out.println(opl.getElement("demand").asIntMap().get(1));
 			if ( cp.solve() )
 			{
 				System.out.println("OBJECTIVE: " + opl.getCP().getObjValue());

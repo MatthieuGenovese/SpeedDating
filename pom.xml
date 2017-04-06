@@ -15,6 +15,11 @@
     </properties>
     <dependencies>
         <dependency>
+            <groupId>com.opencsv</groupId>
+            <artifactId>opencsv</artifactId>
+            <version>3.9</version>
+        </dependency>
+        <dependency>
             <groupId>com.ibm</groupId>
             <artifactId>opl</artifactId>
             <version>12.6.3.0</version>
