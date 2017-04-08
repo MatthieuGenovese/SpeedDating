@@ -9,6 +9,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import javafx.util.Pair;
 import sample.Personne;
+import sample.PersonneSoiree;
 
 import java.util.ArrayList;
 

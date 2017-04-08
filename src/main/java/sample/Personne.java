@@ -11,17 +11,16 @@ import java.util.Date;
 public class Personne {
     private String nom;
     private String prenom;
-    private int id;
+    private int idSite;
+    private int id = 0;
     private int age;
     private int ageMin;
     private int ageMax;
-    private double retard;
     private String genre;
     private Date releaseDate;
-    private ArrayList<Pair<Personne, Integer>> listeConflits;
+    private PersonneSoiree pSoiree;
 
-    public Personne(int id, String nom, String prenom, String genre, int age, int ageMin, int ageMax, Date releaseDate){
-        this.id = id;
+    public Personne(int idSite, String nom, String prenom, String genre, int age, int ageMin, int ageMax, Date releaseDate){
         this.prenom = prenom;
         this.nom = nom;
         this.genre = genre;
@@ -29,8 +28,8 @@ public class Personne {
         this.ageMin = ageMin;
         this.ageMax = ageMax;
         this.releaseDate = releaseDate;
-        this.retard = 0;
-        listeConflits = new ArrayList<>();
+        this.idSite = idSite;
+        this.pSoiree = new PersonneSoiree(this);
     }
 
     public void setNom(String nom){
@@ -49,12 +48,24 @@ public class Personne {
         return prenom;
     }
 
+    public PersonneSoiree getPersonneSoiree(){
+        return pSoiree;
+    }
+
     public void setId(int id){
         this.id = id;
     }
 
     public int getId(){
         return id;
+    }
+
+    public void setIdSite(int idSite){
+        this.idSite = idSite;
+    }
+
+    public int getIdSite(){
+        return idSite;
     }
 
     public void setGenre(String genre){
@@ -89,10 +100,6 @@ public class Personne {
         return ageMax;
     }
 
-    public void setRetard(double r) {this.retard = r;}
-
-    public double getRetard() {return this.retard;}
-
     public void setReleaseDate(Date releaseDate){
         this.releaseDate = releaseDate;
     }
@@ -101,27 +108,6 @@ public class Personne {
         return releaseDate;
     }
 
-    public ArrayList<Pair<Personne, Integer>> calculerConflits(ArrayList<Personne> listeP){
-        //on boucle sur la liste des personnes
-        for(Personne p : listeP){
-            //on s'exclue soit même (cela n'a pas de sens de calculer un conflit entre this et this
-            if(p.getId() != this.getId()){
-                //si le critère d'age correspont, on ajoute la pair (p, 1)
-                if(p.getAge() >= this.getAgeMin() && p.getAge() <= this.getAgeMax() && !p.getGenre().equalsIgnoreCase(this.getGenre())){
-                    listeConflits.add(new Pair<Personne, Integer>(p, 1));
-                }
-                //sinon on ajoute la pair (p,0)
-                else if(!p.getGenre().equalsIgnoreCase(this.getGenre())){
-                    listeConflits.add(new Pair<Personne, Integer>(p, 0));
-                }
-            }
-        }
-        return listeConflits;
-    }
-
-    public ArrayList<Pair<Personne, Integer>> getConflits(){
-        return listeConflits;
-    }
 
     public String toString(){
         return "Nom : " + nom + " Prenom : " + prenom + " " + genre + " Age : " + Integer.toString(age) + " Age Min : " + Integer.toString(ageMin) + " Age Max : " + Integer.toString(ageMax) + " " + releaseDate.toString();

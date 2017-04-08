@@ -8,6 +8,7 @@ import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import sample.CSVManager;
 import sample.Personne;
+import sample.PersonneSoiree;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -29,6 +30,7 @@ public class ImportNode extends Parent implements Obs {
     //Propriete metier
     CSVManager csvManager;
     ArrayList<Personne> listeChargee;
+    ArrayList<PersonneSoiree> listePersonneSoiree;
     ObservableList<Personne> hommes = observableArrayList();
     ObservableList<Personne> femmes = observableArrayList();
 
@@ -62,7 +64,6 @@ public class ImportNode extends Parent implements Obs {
     }
 
     public void initPositionElementsGraphiques(){
-        listeChargee = new ArrayList<>();
         textImport.setLayoutX(posx * 20 / 100);
         textImport.setLayoutY(posy * 10 / 100);
         textFilePath.setMaxWidth(posx * 40 / 100);
@@ -95,6 +96,7 @@ public class ImportNode extends Parent implements Obs {
         btnValiderImport.setOnAction(actionEvent -> {
             try {
                 csvManager = new CSVManager(textFilePath.getText());
+                listeChargee = new ArrayList<>();
                 listeChargee = csvManager.getPersonnesFromCSV();
                 remplir();
             } catch (Throwable e) {
@@ -104,13 +106,21 @@ public class ImportNode extends Parent implements Obs {
     }
 
     public void remplir() throws Throwable{
+        int cptHomme = 0;
+        int cptFemme = 0;
+        listePersonneSoiree = new ArrayList<>();
         for(Personne p : listeChargee){
-            p.calculerConflits(listeChargee);
+            p.getPersonneSoiree().calculerConflits(listeChargee);
+            listePersonneSoiree.add(p.getPersonneSoiree());
             if(p.getGenre().equals("M")){
+                p.setId(cptHomme);
                 hommes.add(p);
+                cptHomme++;
             }
             else if(p.getGenre().equals("F")) {
+                p.setId(cptFemme);
                 femmes.add(p);
+                cptFemme++;
             }
             else {
                 throw new Throwable("Genre illisible ou incorrect !");
@@ -148,6 +158,10 @@ public class ImportNode extends Parent implements Obs {
 
     public ArrayList<Personne> getListeChargee() {
         return listeChargee;
+    }
+
+    public ArrayList<PersonneSoiree> getListePersonneSoiree(){
+        return listePersonneSoiree;
     }
 
     public void setListeChargee(ArrayList<Personne> listeChargee) {

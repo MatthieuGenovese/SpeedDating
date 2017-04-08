@@ -4,6 +4,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Pair;
 import sample.Personne;
+import sample.PersonneSoiree;
 
 import java.util.ArrayList;
 
@@ -23,12 +24,13 @@ public class DoubleTabNode extends Parent implements Observateur {
 
         this.getChildren().add(hommesList);
         this.getChildren().add(femmesList);
+        initListeners();
 
     }
 
     public void initListeners(){
         //ecouteur du clic sur le tableview d'hommes
-        hommesList.setOnMouseClicked(event -> {
+        hommesList.getList().setOnMouseClicked(event -> {
             Personne personneFocus = hommesList.getList().getSelectionModel().getSelectedItem();
             if(personneFocus != null) {
                 /*if(validRetard){
@@ -37,7 +39,7 @@ public class DoubleTabNode extends Parent implements Observateur {
                     validRetard = false;
                 }*/
                 femmesList.getList().getSelectionModel().clearSelection();
-                ArrayList<Pair<Personne, Integer>> matriceConflits = personneFocus.getConflits();
+                ArrayList<Pair<Personne, Integer>> matriceConflits = personneFocus.getPersonneSoiree().getConflits();
                 for(Pair<Personne, Integer> couple : matriceConflits){
                     if(couple.getValue().equals(1)){
                         femmesList.getList().getSelectionModel().select(couple.getKey());
@@ -47,7 +49,7 @@ public class DoubleTabNode extends Parent implements Observateur {
         });
 
         //ecouteur du clic sur le tableview des femmes
-        femmesList.setOnMouseClicked(event -> {
+        femmesList.getList().setOnMouseClicked(event -> {
             Personne personneFocus = femmesList.getList().getSelectionModel().getSelectedItem();
             if(personneFocus != null) {
                 /*if(validRetard){
@@ -56,7 +58,7 @@ public class DoubleTabNode extends Parent implements Observateur {
                     validRetard = false;
                 }*/
                 hommesList.getList().getSelectionModel().clearSelection();
-                ArrayList<Pair<Personne, Integer>> matriceConflits = personneFocus.getConflits();
+                ArrayList<Pair<Personne, Integer>> matriceConflits = personneFocus.getPersonneSoiree().getConflits();
                 for (Pair<Personne, Integer> couple : matriceConflits) {
                     if (couple.getValue().equals(1)) {
                         hommesList.getList().getSelectionModel().select(couple.getKey());
