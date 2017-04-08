@@ -1,5 +1,6 @@
 package CustomNodes;
 
+import cplex.CalculMatrice;
 import javafx.collections.ObservableList;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
@@ -26,12 +27,14 @@ public class ImportNode extends Parent implements Obs {
     //Position de ce noeud dans la fenetre
     double posx;
     double posy;
+    int nbCol;
 
     //Propriete metier
     CSVManager csvManager;
     ArrayList<Personne> listeChargee;
     ArrayList<PersonneSoiree> listePersonneSoiree;
     ObservableList<Personne> hommes = observableArrayList();
+    CalculMatrice calculateur;
     ObservableList<Personne> femmes = observableArrayList();
 
     //Propriete graphique
@@ -48,7 +51,7 @@ public class ImportNode extends Parent implements Obs {
         initsElementsGrapiques();
         initPositionElementsGraphiques();
         initListeners();
-
+        nbCol = 0;
         this.getChildren().add(getBtnImport());
         this.getChildren().add(getBtnValiderImport());
         this.getChildren().add(getTextImport());
@@ -99,6 +102,7 @@ public class ImportNode extends Parent implements Obs {
                 listeChargee = new ArrayList<>();
                 listeChargee = csvManager.getPersonnesFromCSV();
                 remplir();
+                calculateur.calculerMatriceCPLEX(listePersonneSoiree);
             } catch (Throwable e) {
                 e.printStackTrace();
             }
@@ -127,6 +131,8 @@ public class ImportNode extends Parent implements Obs {
             }
             System.out.println(p.toString());
         }
+        nbCol = cptFemme;
+        calculateur = new CalculMatrice(csvManager, nbCol);
         notifier();
     }
 

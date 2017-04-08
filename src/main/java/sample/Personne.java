@@ -4,6 +4,10 @@ import javafx.util.Pair;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.function.Function;
+import java.util.function.ToDoubleFunction;
+import java.util.function.ToIntFunction;
+import java.util.function.ToLongFunction;
 
 /**
  * Created by Matthieu on 21/03/2017.
@@ -112,4 +116,6 @@ public class Personne {
     public String toString(){
         return "Nom : " + nom + " Prenom : " + prenom + " " + genre + " Age : " + Integer.toString(age) + " Age Min : " + Integer.toString(ageMin) + " Age Max : " + Integer.toString(ageMax) + " " + releaseDate.toString();
      }
+
+
 }

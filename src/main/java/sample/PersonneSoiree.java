@@ -3,6 +3,7 @@ package sample;
 import javafx.util.Pair;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 
 /**
@@ -49,4 +50,5 @@ public class PersonneSoiree {
     public ArrayList<Pair<Personne, Integer>> getConflits(){
         return listeConflits;
     }
+
 }
