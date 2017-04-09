@@ -10,14 +10,14 @@ import java.util.Date;
  * Created by Matthieu on 08/04/2017.
  */
 public class PersonneSoiree {
-    private Date retard;
+    //private Date retard;
     private ArrayList<Pair<Personne, Integer>> listeConflits;
     private Personne personne;
 
     public PersonneSoiree(Personne personne){
         this.personne = personne;
         listeConflits = new ArrayList<>();
-        retard = new Date();
+        //retard = new Date();
     }
 
     public Personne getPersonne(){
@@ -25,9 +25,9 @@ public class PersonneSoiree {
     }
 
 
-    public void setRetard(Date r) {this.retard = r;}
+    /*public void setRetard(Date r) {this.retard = r;}
 
-    public Date getRetard() {return this.retard;}
+    public Date getRetard() {return this.retard;}*/
 
     public ArrayList<Pair<Personne, Integer>> calculerConflits(ArrayList<Personne> listeP){
         //on boucle sur la liste des personnes

@@ -6,6 +6,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 
+import java.util.Date;
+
 /**
  * Created by Jeremy on 06/04/2017.
  */
@@ -15,12 +17,12 @@ public class RetardNode extends Parent {
     double posy;
 
     //Partie metier
-    private boolean validRetard = false;
+    private static boolean validRetard = false;
 
     //Partie Graphique
     Button btnValiderRetard = new Button("OK");
 
-    Slider retard;
+    static Slider retard;
 
     Label labelR;
     Label labelT;
@@ -66,9 +68,14 @@ public class RetardNode extends Parent {
         btnValiderRetard.setLayoutY(posy * 85 / 100);
     }
 
+    public static void setValidRetard(boolean b){validRetard = b;}
+
+    public static boolean getValidRetard(){return validRetard;}
+
     public void initListeners(){
         btnValiderRetard.setOnAction(actionEvent -> {
             validRetard = true;
         });
     }
+    public static long getRetard(){return (long)retard.getValue();}
 }

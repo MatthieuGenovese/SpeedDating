@@ -20,6 +20,7 @@ public class Personne {
     private int age;
     private int ageMin;
     private int ageMax;
+    private long retard;
     private String genre;
     private Date releaseDate;
     private PersonneSoiree pSoiree;
@@ -34,6 +35,7 @@ public class Personne {
         this.releaseDate = releaseDate;
         this.idSite = idSite;
         this.pSoiree = new PersonneSoiree(this);
+        this.retard = 0;
     }
 
     public void setNom(String nom){
@@ -111,6 +113,11 @@ public class Personne {
     public Date getReleaseDate(){
         return releaseDate;
     }
+
+    public void setRetard(long r) {this.retard = r;}
+
+    public long getRetard() {return this.retard;}
+
 
 
     public String toString(){

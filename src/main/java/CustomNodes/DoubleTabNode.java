@@ -33,11 +33,11 @@ public class DoubleTabNode extends Parent implements Observateur {
         hommesList.getList().setOnMouseClicked(event -> {
             Personne personneFocus = hommesList.getList().getSelectionModel().getSelectedItem();
             if(personneFocus != null) {
-                /*if(validRetard){
-                    personneFocus.setRetard(retard.getValue());
+                if(RetardNode.getValidRetard()){
+                    personneFocus.setRetard(RetardNode.getRetard());
                     hommesList.getColRetardHommes().setCellValueFactory(new PropertyValueFactory<Personne,String>("retard"));
-                    validRetard = false;
-                }*/
+                    RetardNode.setValidRetard(false);
+                }
                 femmesList.getList().getSelectionModel().clearSelection();
                 ArrayList<Pair<Personne, Integer>> matriceConflits = personneFocus.getPersonneSoiree().getConflits();
                 for(Pair<Personne, Integer> couple : matriceConflits){
