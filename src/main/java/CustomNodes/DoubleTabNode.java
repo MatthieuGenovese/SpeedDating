@@ -54,7 +54,7 @@ public class DoubleTabNode extends Parent implements Observateur {
             if(personneFocus != null) {
                 if(RetardNode.getValidRetard()){
                     personneFocus.setRetard(RetardNode.getRetard());
-                    hommesList.getColRetardHommes().setCellValueFactory(new PropertyValueFactory<Personne,String>("retard"));
+                    femmesList.getColRetardHommes().setCellValueFactory(new PropertyValueFactory<Personne,String>("retard"));
                     RetardNode.setValidRetard(false);
                 }
                 hommesList.getList().getSelectionModel().clearSelection();
