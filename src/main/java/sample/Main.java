@@ -75,6 +75,8 @@ public class Main extends Application {
         primaryStage.show();
     }
 
+
+
     private void initListeners(){
         //TODO ajout d'un listener sur le resize de la scene, ecoute le resize du width, mets a jour la position du texte en fonction
 //        scene.widthProperty().addListener(new ChangeListener<Number>() {

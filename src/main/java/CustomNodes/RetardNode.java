@@ -1,5 +1,7 @@
 package CustomNodes;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Orientation;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
@@ -66,6 +68,14 @@ public class RetardNode extends Parent {
         labelT2.setLayoutY(posy * 85 / 100);
         btnValiderRetard.setLayoutX(posx * 52 / 100);
         btnValiderRetard.setLayoutY(posy * 85 / 100);
+
+        retard.valueProperty().addListener(new ChangeListener() {
+            @Override
+            public void changed(ObservableValue arg0, Object arg1, Object arg2) {
+                labelT.textProperty().setValue(
+                        String.valueOf((int) retard.getValue()));
+            }
+        });
     }
 
     public static void setValidRetard(boolean b){validRetard = b;}
@@ -77,5 +87,6 @@ public class RetardNode extends Parent {
             validRetard = true;
         });
     }
+
     public static long getRetard(){return (long)retard.getValue();}
 }
