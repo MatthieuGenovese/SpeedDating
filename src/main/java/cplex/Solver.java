@@ -177,7 +177,7 @@ public class Solver
         int res[][];
         int nbLignes = 0;
         try {
-            FileReader c = new FileReader("E:\\TER\\matriceConflits.csv");
+            FileReader c = new FileReader("matriceConflits.csv");
             BufferedReader r = new BufferedReader(c);
             String ligne = r.readLine();
 
