@@ -20,6 +20,7 @@ import ilog.cp.IloCP;
 import ilog.opl.*;
 
 import java.io.*;
+import java.util.ArrayList;
 
 public class Solver
 {
@@ -58,9 +59,10 @@ public class Solver
             handler.addIntItem(mini);
             handler.endElement();
 
-            int scores[][]={{0, 1, 1},
+            /*int scores[][]={{0, 1, 1},
                             {1, 0, 1},
-                            {1, 1, 0}};
+                            {1, 1, 0}};*/
+            int scores[][] = importerMatrice();
 
 
             int dispoF[][] ={{0, 0},
@@ -167,6 +169,38 @@ public class Solver
         }
         System.out.println(ligne);
         return ligne;
+    }
+
+    static int[][] importerMatrice() {
+        ArrayList<String[]> listeSArray = new ArrayList<>();
+        int nbCol = 0;
+        int res[][];
+        int nbLignes = 0;
+        try {
+            FileReader c = new FileReader("E:\\TER\\matriceConflits.csv");
+            BufferedReader r = new BufferedReader(c);
+            String ligne = r.readLine();
+
+
+            while (ligne != null) {
+                String[] decompose = ligne.split(",");
+                nbCol = decompose.length;
+                listeSArray.add(decompose);
+                ligne = r.readLine();
+                nbLignes++;
+            }
+            r.close();
+            res = new int [nbCol][nbLignes];
+            for(int i = 0; i < listeSArray.size(); i++){
+                for(int j = 0; j < listeSArray.get(i).length; j++){
+                    res[i][j] = Integer.parseInt(listeSArray.get(i)[j]);
+                }
+            }
+
+        } catch (Exception e) {
+            throw new Error(e);
+        }
+        return res;
     }
 
     static String getModelText()

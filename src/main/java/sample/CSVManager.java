@@ -20,7 +20,7 @@ public class CSVManager {
 
     public CSVManager (String filePath) throws Exception{
         reader = new CSVReader(new FileReader(filePath),'\t');
-        writer = new CSVWriter(new FileWriter("matriceConflits.csv"), ';');
+        writer = new CSVWriter(new FileWriter("matriceConflits.csv"), ',');
     }
 
 
@@ -58,8 +58,7 @@ public class CSVManager {
                 entries.add(Integer.toString(conflits.get(j)));
             }
             else{
-                entries.add("\n");
-                String[] s = new String[cpt+2];
+                String[] s = new String[cpt];
                 s = entries.toArray(s);
                 listeSArray.add(s);
                 entries = new ArrayList<>();
