@@ -1,10 +1,8 @@
  using CP;
 
- //DONNEES
-
- int f = ...; //nb de femmes
- int h = ...; //nb d'hommes
- int c = ...; //nb de créneaux
+ int f = ...;
+ int h = ...;
+ int c = ...;
  int mini = ...;
 
  range F = 1..f;
@@ -12,38 +10,34 @@
  range C = 1..c;
  range A = 1..2;
 
- int scores[F][H]= ...; //tableau de scores passé en entrée
+ int scores[F][H]= ...;
  int dispoF[F][A]= ...;
  int dispoH[H][A]= ...;
-
- //SORTIES
 
  dvar int rencontres[F][H][C] in 0..1;
  dexpr int attentes = -(h*f - sum(f in F, c in C, h in H ) rencontres[f][h][c]);
  dexpr int maxScores = sum(f in F, h in H, c in C) scores[f][h] * rencontres[f][h][c];
  maximize attentes + maxScores;
 
- //CONTRAINTES
-
  subject to {
- 	forall(f in F, h in H, c in C){                                   //rencontres interdites
+ 	forall(f in F, h in H, c in C){
 		if(scores[f][h] == 0){
 			rencontres[f][h][c] == 0;
  		}
 	}
- 	forall(f in F, h in H){                  				 //Au plus 1 rencontre par couple
+ 	forall(f in F, h in H){
  		(sum(c in C) rencontres[f][h][c]) <= 1;
  	}
 	forall(f in F){
-		(sum(h in H, c in C) rencontres[f][h][c]) >= mini;   //minimum de rencontre pour chq femme
+		(sum(h in H, c in C) rencontres[f][h][c]) >= mini;
 	}
 	forall(h in H){
-		(sum(f in F, c in C) rencontres[f][h][c]) >= mini;   //minimum de rencontre pour chq homme
+		(sum(f in F, c in C) rencontres[f][h][c]) >= mini;
 	}
 	forall(f in F, c in C){
-		(sum(h in H) rencontres[f][h][c]) <= 1; //au plus 1 rencontres par femme et par créneau
+		(sum(h in H) rencontres[f][h][c]) <= 1;
 	}
 	forall(h in H, c in C){
-		(sum(f in F) rencontres[f][h][c]) <= 1;	// au plus 1 rencontes par homme et par creneau
+		(sum(f in F) rencontres[f][h][c]) <= 1;
 	}
 }

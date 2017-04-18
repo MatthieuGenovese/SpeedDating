@@ -48,7 +48,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Speed Dating");
-        Solver s = new Solver();
+        Solver s = new Solver("E:\\TER\\src\\main\\opl\\model");
         double sw = scene.getWidth();
         double sh = scene.getHeight();
         try {

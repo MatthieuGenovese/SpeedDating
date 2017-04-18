@@ -19,8 +19,16 @@ import ilog.concert.*;
 import ilog.cp.IloCP;
 import ilog.opl.*;
 
+import java.io.*;
+
 public class Solver
 {
+    private static String chemin;
+
+    public Solver(String chemin){
+        this.chemin = chemin;
+    }
+
     static class MyData extends IloCustomOplDataSource
     {
         MyData(IloOplFactory oplF)
@@ -50,9 +58,16 @@ public class Solver
             handler.addIntItem(mini);
             handler.endElement();
 
-            int scores[][]={{1, 1, 1},
-                            {1, 1, 1},
-                            {1, 1, 1}};
+            int scores[][]={{0, 1, 1},
+                            {1, 0, 1},
+                            {1, 1, 0}};
+
+
+            int dispoF[][] ={{0, 0},
+                    {0, 0}};
+            int dispoH[][] ={{0, 0},
+                    {0, 0}};
+
             handler.startElement("scores");
             handler.startArray();
             for (int i = 0 ; i< f ; i++) {
@@ -63,17 +78,42 @@ public class Solver
             }
             handler.endArray();
             handler.endElement();
+
+
+            handler.startElement("dispoF");
+            handler.startArray();
+            for (int i = 0 ; i< f-1 ; i++) {
+                handler.startArray();
+                for (int j = 0 ; j< h-1 ; j++)
+                    handler.addIntItem(dispoF[i][j]);
+                handler.endArray();
+            }
+            handler.endArray();
+            handler.endElement();
+
+            handler.startElement("dispoH");
+            handler.startArray();
+            for (int i = 0 ; i< f-1 ; i++) {
+                handler.startArray();
+                for (int j = 0 ; j< h -1; j++)
+                    handler.addIntItem(dispoH[i][j]);
+                handler.endArray();
+            }
+            handler.endArray();
+            handler.endElement();
         }
     };
 
     public void exec() throws Exception
     {
         int status = 127;
+        //getModelFromFile();
         try {
             IloOplFactory.setDebugMode(true);
             IloOplFactory oplF = new IloOplFactory();
             IloOplErrorHandler errHandler = oplF.createOplErrorHandler(System.out);
-            IloOplModelSource modelSource=oplF.createOplModelSourceFromString(getModelText(),"test opl");
+            //IloOplFactory.setDebugMode(false);
+            IloOplModelSource modelSource=oplF.createOplModelSourceFromString(getModelFromFile(),"test opl");
             IloOplSettings settings = oplF.createOplSettings(errHandler);
             IloOplModelDefinition def=oplF.createOplModelDefinition(modelSource,settings);
             IloCP cp = oplF.createCP();
@@ -108,6 +148,25 @@ public class Solver
             ex.printStackTrace();
             status = 4;
         }
+    }
+
+    static String getModelFromFile(){
+        BufferedReader fis;
+        String ligne = "";
+            try {
+            fis =  new BufferedReader(new FileReader(new File(chemin)));
+            String c = fis.readLine();
+            while(c != null){
+                ligne += c;
+                ligne += "\n";
+                c = fis.readLine();
+            }
+            fis.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println(ligne);
+        return ligne;
     }
 
     static String getModelText()
