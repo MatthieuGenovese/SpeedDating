@@ -6,6 +6,7 @@ import CustomNodes.RetardNode;
 import CustomNodes.TableauPersonnes;
 import com.sun.javafx.scene.text.TextLine;
 import cplex.Carseq;
+import cplex.Solver;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -47,8 +48,14 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Speed Dating");
+        Solver s = new Solver();
         double sw = scene.getWidth();
         double sh = scene.getHeight();
+        try {
+            s.exec();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         //ajout de l'onglet "import" au gestionnaire d'onglet
         gestionnaireDonglet.getTabs().setAll(ongletImport);
