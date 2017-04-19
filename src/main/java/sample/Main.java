@@ -1,9 +1,6 @@
 package sample;
 
-import CustomNodes.DoubleTabNode;
-import CustomNodes.ImportNode;
-import CustomNodes.RetardNode;
-import CustomNodes.TableauPersonnes;
+import CustomNodes.*;
 import com.sun.javafx.scene.text.TextLine;
 import cplex.Carseq;
 import cplex.Solver;
@@ -67,6 +64,10 @@ public class Main extends Application {
 
         RetardNode retardnode = new RetardNode(sw,sh);
         groupImport.getChildren().add(retardnode);
+
+        SearchNode searchNode = new SearchNode(250,100);
+        groupImport.getChildren().add(searchNode);
+        importnode.ajouterObservateur(searchNode);
 
 
         //assignation du groupe "groupImport" a l'onglet Import
