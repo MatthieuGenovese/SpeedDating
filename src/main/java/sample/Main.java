@@ -39,9 +39,12 @@ public class Main extends Application {
     final StackPane root = new StackPane();
     //le groupe de l'onglet import, on ajoutera tous les éléments de l'onglet a ce groupe, et on ajoutera le groupe a l'onglet import
     final Pane groupImport = new Pane();
+    final Pane groupCreneaux = new Pane();
     final Scene scene = new Scene(root, 800, 600);
     //l'onglet import
     final Tab ongletImport = new Tab("Import");
+    //l'onglet Creneaux
+    final Tab ongletCreneaux = new Tab("Creneaux");
     //le gestionnaire d'onglet (tous les onglets seront ajoutés sur lui
     final TabPane gestionnaireDonglet = new TabPane();
 
@@ -51,6 +54,7 @@ public class Main extends Application {
         Solver s = new Solver("src\\main\\opl\\model");
         double sw = scene.getWidth();
         double sh = scene.getHeight();
+
         try {
             s.exec();
         } catch (Exception e) {
@@ -58,7 +62,7 @@ public class Main extends Application {
         }
 
         //ajout de l'onglet "import" au gestionnaire d'onglet
-        gestionnaireDonglet.getTabs().setAll(ongletImport);
+        gestionnaireDonglet.getTabs().setAll(ongletImport, ongletCreneaux);
 
         ImportNode importnode = new ImportNode(sw,sh);
         groupImport.getChildren().add(importnode);
@@ -74,6 +78,8 @@ public class Main extends Application {
         //assignation du groupe "groupImport" a l'onglet Import
         ongletImport.setContent(groupImport);
         ongletImport.setClosable(false);
+        ongletCreneaux.setContent(groupCreneaux);
+        ongletCreneaux.setClosable(false);
 
         //ajout du gestionnaire d'onglet au root
         root.getChildren().add(gestionnaireDonglet);
