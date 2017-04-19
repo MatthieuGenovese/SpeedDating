@@ -26,6 +26,7 @@ public class Solver
 {
     private static String chemin;
     private static int colonnes, lignes;
+    private static int crenaux = 2;
 
     public Solver(String chemin, int colonnes, int lignes){
         this.chemin = chemin;
@@ -44,8 +45,8 @@ public class Solver
         {
             int f = colonnes;
             int h = lignes;
-            int c = 1;
-            int mini = 1;
+            int c = crenaux;
+            int mini = 2;
 
 
             IloOplDataHandler handler = getDataHandler();
@@ -62,9 +63,6 @@ public class Solver
             handler.addIntItem(mini);
             handler.endElement();
 
-            /*int scores[][]={{0, 1, 1},
-                            {1, 0, 1},
-                            {1, 1, 0}};*/
             int scores[][] = importerMatrice();
 
 
@@ -175,7 +173,6 @@ public class Solver
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println(ligne);
         return ligne;
     }
 
@@ -211,29 +208,45 @@ public class Solver
         return res;
     }
 
-    public int[][] extraireResultats(String res, int taille){
+    public int[][][] extraireResultats(String res, int taille){
         char[] tableau = res.toCharArray();
-        int[][] results = new int[taille][taille];
-        int cptLigne = 0;
-        int cptColonne = 0;
+        int[][][] results = new int[taille][taille][crenaux];
+        int cpt1 = 0;
+        int cpt2 = 0;
+        int cpt3 = 0;
+        boolean niveau2 = false;
+        boolean niveau3 = false;
         boolean start = false;
         for(Character c : tableau){
             if(c == '[' && !start){
                 start = true;
             }
-            if(Character.isDigit(c) && cptColonne == taille-1 && start){
-                results[cptLigne][cptColonne] = Character.getNumericValue(c);
-                cptLigne++;
-                cptColonne = 0;
+            else if(c == '[' && !niveau2){
+                niveau2 = true;
+            }
+            else if(c == '[' && !niveau3){
+                niveau3 = true;
+            }
+            else if(c == ']' && niveau2 && !niveau3){
+                cpt2 = 0;
+                cpt1++;
+            }
+            else if(c == ']' && niveau3){
+                cpt3 = 0;
+                cpt2++;
+                niveau3 = false;
             }
             else if(Character.isDigit(c) && start){
-                results[cptLigne][cptColonne] = Character.getNumericValue(c);
-                cptColonne++;
+                results[cpt1][cpt2][cpt3] = Character.getNumericValue(c);
+                cpt3++;
             }
         }
         for(int i = 0; i < taille; i++){
             for(int j = 0; j < taille; j++){
-                System.out.print(results[i][j] +",");
+                for(int k = 0; k < crenaux; k++) {
+                    System.out.print(results[i][j][k] + ",");
+                }
+                System.out.println();
             }
             System.out.println();
         }
