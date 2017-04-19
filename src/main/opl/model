@@ -11,8 +11,6 @@
  range A = 1..2;
 
  int scores[F][H]= ...;
- int dispoF[F][A]= ...;
- int dispoH[H][A]= ...;
 
  dvar int rencontres[F][H][C] in 0..1;
  dexpr int attentes = -(h*f - sum(f in F, c in C, h in H ) rencontres[f][h][c]);

@@ -51,15 +51,9 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Speed Dating");
-        Solver s = new Solver("src\\main\\opl\\model",3,3);
+
         double sw = scene.getWidth();
         double sh = scene.getHeight();
-
-        try {
-            s.exec();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
         //ajout de l'onglet "import" au gestionnaire d'onglet
         gestionnaireDonglet.getTabs().setAll(ongletImport, ongletCreneaux);

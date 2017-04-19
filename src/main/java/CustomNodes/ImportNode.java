@@ -27,7 +27,7 @@ public class ImportNode extends Parent implements Obs {
     //Position de ce noeud dans la fenetre
     double posx;
     double posy;
-    int nbCol;
+    int nbCol,nbLigne;
 
     //Propriete metier
     CSVManager csvManager;
@@ -52,6 +52,7 @@ public class ImportNode extends Parent implements Obs {
         initPositionElementsGraphiques();
         initListeners();
         nbCol = 0;
+        nbLigne = 0;
         this.getChildren().add(getBtnImport());
         this.getChildren().add(getBtnValiderImport());
         this.getChildren().add(getTextImport());
@@ -132,7 +133,8 @@ public class ImportNode extends Parent implements Obs {
             System.out.println(p.toString());
         }
         nbCol = cptFemme;
-        calculateur = new CalculMatrice(csvManager, nbCol);
+        nbLigne = cptHomme;
+        calculateur = new CalculMatrice(csvManager, nbLigne, nbCol);
         notifier();
     }
 

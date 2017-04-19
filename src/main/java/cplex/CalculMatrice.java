@@ -13,11 +13,12 @@ import java.util.Comparator;
  * Created by Matthieu on 08/04/2017.
  */
 public class CalculMatrice {
-    private int nbCol;
+    private int nbCol,nbLigne;
     private CSVManager manager;
 
-    public CalculMatrice(CSVManager manager, int nbCol) {
+    public CalculMatrice(CSVManager manager, int nbLigne, int nbCol) {
         this.nbCol = nbCol;
+        this.nbLigne = nbLigne;
         this.manager = manager;
     }
 
@@ -36,6 +37,13 @@ public class CalculMatrice {
             }
         }
         manager.ecrireMatriceCPLEX(matrice, nbCol);
+
+        Solver s = new Solver("src\\main\\opl\\model",nbCol,nbLigne);
+        try {
+            s.exec();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

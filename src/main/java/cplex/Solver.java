@@ -85,7 +85,7 @@ public class Solver
             handler.endElement();
 
 
-            handler.startElement("dispoF");
+           /* handler.startElement("dispoF");
             handler.startArray();
             for (int i = 0 ; i< f-1 ; i++) {
                 handler.startArray();
@@ -105,7 +105,7 @@ public class Solver
                 handler.endArray();
             }
             handler.endArray();
-            handler.endElement();
+            handler.endElement();*/
         }
     };
 
@@ -137,7 +137,7 @@ public class Solver
                 opl.printSolution(os);
                 res = os.toString();
                 os.close();
-                extraireResultats(res,3);
+                extraireResultats(res,colonnes);
                 status = 0;
             } else {
                 System.out.println("No solution!");
