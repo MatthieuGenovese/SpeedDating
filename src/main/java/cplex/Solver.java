@@ -25,9 +25,12 @@ import java.util.ArrayList;
 public class Solver
 {
     private static String chemin;
+    private static int colonnes, lignes;
 
-    public Solver(String chemin){
+    public Solver(String chemin, int colonnes, int lignes){
         this.chemin = chemin;
+        this.lignes = lignes;
+        this.colonnes = colonnes;
     }
 
     static class MyData extends IloCustomOplDataSource
@@ -39,8 +42,8 @@ public class Solver
 
         public void customRead()
         {
-            int f = 3;
-            int h = 3;
+            int f = colonnes;
+            int h = lignes;
             int c = 1;
             int mini = 1;
 
@@ -114,7 +117,6 @@ public class Solver
             IloOplFactory.setDebugMode(true);
             IloOplFactory oplF = new IloOplFactory();
             IloOplErrorHandler errHandler = oplF.createOplErrorHandler(System.out);
-            //IloOplFactory.setDebugMode(false);
             IloOplModelSource modelSource=oplF.createOplModelSourceFromString(getModelFromFile(),"test opl");
             IloOplSettings settings = oplF.createOplSettings(errHandler);
             IloOplModelDefinition def=oplF.createOplModelDefinition(modelSource,settings);
@@ -130,6 +132,12 @@ public class Solver
                 System.out.println("OBJECTIVE: " + opl.getCP().getObjValue());
                 opl.postProcess();
                 opl.printSolution(System.out);
+                String res;
+                ByteArrayOutputStream os = new ByteArrayOutputStream();
+                opl.printSolution(os);
+                res = os.toString();
+                os.close();
+                extraireResultats(res,3);
                 status = 0;
             } else {
                 System.out.println("No solution!");
@@ -201,6 +209,35 @@ public class Solver
             throw new Error(e);
         }
         return res;
+    }
+
+    public int[][] extraireResultats(String res, int taille){
+        char[] tableau = res.toCharArray();
+        int[][] results = new int[taille][taille];
+        int cptLigne = 0;
+        int cptColonne = 0;
+        boolean start = false;
+        for(Character c : tableau){
+            if(c == '[' && !start){
+                start = true;
+            }
+            if(Character.isDigit(c) && cptColonne == taille-1 && start){
+                results[cptLigne][cptColonne] = Character.getNumericValue(c);
+                cptLigne++;
+                cptColonne = 0;
+            }
+            else if(Character.isDigit(c) && start){
+                results[cptLigne][cptColonne] = Character.getNumericValue(c);
+                cptColonne++;
+            }
+        }
+        for(int i = 0; i < taille; i++){
+            for(int j = 0; j < taille; j++){
+                System.out.print(results[i][j] +",");
+            }
+            System.out.println();
+        }
+        return results;
     }
 
     static String getModelText()
