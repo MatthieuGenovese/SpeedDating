@@ -124,5 +124,9 @@ public class Personne {
         return "Nom : " + nom + " Prenom : " + prenom + " " + genre + " Age : " + Integer.toString(age) + " Age Min : " + Integer.toString(ageMin) + " Age Max : " + Integer.toString(ageMax) + " " + releaseDate.toString();
      }
 
+     public String affichageNomPrenom(){
+         return nom + " " + prenom;
+     }
+
 
 }

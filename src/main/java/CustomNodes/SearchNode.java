@@ -6,6 +6,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Parent;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import sample.Personne;
@@ -97,6 +98,22 @@ public class SearchNode extends Parent implements Observateur {
                             }
                         });
                     }
+                }
+            }
+        });
+
+        list.setCellFactory(lv -> new ListCell<Personne>(){
+            @Override
+            public void updateItem(Personne p, boolean empty){
+                super.updateItem(p,empty);
+                if(!empty){
+                    if(p.getGenre().equals("M")){
+                        setText("\u2642" + p.affichageNomPrenom());
+                    }else{
+                        setText("\u2640" + p.affichageNomPrenom());
+                    }
+                }else{
+                    setText(null);
                 }
             }
         });
