@@ -50,6 +50,7 @@ public class SearchNode extends Parent implements Observateur {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 list.getSelectionModel().clearSelection();
+                tableaux.unselectall();
                 handleSearchByKey(oldValue,newValue);
             }
         });
@@ -75,6 +76,8 @@ public class SearchNode extends Parent implements Observateur {
                                 tableaux.hommesList.getList().requestFocus();
                                 tableaux.hommesList.getList().getSelectionModel().clearAndSelect(i);
                                 tableaux.hommesList.getList().getFocusModel().focus(i);
+                                list.getSelectionModel().clearSelection();
+                                tableaux.femmesList.getList().getSelectionModel().clearSelection();
                                 i = 0;
                             }
                         });
@@ -94,6 +97,8 @@ public class SearchNode extends Parent implements Observateur {
                                 tableaux.femmesList.getList().requestFocus();
                                 tableaux.femmesList.getList().getSelectionModel().clearAndSelect(i);
                                 tableaux.femmesList.getList().getFocusModel().focus(i);
+                                list.getSelectionModel().clearSelection();
+                                tableaux.hommesList.getList().getSelectionModel().clearSelection();
                                 i = 0;
                             }
                         });
@@ -117,6 +122,7 @@ public class SearchNode extends Parent implements Observateur {
                 }
             }
         });
+
     }
 
     private void handleSearchByKey(String oldValue, String newValue) {

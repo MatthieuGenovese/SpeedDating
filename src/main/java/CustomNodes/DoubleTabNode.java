@@ -82,4 +82,9 @@ public class DoubleTabNode extends Parent implements Observateur {
         }
 
     }
+
+    public void unselectall() {
+        hommesList.getList().getSelectionModel().clearSelection();
+        femmesList.getList().getSelectionModel().clearSelection();
+    }
 }
