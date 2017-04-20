@@ -6,6 +6,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Parent;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import sample.Personne;
@@ -49,6 +50,7 @@ public class SearchNode extends Parent implements Observateur {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 list.getSelectionModel().clearSelection();
+                tableaux.unselectall();
                 handleSearchByKey(oldValue,newValue);
             }
         });
@@ -74,6 +76,8 @@ public class SearchNode extends Parent implements Observateur {
                                 tableaux.hommesList.getList().requestFocus();
                                 tableaux.hommesList.getList().getSelectionModel().clearAndSelect(i);
                                 tableaux.hommesList.getList().getFocusModel().focus(i);
+                                list.getSelectionModel().clearSelection();
+                                tableaux.femmesList.getList().getSelectionModel().clearSelection();
                                 i = 0;
                             }
                         });
@@ -93,6 +97,8 @@ public class SearchNode extends Parent implements Observateur {
                                 tableaux.femmesList.getList().requestFocus();
                                 tableaux.femmesList.getList().getSelectionModel().clearAndSelect(i);
                                 tableaux.femmesList.getList().getFocusModel().focus(i);
+                                list.getSelectionModel().clearSelection();
+                                tableaux.hommesList.getList().getSelectionModel().clearSelection();
                                 i = 0;
                             }
                         });
@@ -100,6 +106,23 @@ public class SearchNode extends Parent implements Observateur {
                 }
             }
         });
+
+        list.setCellFactory(lv -> new ListCell<Personne>(){
+            @Override
+            public void updateItem(Personne p, boolean empty){
+                super.updateItem(p,empty);
+                if(!empty){
+                    if(p.getGenre().equals("M")){
+                        setText("\u2642" + p.affichageNomPrenom());
+                    }else{
+                        setText("\u2640" + p.affichageNomPrenom());
+                    }
+                }else{
+                    setText(null);
+                }
+            }
+        });
+
     }
 
     private void handleSearchByKey(String oldValue, String newValue) {
