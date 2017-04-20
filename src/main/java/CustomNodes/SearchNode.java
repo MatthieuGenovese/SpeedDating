@@ -1,5 +1,6 @@
 package CustomNodes;
 
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -22,6 +23,7 @@ public class SearchNode extends Parent implements Observateur {
     //Partie metier
     ObservableList<Personne> entries = observableArrayList();
     ListView<Personne> list = new ListView();
+    DoubleTabNode tableaux;
 
     //Partie graphique
     TextField txt = new TextField();
@@ -38,6 +40,10 @@ public class SearchNode extends Parent implements Observateur {
         cacherlist();
     }
 
+    public void setTableaux(DoubleTabNode tableaux){
+        this.tableaux = tableaux;
+    }
+
     private void initListeners() {
         txt.textProperty().addListener(new ChangeListener<String>() {
             @Override
@@ -48,10 +54,49 @@ public class SearchNode extends Parent implements Observateur {
         });
 
         list.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Personne>() {
+            int i = 0;
             @Override
             public void changed(ObservableValue<? extends Personne> observable, Personne oldValue, Personne newValue) {
                 if(list.getSelectionModel().getSelectedItem() != null) {
                     System.out.println(list.getSelectionModel().getSelectedItem().getPrenom());
+                    if(list.getSelectionModel().getSelectedItem().getGenre().equalsIgnoreCase("m")){
+                        for(Personne p : tableaux.hommesList.getList().getItems()){
+                            if(p.equals(list.getSelectionModel().getSelectedItem())){
+                                break;
+                            }
+                            i++;
+                        }
+                        Platform.runLater(new Runnable()
+                        {
+                            @Override
+                            public void run()
+                            {
+                                tableaux.hommesList.getList().requestFocus();
+                                tableaux.hommesList.getList().getSelectionModel().select(i);
+                                tableaux.hommesList.getList().getFocusModel().focus(i);
+                                i = 0;
+                            }
+                        });
+                    }
+                    else{
+                        for(Personne p : tableaux.femmesList.getList().getItems()){
+                            if(p.equals(list.getSelectionModel().getSelectedItem())){
+                                break;
+                            }
+                            i++;
+                        }
+                        Platform.runLater(new Runnable()
+                        {
+                            @Override
+                            public void run()
+                            {
+                                tableaux.femmesList.getList().requestFocus();
+                                tableaux.femmesList.getList().getSelectionModel().select(i);
+                                tableaux.femmesList.getList().getFocusModel().focus(i);
+                                i = 0;
+                            }
+                        });
+                    }
                 }
             }
         });

@@ -75,6 +75,7 @@ public class Main extends Application {
         ongletImport.setClosable(false);
         ongletCreneaux.setContent(groupCreneaux);
         ongletCreneaux.setClosable(false);
+        searchNode.setTableaux(doubletab);
 
         //ajout du gestionnaire d'onglet au root
         root.getChildren().add(gestionnaireDonglet);
