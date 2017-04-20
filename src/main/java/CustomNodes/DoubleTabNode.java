@@ -37,6 +37,7 @@ public class DoubleTabNode extends Parent implements Observateur {
                     personneFocus.setRetard(RetardNode.getRetard());
                     hommesList.getColRetardHommes().setCellValueFactory(new PropertyValueFactory<Personne,String>("retard"));
                     RetardNode.setValidRetard(false);
+                    hommesList.getList().refresh();
                 }
                 femmesList.getList().getSelectionModel().clearSelection();
                 ArrayList<Pair<Personne, Integer>> matriceConflits = personneFocus.getPersonneSoiree().getConflits();
@@ -52,10 +53,13 @@ public class DoubleTabNode extends Parent implements Observateur {
         femmesList.getList().setOnMouseClicked(event -> {
             Personne personneFocus = femmesList.getList().getSelectionModel().getSelectedItem();
             if(personneFocus != null) {
+                System.out.println(personneFocus.toString());
                 if(RetardNode.getValidRetard()){
+                    System.out.println(RetardNode.getValidRetard());
                     personneFocus.setRetard(RetardNode.getRetard());
                     femmesList.getColRetardHommes().setCellValueFactory(new PropertyValueFactory<Personne,String>("retard"));
                     RetardNode.setValidRetard(false);
+                    femmesList.getList().refresh();
                 }
                 hommesList.getList().getSelectionModel().clearSelection();
                 ArrayList<Pair<Personne, Integer>> matriceConflits = personneFocus.getPersonneSoiree().getConflits();
@@ -65,6 +69,7 @@ public class DoubleTabNode extends Parent implements Observateur {
                     }
                 }
             }
+            System.out.println(personneFocus.getRetard());
         });
     }
 
@@ -72,14 +77,16 @@ public class DoubleTabNode extends Parent implements Observateur {
     @Override
     public void updated(Obs o) {
         System.out.println("-----------");
-        ImportNode in =(ImportNode)o;
-
-        hommesList.getList().setItems(in.getHommes());
-        femmesList.getList().setItems(in.getFemmes());
-
-        for(Personne p : hommesList.getList().getItems()){
-            System.out.println(p.toString());
+        if(o instanceof ImportNode){
+            ImportNode in =(ImportNode)o;
+            hommesList.getList().setItems(in.getHommes());
+            femmesList.getList().setItems(in.getFemmes());
         }
+        if(o instanceof RetardNode){
+            int index = hommesList.getList().getSelectionModel().getSelectedIndex();
+        }
+
+
 
     }
 
