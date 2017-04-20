@@ -38,7 +38,7 @@ public class CalculMatrice {
         }
         manager.ecrireMatriceCPLEX(matrice, nbCol);
 
-        Solver s = new Solver("src\\main\\opl\\model",nbCol,nbLigne);
+        Solver s = new Solver("src\\main\\opl\\modele3",nbCol,nbLigne);
         try {
             s.exec();
         } catch (Exception e) {
