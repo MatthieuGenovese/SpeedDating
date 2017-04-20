@@ -1,0 +1,5 @@
+ include "model2.mod";
+
+ subject to {
+ 	penalite == - ((sum(f in F) (nbRencontresF[f] < mini)) + (sum(h in H) (nbRencontresH[h] < mini)));
+}
