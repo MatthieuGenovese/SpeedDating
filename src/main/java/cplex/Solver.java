@@ -50,7 +50,6 @@ public class Solver
             int c = crenaux;
             int mini = 1;
 
-
             IloOplDataHandler handler = getDataHandler();
             handler.startElement("f");
             handler.addIntItem(f);
@@ -114,71 +113,60 @@ public class Solver
         }
     };
 
-    public void exec() throws Exception
-    {
+    public void exec() throws Exception {
         int status = 127;
         //getModelFromFile();
-        try {
-            IloOplFactory.setDebugMode(true);
-            IloOplFactory oplF = new IloOplFactory();
-            IloOplErrorHandler errHandler = oplF.createOplErrorHandler(System.out);
-            IloOplModelSource modelSource=oplF.createOplModelSourceFromString(getModelFromFile(),"test opl");
-            IloOplSettings settings = oplF.createOplSettings(errHandler);
-            IloOplModelDefinition def=oplF.createOplModelDefinition(modelSource,settings);
-            IloCP cp = oplF.createCP();
-            IloOplModel opl=oplF.createOplModel(def,cp);
-            IloOplDataSource dataSource=new MyData(oplF);
-            opl.addDataSource(dataSource);
-            opl.generate();
-            if ( cp.solve() )
-            {
-                System.out.println("OBJECTIVE: " + opl.getCP().getObjValue());
-                opl.postProcess();
-                opl.printSolution(System.out);
-                String res;
-                ByteArrayOutputStream os = new ByteArrayOutputStream();
-                opl.printSolution(os);
-                res = os.toString();
-                os.close();
-                extraireResultats(res,3);
-                status = 0;
-            } else {
-                System.out.println("No solution!");
-                status = 1;
-            }
 
-            oplF.end();
-        } catch (IloOplException ex) {
+        int iteration = 1;
+        while (iteration < 5) {
+            try {
+                IloOplFactory.setDebugMode(true);
+                IloOplFactory oplF = new IloOplFactory();
+                IloOplErrorHandler errHandler = oplF.createOplErrorHandler(System.out);
+                IloOplModelSource modelSource = oplF.createOplModelSource(chemin);
+                IloOplSettings settings = oplF.createOplSettings(errHandler);
+                IloOplModelDefinition def = oplF.createOplModelDefinition(modelSource, settings);
+                IloCP cp = oplF.createCP();
+                IloOplModel opl = oplF.createOplModel(def, cp);
+                //IloOplDataSource dataSource=new MyData(oplF);
+                String nomDonnees = "src\\main\\opl\\donnees" + Integer.toString(iteration);
+                IloOplDataSource dataSource = new IloOplDataSource(oplF.getEnv(), nomDonnees + ".dat");
+                opl.addDataSource(dataSource);
+                opl.generate();
+                if (cp.solve()) {
+                    System.out.println("OBJECTIVE: " + opl.getCP().getObjValue());
+                    opl.postProcess();
+                    opl.printSolution(System.out);
+                    String res;
+                    ByteArrayOutputStream os = new ByteArrayOutputStream();
+                    opl.printSolution(os);
+                    res = os.toString();
+                    os.close();
+                    //extraireResultats(res, 2);
+                    status = 0;
+                } else {
+                    System.out.println("No solution!");
+                    status = 1;
+                }
+
+                oplF.end();
+            }
+        catch(IloOplException ex){
             System.err.println("### OPL exception: " + ex.getMessage());
             ex.printStackTrace();
             status = 2;
-        } catch (IloException ex) {
+        } catch(IloException ex){
             System.err.println("### CONCERT exception: " + ex.getMessage());
             ex.printStackTrace();
             status = 3;
-        } catch (Exception ex) {
+        } catch(Exception ex){
             System.err.println("### UNEXPECTED UNKNOWN ERROR ...");
             ex.printStackTrace();
             status = 4;
         }
-    }
 
-    static String getModelFromFile(){
-        BufferedReader fis;
-        String ligne = "";
-            try {
-            fis =  new BufferedReader(new FileReader(new File(chemin)));
-            String c = fis.readLine();
-            while(c != null){
-                ligne += c;
-                ligne += "\n";
-                c = fis.readLine();
-            }
-            fis.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return ligne;
+            iteration++;
+    }
     }
 
     static int[][] importerMatrice() {
