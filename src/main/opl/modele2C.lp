@@ -1,4 +1,4 @@
- include "model2.mod" ;
+ include "modele2.lp" ;
 
  subject to{
 	 forall(f in F){
