@@ -69,6 +69,9 @@ public class Main extends Application {
         groupImport.getChildren().add(searchNode);
         importnode.ajouterObservateur(searchNode);
 
+        PreferenceNode preferenceNode = new PreferenceNode(100,500);
+        groupImport.getChildren().add(preferenceNode);
+
 
         //assignation du groupe "groupImport" a l'onglet Import
         ongletImport.setContent(groupImport);

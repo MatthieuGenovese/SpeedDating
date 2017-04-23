@@ -76,6 +76,8 @@ public class SearchNode extends Parent implements Observateur {
                                 tableaux.hommesList.getList().requestFocus();
                                 tableaux.hommesList.getList().getSelectionModel().clearAndSelect(i);
                                 tableaux.hommesList.getList().getFocusModel().focus(i);
+                                int focus = tableaux.hommesList.getList().getSelectionModel().getFocusedIndex();
+                                tableaux.hommesList.getList().scrollTo(focus);
                                 list.getSelectionModel().clearSelection();
                                 tableaux.femmesList.getList().getSelectionModel().clearSelection();
                                 i = 0;
@@ -97,6 +99,8 @@ public class SearchNode extends Parent implements Observateur {
                                 tableaux.femmesList.getList().requestFocus();
                                 tableaux.femmesList.getList().getSelectionModel().clearAndSelect(i);
                                 tableaux.femmesList.getList().getFocusModel().focus(i);
+                                int focus = tableaux.femmesList.getList().getSelectionModel().getFocusedIndex();
+                                tableaux.femmesList.getList().scrollTo(focus);
                                 list.getSelectionModel().clearSelection();
                                 tableaux.hommesList.getList().getSelectionModel().clearSelection();
                                 i = 0;
