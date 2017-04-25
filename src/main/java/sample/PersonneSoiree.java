@@ -29,7 +29,7 @@ public class PersonneSoiree {
 
     public Date getRetard() {return this.retard;}*/
 
-    public ArrayList<Pair<Personne, Integer>> calculerConflits(ArrayList<Personne> listeP){
+    public ArrayList<Pair<Personne, Integer>> calculerConflits(Iterable<Personne> listeP){
         //on boucle sur la liste des personnes
         for(Personne p : listeP){
             //on s'exclue soit même (cela n'a pas de sens de calculer un conflit entre this et this

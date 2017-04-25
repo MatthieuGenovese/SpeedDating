@@ -32,7 +32,7 @@ public class ImportNode extends Parent implements Obs {
     //Propriete metier
     CSVManager csvManager;
     ArrayList<Personne> listeChargee;
-    ArrayList<PersonneSoiree> listePersonneSoiree;
+    ArrayList<PersonneSoiree> listePersonneSoiree ;
     ObservableList<Personne> hommes = observableArrayList();
     CalculMatrice calculateur;
     ObservableList<Personne> femmes = observableArrayList();
@@ -53,6 +53,7 @@ public class ImportNode extends Parent implements Obs {
         initListeners();
         nbCol = 0;
         nbLigne = 0;
+        listePersonneSoiree = new ArrayList<>();
         this.getChildren().add(getBtnImport());
         this.getChildren().add(getBtnValiderImport());
         this.getChildren().add(getTextImport());
@@ -113,9 +114,7 @@ public class ImportNode extends Parent implements Obs {
     public void remplir() throws Throwable{
         int cptHomme = 0;
         int cptFemme = 0;
-        listePersonneSoiree = new ArrayList<>();
         for(Personne p : listeChargee){
-            p.getPersonneSoiree().calculerConflits(listeChargee);
             listePersonneSoiree.add(p.getPersonneSoiree());
             if(p.getGenre().equals("M")){
                 p.setId(cptHomme);
@@ -131,6 +130,12 @@ public class ImportNode extends Parent implements Obs {
                 throw new Throwable("Genre illisible ou incorrect !");
             }
             System.out.println(p.toString());
+        }
+        for(Personne p : femmes){
+            p.getPersonneSoiree().calculerConflits(hommes);
+        }
+        for(Personne p : hommes){
+            p.getPersonneSoiree().calculerConflits(femmes);
         }
         nbCol = cptFemme;
         nbLigne = cptHomme;
