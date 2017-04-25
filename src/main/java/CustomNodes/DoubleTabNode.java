@@ -42,7 +42,7 @@ public class DoubleTabNode extends Parent implements Observateur {
             if(personneFocus != null) {
                 faireRetard(personneFocus, hommesList);
 
-
+                historiqueH = personneFocus;
                 historiqueF = femmesList.getList().getSelectionModel().getSelectedItem();
                 femmesList.getList().getSelectionModel().clearSelection();
 
@@ -56,6 +56,7 @@ public class DoubleTabNode extends Parent implements Observateur {
             if(personneFocus != null) {
                 faireRetard(personneFocus,femmesList);
 
+                historiqueF = personneFocus;
                 historiqueH = hommesList.getList().getSelectionModel().getSelectedItem();
                 hommesList.getList().getSelectionModel().clearSelection();
 
@@ -90,8 +91,11 @@ public class DoubleTabNode extends Parent implements Observateur {
             System.out.println("MODIFPREFBUTTON ---");
             int value = ((PreferenceNode) o).getValue();
             System.out.println(value);
-            System.out.println(historiqueF + " " + historiqueH);
+            System.out.println(historiqueF);
+            System.out.println(historiqueH);
             if(historiqueF != null && historiqueH != null){
+
+
                 for(Pair<Personne, Integer> pp : historiqueH.getPersonneSoiree().getConflits()){
                     if(pp.getKey().getId() == historiqueF.getId()){
                         historiqueH.getPersonneSoiree().getConflits().remove(pp);
@@ -110,8 +114,6 @@ public class DoubleTabNode extends Parent implements Observateur {
                 Pair<Personne,Integer> newP2 = new Pair<Personne,Integer>(historiqueH,value);
                 historiqueF.getPersonneSoiree().getConflits().add(newP2);
 
-                faireMatriceConflit(historiqueF,hommesList);
-                faireMatriceConflit(historiqueH,femmesList);
             }
         }
 
