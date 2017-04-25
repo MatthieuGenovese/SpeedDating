@@ -16,6 +16,9 @@ public class DoubleTabNode extends Parent implements Observateur {
     TableauPersonnes hommesList;
     TableauPersonnes femmesList;
 
+    Personne historiqueH;
+    Personne historiqueF;
+
     public DoubleTabNode(String s1, double posx1, double posy1, String s2, double posx2, double posy2){
         hommesList = new TableauPersonnes(s1,posx1,posy1);
         femmesList = new TableauPersonnes(s2,posx2,posy2);
@@ -24,6 +27,10 @@ public class DoubleTabNode extends Parent implements Observateur {
 
         this.getChildren().add(hommesList);
         this.getChildren().add(femmesList);
+
+        historiqueH = null;
+        historiqueF = null;
+
         initListeners();
 
     }
@@ -33,44 +40,37 @@ public class DoubleTabNode extends Parent implements Observateur {
         hommesList.getList().setOnMouseClicked(event -> {
             Personne personneFocus = hommesList.getList().getSelectionModel().getSelectedItem();
             if(personneFocus != null) {
-                if(RetardNode.getValidRetard()){
-                    personneFocus.setRetard(RetardNode.getRetard());
-                    hommesList.getColRetardHommes().setCellValueFactory(new PropertyValueFactory<Personne,String>("retard"));
-                    RetardNode.setValidRetard(false);
-                    hommesList.getList().refresh();
-                }
+                faireRetard(personneFocus, hommesList);
+
+
+                historiqueF = femmesList.getList().getSelectionModel().getSelectedItem();
                 femmesList.getList().getSelectionModel().clearSelection();
-                ArrayList<Pair<Personne, Integer>> matriceConflits = personneFocus.getPersonneSoiree().getConflits();
-                for(Pair<Personne, Integer> couple : matriceConflits){
-                    if(couple.getValue().equals(1)){
-                        femmesList.getList().getSelectionModel().select(couple.getKey());
-                    }
-                }
+
+                faireMatriceConflit(personneFocus, femmesList);
+
             }
         });
-
         //ecouteur du clic sur le tableview des femmes
         femmesList.getList().setOnMouseClicked(event -> {
             Personne personneFocus = femmesList.getList().getSelectionModel().getSelectedItem();
             if(personneFocus != null) {
-                System.out.println(personneFocus.toString());
-                if(RetardNode.getValidRetard()){
-                    System.out.println(RetardNode.getValidRetard());
-                    personneFocus.setRetard(RetardNode.getRetard());
-                    femmesList.getColRetardHommes().setCellValueFactory(new PropertyValueFactory<Personne,String>("retard"));
-                    RetardNode.setValidRetard(false);
-                    femmesList.getList().refresh();
-                }
+                faireRetard(personneFocus,femmesList);
+
+                historiqueH = hommesList.getList().getSelectionModel().getSelectedItem();
                 hommesList.getList().getSelectionModel().clearSelection();
-                ArrayList<Pair<Personne, Integer>> matriceConflits = personneFocus.getPersonneSoiree().getConflits();
-                for (Pair<Personne, Integer> couple : matriceConflits) {
-                    if (couple.getValue().equals(1)) {
-                        hommesList.getList().getSelectionModel().select(couple.getKey());
-                    }
-                }
+
+                faireMatriceConflit(personneFocus,hommesList);
             }
-            System.out.println(personneFocus.getRetard());
         });
+    }
+
+    private void faireMatriceConflit(Personne personneFocus, TableauPersonnes tp) {
+        ArrayList<Pair<Personne, Integer>> matriceConflits = personneFocus.getPersonneSoiree().getConflits();
+        for(Pair<Personne, Integer> couple : matriceConflits){
+            if(couple.getValue() > 0){
+                tp.getList().getSelectionModel().select(couple.getKey());
+            }
+        }
     }
 
 
@@ -86,6 +86,34 @@ public class DoubleTabNode extends Parent implements Observateur {
             int index = hommesList.getList().getSelectionModel().getSelectedIndex();
         }
 
+        if(o instanceof PreferenceNode){
+            System.out.println("MODIFPREFBUTTON ---");
+            int value = ((PreferenceNode) o).getValue();
+            System.out.println(value);
+            System.out.println(historiqueF + " " + historiqueH);
+            if(historiqueF != null && historiqueH != null){
+                for(Pair<Personne, Integer> pp : historiqueH.getPersonneSoiree().getConflits()){
+                    if(pp.getKey().getId() == historiqueF.getId()){
+                        historiqueH.getPersonneSoiree().getConflits().remove(pp);
+                        break;
+                    }
+                }
+                Pair<Personne, Integer> newP = new Pair<Personne,Integer>(historiqueF,value);
+                historiqueH.getPersonneSoiree().getConflits().add(newP);
+
+                for(Pair<Personne, Integer> pp : historiqueF.getPersonneSoiree().getConflits()){
+                    if(pp.getKey().getId() == historiqueH.getId()){
+                        historiqueF.getPersonneSoiree().getConflits().remove(pp);
+                        break;
+                    }
+                }
+                Pair<Personne,Integer> newP2 = new Pair<Personne,Integer>(historiqueH,value);
+                historiqueF.getPersonneSoiree().getConflits().add(newP2);
+
+                faireMatriceConflit(historiqueF,hommesList);
+                faireMatriceConflit(historiqueH,femmesList);
+            }
+        }
 
 
     }
@@ -93,5 +121,14 @@ public class DoubleTabNode extends Parent implements Observateur {
     public void unselectall() {
         hommesList.getList().getSelectionModel().clearSelection();
         femmesList.getList().getSelectionModel().clearSelection();
+    }
+
+    public void faireRetard(Personne personnefocus, TableauPersonnes tp){
+        if(RetardNode.getValidRetard()){
+            personnefocus.setRetard(RetardNode.getRetard());
+            tp.getColRetardHommes().setCellValueFactory(new PropertyValueFactory<Personne,String>("retard"));
+            RetardNode.setValidRetard(false);
+            tp.getList().refresh();
+        }
     }
 }

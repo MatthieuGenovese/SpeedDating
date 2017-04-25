@@ -71,7 +71,7 @@ public class Main extends Application {
 
         PreferenceNode preferenceNode = new PreferenceNode(100,500);
         groupImport.getChildren().add(preferenceNode);
-
+        preferenceNode.ajouterObservateur(doubletab);
 
         //assignation du groupe "groupImport" a l'onglet Import
         ongletImport.setContent(groupImport);

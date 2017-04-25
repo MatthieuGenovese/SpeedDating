@@ -3,18 +3,24 @@ package CustomNodes;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+
+import java.util.ArrayList;
 
 /**
  * Created by Jeremy on 23/04/2017.
  */
-public class PreferenceNode extends Parent {
+public class PreferenceNode extends Parent implements Obs {
 
     double posx;
     double posy;
 
+    ArrayList<Observateur> observateurs = new ArrayList<Observateur>();
+
     //Partie metier
+    boolean modification;
 
     //Partie graphique
     Slider slider;
@@ -25,10 +31,12 @@ public class PreferenceNode extends Parent {
     Label passionement;
     Label folie;
 
+    Button modif;
+
     public PreferenceNode(double posx, double posy){
         this.posx = posx;
         this.posy = posy;
-
+        this.modification = false;
         initElementsGraphiques();
         initPositionElementsGraphiques();
         initListeners();
@@ -39,6 +47,7 @@ public class PreferenceNode extends Parent {
         this.getChildren().add(bcp);
         this.getChildren().add(passionement);
         this.getChildren().add(folie);
+        this.getChildren().add(modif);
 
     }
 
@@ -61,6 +70,8 @@ public class PreferenceNode extends Parent {
         passionement = new Label("Passionement");
         folie = new Label("A la folie");
 
+        modif = new Button("Modifier Preference");
+
     }
 
     private void initPositionElementsGraphiques(){
@@ -69,6 +80,9 @@ public class PreferenceNode extends Parent {
 
         slider.setLayoutX(posx);
         slider.setLayoutY(posy);
+
+        modif.setLayoutX(posx);
+        modif.setLayoutY(posy + 40);
 
         pdt.setLayoutX(posx);
         pdt.setLayoutY(posy- ydiff);
@@ -117,6 +131,12 @@ public class PreferenceNode extends Parent {
 
             }
         });
+
+        modif.setOnAction(actionEvent->{
+                    modification=true;
+                    notifier();
+                }
+        );
     }
 
     private void cacher(){
@@ -147,5 +167,25 @@ public class PreferenceNode extends Parent {
         folie.setVisible(true);
     }
 
+    public int getValue(){
+        return (int) slider.getValue();
+    }
 
+
+    @Override
+    public void ajouterObservateur(Observateur o) {
+        observateurs.add(o);
+    }
+
+    @Override
+    public void supprimerObservateur(Observateur o) {
+        observateurs.remove(o);
+    }
+
+    @Override
+    public void notifier() {
+        for(Observateur o : observateurs){
+            o.updated(this);
+        }
+    }
 }
