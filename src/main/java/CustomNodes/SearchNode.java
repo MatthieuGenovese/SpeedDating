@@ -37,7 +37,7 @@ public class SearchNode extends Parent implements Observateur {
 
         this.getChildren().add(txt);
         this.getChildren().add(list);
-
+        cacherTexte();
         cacherlist();
     }
 
@@ -80,6 +80,7 @@ public class SearchNode extends Parent implements Observateur {
                                 tableaux.hommesList.getList().scrollTo(focus);
                                 list.getSelectionModel().clearSelection();
                                 tableaux.femmesList.getList().getSelectionModel().clearSelection();
+                                cacherlist();
                                 i = 0;
                             }
                         });
@@ -103,6 +104,7 @@ public class SearchNode extends Parent implements Observateur {
                                 tableaux.femmesList.getList().scrollTo(focus);
                                 list.getSelectionModel().clearSelection();
                                 tableaux.hommesList.getList().getSelectionModel().clearSelection();
+                                cacherlist();
                                 i = 0;
                             }
                         });
@@ -166,6 +168,7 @@ public class SearchNode extends Parent implements Observateur {
     @Override
     public void updated(Obs o) {
         ImportNode in = (ImportNode) o;
+        afficherTexte();
         entries.setAll(in.getHommes());
         entries.addAll(in.getFemmes());
     }
@@ -178,5 +181,13 @@ public class SearchNode extends Parent implements Observateur {
     public void afficherlist(){
         list.setDisable(false);
         list.setVisible(true);
+    }
+
+    public void cacherTexte(){
+        txt.setVisible(false);
+    }
+
+    public void afficherTexte(){
+        txt.setVisible(true);
     }
 }

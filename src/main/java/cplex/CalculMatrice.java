@@ -1,6 +1,7 @@
 package cplex;
 
 import javafx.util.Pair;
+import sample.Affinite;
 import sample.CSVManager;
 import sample.Personne;
 import sample.PersonneSoiree;
@@ -26,10 +27,10 @@ public class CalculMatrice {
         ArrayList<Integer> matrice = new ArrayList<>();
         for (PersonneSoiree Ps : listePs) {
             if (Ps.getPersonne().getGenre().equalsIgnoreCase("m")) {
-                for (Pair<Personne, Integer> p : Ps.getConflits()) {
-                    for (Pair<Personne, Integer> p2 : p.getKey().getPersonneSoiree().getConflits()) {
-                        if (p2.getKey().getId() == Ps.getPersonne().getId()) {
-                            matrice.add(Math.min(p2.getValue(),p.getValue()));
+                for (Affinite p : Ps.getConflits()) {
+                    for (Affinite p2 : p.getPersonne().getPersonneSoiree().getConflits()) {
+                        if (p2.getPersonne().getId() == Ps.getPersonne().getId()) {
+                            matrice.add(Math.min(p2.getAffinite(),p.getAffinite()));
 
                         }
                     }

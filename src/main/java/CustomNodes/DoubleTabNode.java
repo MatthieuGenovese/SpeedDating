@@ -3,6 +3,7 @@ package CustomNodes;
 import javafx.scene.Parent;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Pair;
+import sample.Affinite;
 import sample.Personne;
 import sample.PersonneSoiree;
 
@@ -66,10 +67,10 @@ public class DoubleTabNode extends Parent implements Observateur {
     }
 
     private void faireMatriceConflit(Personne personneFocus, TableauPersonnes tp) {
-        ArrayList<Pair<Personne, Integer>> matriceConflits = personneFocus.getPersonneSoiree().getConflits();
-        for(Pair<Personne, Integer> couple : matriceConflits){
-            if(couple.getValue() > 0){
-                tp.getList().getSelectionModel().select(couple.getKey());
+        ArrayList<Affinite> matriceConflits = personneFocus.getPersonneSoiree().getConflits();
+        for(Affinite couple : matriceConflits){
+            if(couple.getAffinite() > 0){
+                tp.getList().getSelectionModel().select(couple.getPersonne());
             }
         }
     }
@@ -96,23 +97,19 @@ public class DoubleTabNode extends Parent implements Observateur {
             if(historiqueF != null && historiqueH != null){
 
 
-                for(Pair<Personne, Integer> pp : historiqueH.getPersonneSoiree().getConflits()){
-                    if(pp.getKey().getId() == historiqueF.getId()){
-                        historiqueH.getPersonneSoiree().getConflits().remove(pp);
+                for(Affinite pp : historiqueH.getPersonneSoiree().getConflits()){
+                    if(pp.getPersonne().getId() == historiqueF.getId()){
+                        pp.setAffinite(value);
                         break;
                     }
                 }
-                Pair<Personne, Integer> newP = new Pair<Personne,Integer>(historiqueF,value);
-                historiqueH.getPersonneSoiree().getConflits().add(newP);
 
-                for(Pair<Personne, Integer> pp : historiqueF.getPersonneSoiree().getConflits()){
-                    if(pp.getKey().getId() == historiqueH.getId()){
-                        historiqueF.getPersonneSoiree().getConflits().remove(pp);
+                for(Affinite pp : historiqueF.getPersonneSoiree().getConflits()){
+                    if(pp.getPersonne().getId() == historiqueH.getId()){
+                        pp.setAffinite(value);
                         break;
                     }
                 }
-                Pair<Personne,Integer> newP2 = new Pair<Personne,Integer>(historiqueH,value);
-                historiqueF.getPersonneSoiree().getConflits().add(newP2);
 
             }
         }
