@@ -22,7 +22,6 @@ public class DoubleTabNode extends Parent implements Observateur {
     Personne historiqueH;
     Personne historiqueF;
     CalculMatrice calculateur;
-    ArrayList<PersonneSoiree> listePersonnesSoiree;
 
     public DoubleTabNode(String s1, double posx1, double posy1, String s2, double posx2, double posy2){
         hommesList = new TableauPersonnes(s1,posx1,posy1);
@@ -75,7 +74,7 @@ public class DoubleTabNode extends Parent implements Observateur {
         });
 
         calcul.setOnAction(actionEvent->{
-            calculateur.calculerMatriceCPLEX(listePersonnesSoiree);
+            calculateur.calculerMatriceCPLEX();
         });
     }
 
@@ -95,8 +94,7 @@ public class DoubleTabNode extends Parent implements Observateur {
         if(o instanceof ImportNode){
             ImportNode in =(ImportNode)o;
             afficherCalcul();
-            calculateur = new CalculMatrice(in.getCsvManager(), in.getNbLigne(), in.getNbCol());
-            listePersonnesSoiree = in.getListePersonneSoiree();
+            calculateur = new CalculMatrice(in.getCsvManager(), in.getNbLigne(), in.getNbCol(), in.getHommes(), in.getFemmes(), in.getListePersonneSoiree());
             hommesList.getList().setItems(in.getHommes());
             femmesList.getList().setItems(in.getFemmes());
         }

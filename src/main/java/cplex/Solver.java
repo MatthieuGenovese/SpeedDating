@@ -43,8 +43,8 @@ public class Solver
 
         public void customRead()
         {
-            colonnes = 3;
-            lignes = 3;
+            //colonnes = 3;
+            //lignes = 3;
             int f = colonnes;
             int h = lignes;
             int c = crenaux;
@@ -64,11 +64,11 @@ public class Solver
             handler.addIntItem(mini);
             handler.endElement();
 
-            //int scores[][] = importerMatrice();
+            int scores[][] = importerMatrice();
 
-            int scores[][] = {{1, 5, 0},
+           /* int scores[][] = {{1, 5, 0},
                     {5, 0, 1},
-                    {0, 1, 5}};
+                    {0, 1, 5}};*/
 
             int dispoF[][] ={{1, 3},
                     {1, 3},
@@ -113,10 +113,10 @@ public class Solver
         }
     };
 
-    public void exec() throws Exception {
+    public int[][][] exec() throws Exception {
         int status = 127;
         //getModelFromFile();
-
+        int[][][] resultat = {{{-1}}};
         int iteration = 1;
         while (iteration < 5) {
             try {
@@ -128,9 +128,9 @@ public class Solver
                 IloOplModelDefinition def = oplF.createOplModelDefinition(modelSource, settings);
                 IloCP cp = oplF.createCP();
                 IloOplModel opl = oplF.createOplModel(def, cp);
-                //IloOplDataSource dataSource=new MyData(oplF);
+                IloOplDataSource dataSource=new MyData(oplF);
                 String nomDonnees = "src\\main\\opl\\donnees" + Integer.toString(iteration);
-                IloOplDataSource dataSource = new IloOplDataSource(oplF.getEnv(), nomDonnees + ".dat");
+                //IloOplDataSource dataSource = new IloOplDataSource(oplF.getEnv(), nomDonnees + ".dat");
                 opl.addDataSource(dataSource);
                 opl.generate();
                 if (cp.solve()) {
@@ -142,7 +142,7 @@ public class Solver
                     opl.printSolution(os);
                     res = os.toString();
                     os.close();
-                    //extraireResultats(res, 2);
+                    resultat = extraireResultats(res, 2);
                     status = 0;
                 } else {
                     System.out.println("No solution!");
@@ -151,22 +151,23 @@ public class Solver
 
                 oplF.end();
             }
-        catch(IloOplException ex){
-            System.err.println("### OPL exception: " + ex.getMessage());
-            ex.printStackTrace();
-            status = 2;
-        } catch(IloException ex){
+            catch(IloOplException ex){
+                System.err.println("### OPL exception: " + ex.getMessage());
+                ex.printStackTrace();
+                status = 2;
+            } catch(IloException ex){
             System.err.println("### CONCERT exception: " + ex.getMessage());
             ex.printStackTrace();
             status = 3;
-        } catch(Exception ex){
+            } catch(Exception ex){
             System.err.println("### UNEXPECTED UNKNOWN ERROR ...");
             ex.printStackTrace();
             status = 4;
+            }
+        iteration++;
         }
 
-            iteration++;
-    }
+        return resultat;
     }
 
     static int[][] importerMatrice() {
