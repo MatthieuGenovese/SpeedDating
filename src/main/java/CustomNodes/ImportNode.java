@@ -34,7 +34,6 @@ public class ImportNode extends Parent implements Obs {
     ArrayList<Personne> listeChargee;
     ArrayList<PersonneSoiree> listePersonneSoiree ;
     ObservableList<Personne> hommes = observableArrayList();
-    CalculMatrice calculateur;
     ObservableList<Personne> femmes = observableArrayList();
 
     //Propriete graphique
@@ -104,7 +103,6 @@ public class ImportNode extends Parent implements Obs {
                 listeChargee = new ArrayList<>();
                 listeChargee = csvManager.getPersonnesFromCSV();
                 remplir();
-                calculateur.calculerMatriceCPLEX(listePersonneSoiree);
             } catch (Throwable e) {
                 e.printStackTrace();
             }
@@ -139,11 +137,16 @@ public class ImportNode extends Parent implements Obs {
         }
         nbCol = cptFemme;
         nbLigne = cptHomme;
-        calculateur = new CalculMatrice(csvManager, nbLigne, nbCol);
         notifier();
     }
 
+    public int getNbCol() {
+        return nbCol;
+    }
 
+    public int getNbLigne() {
+        return nbLigne;
+    }
 
     public double getPosx() {
         return posx;

@@ -38,7 +38,6 @@ public class CalculMatrice {
             }
         }
         manager.ecrireMatriceCPLEX(matrice, nbCol);
-
         Solver s = new Solver("src\\main\\opl\\modele2P.lp",nbCol,nbLigne);
         try {
             s.exec();

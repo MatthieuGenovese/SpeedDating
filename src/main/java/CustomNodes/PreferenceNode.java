@@ -40,7 +40,6 @@ public class PreferenceNode extends Parent implements Obs {
         initElementsGraphiques();
         initPositionElementsGraphiques();
         initListeners();
-
         this.getChildren().add(slider);
         this.getChildren().add(pdt);
         this.getChildren().add(unpeu);
@@ -166,7 +165,6 @@ public class PreferenceNode extends Parent implements Obs {
     private void afficherL4(){
         folie.setVisible(true);
     }
-
     public int getValue(){
         return (int) slider.getValue();
     }

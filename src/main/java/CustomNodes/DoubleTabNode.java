@@ -1,6 +1,8 @@
 package CustomNodes;
 
+import cplex.CalculMatrice;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Pair;
 import sample.Affinite;
@@ -16,18 +18,25 @@ public class DoubleTabNode extends Parent implements Observateur {
 
     TableauPersonnes hommesList;
     TableauPersonnes femmesList;
-
+    Button calcul;
     Personne historiqueH;
     Personne historiqueF;
+    CalculMatrice calculateur;
+    ArrayList<PersonneSoiree> listePersonnesSoiree;
 
     public DoubleTabNode(String s1, double posx1, double posy1, String s2, double posx2, double posy2){
         hommesList = new TableauPersonnes(s1,posx1,posy1);
         femmesList = new TableauPersonnes(s2,posx2,posy2);
+        calcul = new Button("Calcul des crénaux");
 
+        calcul.setLayoutX(240);
+        calcul.setLayoutY(540);
         femmesList.afficheFemme();
 
         this.getChildren().add(hommesList);
         this.getChildren().add(femmesList);
+        this.getChildren().add(calcul);
+        cacherCalcul();
 
         historiqueH = null;
         historiqueF = null;
@@ -64,6 +73,10 @@ public class DoubleTabNode extends Parent implements Observateur {
                 faireMatriceConflit(personneFocus,hommesList);
             }
         });
+
+        calcul.setOnAction(actionEvent->{
+            calculateur.calculerMatriceCPLEX(listePersonnesSoiree);
+        });
     }
 
     private void faireMatriceConflit(Personne personneFocus, TableauPersonnes tp) {
@@ -81,6 +94,9 @@ public class DoubleTabNode extends Parent implements Observateur {
         System.out.println("-----------");
         if(o instanceof ImportNode){
             ImportNode in =(ImportNode)o;
+            afficherCalcul();
+            calculateur = new CalculMatrice(in.getCsvManager(), in.getNbLigne(), in.getNbCol());
+            listePersonnesSoiree = in.getListePersonneSoiree();
             hommesList.getList().setItems(in.getHommes());
             femmesList.getList().setItems(in.getFemmes());
         }
@@ -115,6 +131,14 @@ public class DoubleTabNode extends Parent implements Observateur {
         }
 
 
+    }
+
+    private void afficherCalcul(){
+        calcul.setVisible(true);
+    }
+
+    private void cacherCalcul(){
+        calcul.setVisible(false);
     }
 
     public void unselectall() {
