@@ -1,12 +1,10 @@
 package cplex;
 
+import conflits.Affinite;
 import javafx.collections.ObservableList;
-import javafx.util.Pair;
 import sample.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
 
 /**
  * Created by Matthieu on 08/04/2017.
@@ -17,7 +15,7 @@ public class CalculMatrice {
     private int[][][] matriceResultat;
     private int crenaux = 3;
     private ObservableList<PersonneSoiree> hommeListe, femmeListe;
-
+    private GestionnaireCrenaux gestionnaireCrenaux = new GestionnaireCrenaux(3);
     public void setHommeListe(ObservableList<PersonneSoiree> hommeListe) {
         this.hommeListe = hommeListe;
     }
@@ -39,11 +37,8 @@ public class CalculMatrice {
         ArrayList<Integer> matrice = new ArrayList<>();
         for (PersonneSoiree homme : hommeListe) {
             for (Affinite p : homme.getConflits()) {
-                System.out.println("Affinité : " + p.toString());
                 for (Affinite p2 : p.getPersonneSoiree().getConflits()) {
-                    System.out.println("Affinité : " + p2.toString());
                     if (p2.getPersonneSoiree().getId() == homme.getId()) {
-                        System.out.print(Math.min(p2.getAffinite(),p.getAffinite()) + " ,");
                         matrice.add(Math.min(p2.getAffinite(),p.getAffinite()));
                     }
                 }
@@ -65,21 +60,17 @@ public class CalculMatrice {
     }
 
     public void organiserCrenaux(){
-        ArrayList<Crenau> listeCrenaux = new ArrayList<>();
-        for(int l = 0; l < crenaux; l ++){
-            listeCrenaux.add(new Crenau());
-        }
         for(int homme = 0; homme < nbLigne; homme++){
             for(int femme = 0; femme < nbCol; femme++){
                 for(int k = 0; k < crenaux; k++) {
                     if(matriceResultat[homme][femme][k] == 1 ) {
-                        listeCrenaux.get(k).ajouterRencontre(new Rencontre(hommeListe.get(homme), femmeListe.get(femme)));
+                        gestionnaireCrenaux.ajouterRencontre(new Rencontre(hommeListe.get(homme), femmeListe.get(femme), k),k);
                     }
                 }
             }
         }
-        for(int cpt = 0; cpt < listeCrenaux.size(); cpt++){
-            System.out.println("Crenaux numero : " + cpt + listeCrenaux.get(cpt));
+        for(int cpt = 0; cpt < gestionnaireCrenaux.getNbCrenaux(); cpt++){
+            System.out.println("Crenaux numero : " + cpt + gestionnaireCrenaux.getCrenau(cpt));
         }
     }
 }

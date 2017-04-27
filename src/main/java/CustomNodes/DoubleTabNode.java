@@ -4,9 +4,7 @@ import cplex.CalculMatrice;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.util.Pair;
-import sample.Affinite;
-import sample.Personne;
+import conflits.Affinite;
 import sample.PersonneSoiree;
 
 import java.util.ArrayList;

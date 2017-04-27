@@ -1,10 +1,8 @@
 package sample;
 
-import javafx.util.Pair;
+import conflits.Affinite;
 
 import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Date;
 
 /**
  * Created by Matthieu on 08/04/2017.
@@ -12,18 +10,29 @@ import java.util.Date;
 public class PersonneSoiree extends Personne{
     //private Date retard;
     private ArrayList<Affinite> listeConflits;
+    private int id;
 
-    public PersonneSoiree (Personne personne){
+
+    public PersonneSoiree (Personne personne, int id){
         super(personne.getIdSite(), personne.getNom(), personne.getPrenom(), personne.getGenre(), personne.getAge(), personne.getAgeMin(), personne.getAgeMax(), personne.getReleaseDate());
         listeConflits = new ArrayList<>();
-        super.setId(personne.getId());
+
+        this.id = id;
         //retard = new Date();
     }
-
 
     /*public void setRetard(Date r) {this.retard = r;}
 
     public Date getRetard() {return this.retard;}*/
+
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public ArrayList<Affinite> calculerConflits(Iterable<PersonneSoiree> listeP){
         //on boucle sur la liste des personnes

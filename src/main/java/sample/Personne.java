@@ -16,7 +16,6 @@ public class Personne {
     private String nom;
     private String prenom;
     private int idSite;
-    private int id = 0;
     private int age;
     private int ageMin;
     private int ageMax;
@@ -37,8 +36,8 @@ public class Personne {
         this.retard = 0;
     }
 
-    public void initPersonneSoiree(){
-        this.pSoiree = new PersonneSoiree(this);
+    public void initPersonneSoiree(int id){
+        this.pSoiree = new PersonneSoiree(this,id);
     }
 
     public void setNom(String nom){
@@ -59,14 +58,6 @@ public class Personne {
 
     public PersonneSoiree getPersonneSoiree(){
         return pSoiree;
-    }
-
-    public void setId(int id){
-        this.id = id;
-    }
-
-    public int getId(){
-        return id;
     }
 
     public void setIdSite(int idSite){

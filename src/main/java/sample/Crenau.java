@@ -6,17 +6,29 @@ import java.util.ArrayList;
  * Created by Matthieu on 26/04/2017.
  */
 public class Crenau {
-    private ArrayList<Rencontre> listeRencontres;
+    private ArrayList<IMeeting> listeRencontres;
+    private int nbRencontres;
+    private int numeroCrenau;
 
-    public Crenau(){
+    public int getNumeroCrenau() {
+        return numeroCrenau;
+    }
+
+    public Crenau(int numeroCrenau){
+        this.numeroCrenau = numeroCrenau;
         listeRencontres = new ArrayList<>();
     }
 
-    public void ajouterRencontre(Rencontre r){
+    public void ajouterRencontre(IMeeting r){
         listeRencontres.add(r);
+        nbRencontres++;
     }
 
-    public Rencontre getRencontre(int i){
+    public int getNbRencontres(){
+        return nbRencontres;
+    }
+
+    public IMeeting getRencontre(int i){
         return listeRencontres.get(i);
     }
 

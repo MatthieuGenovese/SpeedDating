@@ -3,9 +3,9 @@ package sample;
 /**
  * Created by Matthieu on 26/04/2017.
  */
-public class Rencontre {
+public class Rencontre implements IMeeting{
     private PersonneSoiree homme,femme;
-
+    private int numeroCrenau;
     public PersonneSoiree getHomme() {
         return homme;
     }
@@ -14,7 +14,7 @@ public class Rencontre {
         this.homme = homme;
     }
 
-    public Personne getFemme() {
+    public PersonneSoiree getFemme() {
         return femme;
     }
 
@@ -22,9 +22,14 @@ public class Rencontre {
         this.femme = femme;
     }
 
-    public Rencontre(PersonneSoiree homme, PersonneSoiree femme){
+    public int getCrenau(){
+        return numeroCrenau;
+    }
+
+    public Rencontre(PersonneSoiree homme, PersonneSoiree femme, int numeroCrenau){
         this.homme = homme;
         this.femme = femme;
+        this.numeroCrenau = numeroCrenau;
 
     }
 
