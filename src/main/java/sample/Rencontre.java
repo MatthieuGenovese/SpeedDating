@@ -4,13 +4,13 @@ package sample;
  * Created by Matthieu on 26/04/2017.
  */
 public class Rencontre {
-    private Personne homme,femme;
+    private PersonneSoiree homme,femme;
 
-    public Personne getHomme() {
+    public PersonneSoiree getHomme() {
         return homme;
     }
 
-    public void setHomme(Personne homme) {
+    public void setHomme(PersonneSoiree homme) {
         this.homme = homme;
     }
 
@@ -18,11 +18,11 @@ public class Rencontre {
         return femme;
     }
 
-    public void setFemme(Personne femme) {
+    public void setFemme(PersonneSoiree femme) {
         this.femme = femme;
     }
 
-    public Rencontre(Personne homme, Personne femme){
+    public Rencontre(PersonneSoiree homme, PersonneSoiree femme){
         this.homme = homme;
         this.femme = femme;
 

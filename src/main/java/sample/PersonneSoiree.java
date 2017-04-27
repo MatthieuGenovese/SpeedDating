@@ -16,6 +16,7 @@ public class PersonneSoiree extends Personne{
     public PersonneSoiree (Personne personne){
         super(personne.getIdSite(), personne.getNom(), personne.getPrenom(), personne.getGenre(), personne.getAge(), personne.getAgeMin(), personne.getAgeMax(), personne.getReleaseDate());
         listeConflits = new ArrayList<>();
+        super.setId(personne.getId());
         //retard = new Date();
     }
 
@@ -24,9 +25,9 @@ public class PersonneSoiree extends Personne{
 
     public Date getRetard() {return this.retard;}*/
 
-    public ArrayList<Affinite> calculerConflits(Iterable<Personne> listeP){
+    public ArrayList<Affinite> calculerConflits(Iterable<PersonneSoiree> listeP){
         //on boucle sur la liste des personnes
-        for(Personne p : listeP){
+        for(PersonneSoiree p : listeP){
             //on s'exclue soit même (cela n'a pas de sens de calculer un conflit entre this et this
             if(p.getIdSite() != this.getIdSite()){
                 //si le critère d'age correspont, on ajoute la pair (p, 1)

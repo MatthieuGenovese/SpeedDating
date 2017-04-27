@@ -16,27 +16,35 @@ public class CalculMatrice {
     private CSVManager manager;
     private int[][][] matriceResultat;
     private int crenaux = 3;
-    private ArrayList<PersonneSoiree> listePersonnesSoiree;
-    private ObservableList<Personne> hommeListe, femmeListe;
+    private ObservableList<PersonneSoiree> hommeListe, femmeListe;
 
-    public CalculMatrice(CSVManager manager, int nbLigne, int nbCol, ObservableList<Personne> hommes, ObservableList<Personne> femmes, ArrayList<PersonneSoiree> listePersonnesSoiree) {
+    public void setHommeListe(ObservableList<PersonneSoiree> hommeListe) {
+        this.hommeListe = hommeListe;
+    }
+
+    public void setFemmeListe(ObservableList<PersonneSoiree> femmeListe) {
+        this.femmeListe = femmeListe;
+    }
+
+    public CalculMatrice(CSVManager manager, int nbLigne, int nbCol, ObservableList<PersonneSoiree> hommes, ObservableList<PersonneSoiree> femmes) {
         this.nbCol = nbCol;
         this.nbLigne = nbLigne;
         this.manager = manager;
-        this.listePersonnesSoiree = listePersonnesSoiree;
+
         this.hommeListe = hommes;
         this.femmeListe = femmes;
     }
 
     public void calculerMatriceCPLEX() {
         ArrayList<Integer> matrice = new ArrayList<>();
-        for (PersonneSoiree Ps : listePersonnesSoiree) {
-            if (Ps.getGenre().equalsIgnoreCase("m")) {
-                for (Affinite p : Ps.getConflits()) {
-                    for (Affinite p2 : p.getPersonne().getPersonneSoiree().getConflits()) {
-                        if (p2.getPersonne().getId() == Ps.getId()) {
-                            matrice.add(Math.min(p2.getAffinite(),p.getAffinite()));
-                        }
+        for (PersonneSoiree homme : hommeListe) {
+            for (Affinite p : homme.getConflits()) {
+                System.out.println("Affinité : " + p.toString());
+                for (Affinite p2 : p.getPersonneSoiree().getConflits()) {
+                    System.out.println("Affinité : " + p2.toString());
+                    if (p2.getPersonneSoiree().getId() == homme.getId()) {
+                        System.out.print(Math.min(p2.getAffinite(),p.getAffinite()) + " ,");
+                        matrice.add(Math.min(p2.getAffinite(),p.getAffinite()));
                     }
                 }
             }

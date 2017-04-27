@@ -20,7 +20,6 @@ public class CSVManager {
 
     public CSVManager (String filePath) throws Exception{
         reader = new CSVReader(new FileReader(filePath),'\t');
-        writer = new CSVWriter(new FileWriter("matriceConflits.csv"), ',');
     }
 
 
@@ -49,28 +48,29 @@ public class CSVManager {
     }
 
     public void ecrireMatriceCPLEX(ArrayList<Integer> conflits, int nbCol){
-        List<String> entries = new ArrayList<>();
-        List<String[]> listeSArray = new ArrayList<String[]>() {
-        };
-        int cpt = 0;
-        for(int j = 0; j <= conflits.size(); j++) {
-            if(cpt < nbCol){
-                entries.add(Integer.toString(conflits.get(j)));
-            }
-            else{
-                String[] s = new String[cpt];
-                s = entries.toArray(s);
-                listeSArray.add(s);
-                entries = new ArrayList<>();
-                if(j != conflits.size()) {
+
+        try {
+            writer = new CSVWriter(new FileWriter("matriceConflits.csv"), ',');
+            List<String> entries = new ArrayList<>();
+            List<String[]> listeSArray = new ArrayList<String[]>();
+            int cpt = 0;
+            for(int j = 0; j <= conflits.size(); j++) {
+                if(cpt < nbCol){
                     entries.add(Integer.toString(conflits.get(j)));
                 }
-                cpt = 0;
+                else{
+                    String[] s = new String[cpt];
+                    s = entries.toArray(s);
+                    listeSArray.add(s);
+                    entries = new ArrayList<>();
+                    if(j != conflits.size()) {
+                        entries.add(Integer.toString(conflits.get(j)));
+                    }
+                    cpt = 0;
+                }
+                cpt++;
             }
-            cpt++;
-        }
-        writer.writeAll(listeSArray, false);
-        try {
+            writer.writeAll(listeSArray, false);
             writer.close();
         } catch (IOException e) {
             e.printStackTrace();

@@ -19,8 +19,8 @@ public class DoubleTabNode extends Parent implements Observateur {
     TableauPersonnes hommesList;
     TableauPersonnes femmesList;
     Button calcul;
-    Personne historiqueH;
-    Personne historiqueF;
+    PersonneSoiree historiqueH;
+    PersonneSoiree historiqueF;
     CalculMatrice calculateur;
 
     public DoubleTabNode(String s1, double posx1, double posy1, String s2, double posx2, double posy2){
@@ -47,7 +47,7 @@ public class DoubleTabNode extends Parent implements Observateur {
     public void initListeners(){
         //ecouteur du clic sur le tableview d'hommes
         hommesList.getList().setOnMouseClicked(event -> {
-            Personne personneFocus = hommesList.getList().getSelectionModel().getSelectedItem();
+            PersonneSoiree personneFocus = hommesList.getList().getSelectionModel().getSelectedItem();
             if(personneFocus != null) {
                 faireRetard(personneFocus, hommesList);
 
@@ -61,7 +61,7 @@ public class DoubleTabNode extends Parent implements Observateur {
         });
         //ecouteur du clic sur le tableview des femmes
         femmesList.getList().setOnMouseClicked(event -> {
-            Personne personneFocus = femmesList.getList().getSelectionModel().getSelectedItem();
+            PersonneSoiree personneFocus = femmesList.getList().getSelectionModel().getSelectedItem();
             if(personneFocus != null) {
                 faireRetard(personneFocus,femmesList);
 
@@ -78,11 +78,11 @@ public class DoubleTabNode extends Parent implements Observateur {
         });
     }
 
-    private void faireMatriceConflit(Personne personneFocus, TableauPersonnes tp) {
-        ArrayList<Affinite> matriceConflits = personneFocus.getPersonneSoiree().getConflits();
+    private void faireMatriceConflit(PersonneSoiree personneFocus, TableauPersonnes tp) {
+        ArrayList<Affinite> matriceConflits = personneFocus.getConflits();
         for(Affinite couple : matriceConflits){
             if(couple.getAffinite() > 0){
-                tp.getList().getSelectionModel().select(couple.getPersonne());
+                tp.getList().getSelectionModel().select(couple.getPersonneSoiree());
             }
         }
     }
@@ -94,7 +94,7 @@ public class DoubleTabNode extends Parent implements Observateur {
         if(o instanceof ImportNode){
             ImportNode in =(ImportNode)o;
             afficherCalcul();
-            calculateur = new CalculMatrice(in.getCsvManager(), in.getNbLigne(), in.getNbCol(), in.getHommes(), in.getFemmes(), in.getListePersonneSoiree());
+            calculateur = new CalculMatrice(in.getCsvManager(), in.getNbLigne(), in.getNbCol(), in.getHommes(), in.getFemmes());
             hommesList.getList().setItems(in.getHommes());
             femmesList.getList().setItems(in.getFemmes());
         }
@@ -111,20 +111,21 @@ public class DoubleTabNode extends Parent implements Observateur {
             if(historiqueF != null && historiqueH != null){
 
 
-                for(Affinite pp : historiqueH.getPersonneSoiree().getConflits()){
-                    if(pp.getPersonne().getId() == historiqueF.getId()){
+                for(Affinite pp : historiqueH.getConflits()){
+                    if(pp.getPersonneSoiree().getId() == historiqueF.getId()){
                         pp.setAffinite(value);
                         break;
                     }
                 }
 
-                for(Affinite pp : historiqueF.getPersonneSoiree().getConflits()){
-                    if(pp.getPersonne().getId() == historiqueH.getId()){
+                for(Affinite pp : historiqueF.getConflits()){
+                    if(pp.getPersonneSoiree().getId() == historiqueH.getId()){
                         pp.setAffinite(value);
                         break;
                     }
                 }
-
+                calculateur.setFemmeListe(femmesList.getList().getItems());
+                calculateur.setHommeListe(hommesList.getList().getItems());
             }
         }
 
@@ -144,10 +145,10 @@ public class DoubleTabNode extends Parent implements Observateur {
         femmesList.getList().getSelectionModel().clearSelection();
     }
 
-    public void faireRetard(Personne personnefocus, TableauPersonnes tp){
+    public void faireRetard(PersonneSoiree personnefocus, TableauPersonnes tp){
         if(RetardNode.getValidRetard()){
             personnefocus.setRetard(RetardNode.getRetard());
-            tp.getColRetardHommes().setCellValueFactory(new PropertyValueFactory<Personne,String>("retard"));
+            tp.getColRetardHommes().setCellValueFactory(new PropertyValueFactory<PersonneSoiree,String>("retard"));
             RetardNode.setValidRetard(false);
             tp.getList().refresh();
         }

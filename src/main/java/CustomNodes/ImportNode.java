@@ -33,8 +33,8 @@ public class ImportNode extends Parent implements Obs {
     CSVManager csvManager;
     ArrayList<Personne> listeChargee;
     ArrayList<PersonneSoiree> listePersonneSoiree ;
-    ObservableList<Personne> hommes = observableArrayList();
-    ObservableList<Personne> femmes = observableArrayList();
+    ObservableList<PersonneSoiree> hommes = observableArrayList();
+    ObservableList<PersonneSoiree> femmes = observableArrayList();
 
     //Propriete graphique
     Text textImport;
@@ -113,16 +113,18 @@ public class ImportNode extends Parent implements Obs {
         int cptHomme = 0;
         int cptFemme = 0;
         for(Personne p : listeChargee){
-            p.initPersonneSoiree();
-            listePersonneSoiree.add(p.getPersonneSoiree());
             if(p.getGenre().equals("M")){
                 p.setId(cptHomme);
-                hommes.add(p);
+                p.initPersonneSoiree();
+                listePersonneSoiree.add(p.getPersonneSoiree());
+                hommes.add(p.getPersonneSoiree());
                 cptHomme++;
             }
             else if(p.getGenre().equals("F")) {
                 p.setId(cptFemme);
-                femmes.add(p);
+                p.initPersonneSoiree();
+                listePersonneSoiree.add(p.getPersonneSoiree());
+                femmes.add(p.getPersonneSoiree());
                 cptFemme++;
             }
             else {
@@ -130,11 +132,11 @@ public class ImportNode extends Parent implements Obs {
             }
             System.out.println(p.toString());
         }
-        for(Personne p : femmes){
-            p.getPersonneSoiree().calculerConflits(hommes);
+        for(PersonneSoiree p : femmes){
+            p.calculerConflits(hommes);
         }
-        for(Personne p : hommes){
-            p.getPersonneSoiree().calculerConflits(femmes);
+        for(PersonneSoiree p : hommes){
+            p.calculerConflits(femmes);
         }
         nbCol = cptFemme;
         nbLigne = cptHomme;
@@ -217,11 +219,11 @@ public class ImportNode extends Parent implements Obs {
         this.btnValiderImport = btnValiderImport;
     }
 
-    public ObservableList<Personne> getHommes() {
+    public ObservableList<PersonneSoiree> getHommes() {
         return hommes;
     }
 
-    public ObservableList<Personne> getFemmes() {
+    public ObservableList<PersonneSoiree> getFemmes() {
         return femmes;
     }
 

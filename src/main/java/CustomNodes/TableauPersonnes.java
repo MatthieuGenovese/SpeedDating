@@ -28,7 +28,7 @@ public class TableauPersonnes extends Parent {
     Text textHommes;
 
     //Je crée mes talesviews
-    TableView<Personne> list;
+    TableView<PersonneSoiree> list;
     //Je crée mes colonnes
     TableColumn colNomsHommes;
     TableColumn colPrenomsHommes;
@@ -104,7 +104,7 @@ public class TableauPersonnes extends Parent {
         return textHommes;
     }
 
-    public TableView<Personne> getList() {
+    public TableView<PersonneSoiree> getList() {
         return list;
     }
 

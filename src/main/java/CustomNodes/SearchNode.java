@@ -10,6 +10,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import sample.Personne;
+import sample.PersonneSoiree;
 
 import static javafx.collections.FXCollections.observableArrayList;
 
@@ -22,8 +23,8 @@ public class SearchNode extends Parent implements Observateur {
     double posy;
 
     //Partie metier
-    ObservableList<Personne> entries = observableArrayList();
-    ListView<Personne> list = new ListView();
+    ObservableList<PersonneSoiree> entries = observableArrayList();
+    ListView<PersonneSoiree> list = new ListView();
     DoubleTabNode tableaux;
 
     //Partie graphique
@@ -55,14 +56,14 @@ public class SearchNode extends Parent implements Observateur {
             }
         });
 
-        list.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Personne>() {
+        list.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<PersonneSoiree>() {
             int i = 0;
             @Override
-            public void changed(ObservableValue<? extends Personne> observable, Personne oldValue, Personne newValue) {
+            public void changed(ObservableValue<? extends PersonneSoiree> observable, PersonneSoiree oldValue, PersonneSoiree newValue) {
                 if(list.getSelectionModel().getSelectedItem() != null) {
                     System.out.println(list.getSelectionModel().getSelectedItem().getPrenom());
                     if(list.getSelectionModel().getSelectedItem().getGenre().equalsIgnoreCase("m")){
-                        for(Personne p : tableaux.hommesList.getList().getItems()){
+                        for(PersonneSoiree p : tableaux.hommesList.getList().getItems()){
                             if(p.equals(list.getSelectionModel().getSelectedItem())){
                                 break;
                             }
@@ -86,7 +87,7 @@ public class SearchNode extends Parent implements Observateur {
                         });
                     }
                     else{
-                        for(Personne p : tableaux.femmesList.getList().getItems()){
+                        for(PersonneSoiree p : tableaux.femmesList.getList().getItems()){
                             if(p.equals(list.getSelectionModel().getSelectedItem())){
                                 break;
                             }
@@ -113,9 +114,9 @@ public class SearchNode extends Parent implements Observateur {
             }
         });
 
-        list.setCellFactory(lv -> new ListCell<Personne>(){
+        list.setCellFactory(lv -> new ListCell<PersonneSoiree>(){
             @Override
-            public void updateItem(Personne p, boolean empty){
+            public void updateItem(PersonneSoiree p, boolean empty){
                 super.updateItem(p,empty);
                 if(!empty){
                     if(p.getGenre().equals("M")){
@@ -144,8 +145,8 @@ public class SearchNode extends Parent implements Observateur {
 
             newValue = newValue.toLowerCase();
 
-            ObservableList<Personne> subentries = observableArrayList();
-            for (Personne p : list.getItems()) {
+            ObservableList<PersonneSoiree> subentries = observableArrayList();
+            for (PersonneSoiree p : list.getItems()) {
                 String nom = p.getNom();
                 String prenom = p.getPrenom();
                 if (nom.toLowerCase().contains(newValue) || prenom.toLowerCase().contains(newValue))

@@ -137,6 +137,7 @@ public class Solver
                     System.out.println("OBJECTIVE: " + opl.getCP().getObjValue());
                     opl.postProcess();
                     opl.printSolution(System.out);
+                    System.out.println("FOO" + opl.getElement("rencontres").asIntMap().toString());
                     String res;
                     ByteArrayOutputStream os = new ByteArrayOutputStream();
                     opl.printSolution(os);
