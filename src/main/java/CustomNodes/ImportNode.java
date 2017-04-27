@@ -113,6 +113,7 @@ public class ImportNode extends Parent implements Obs {
         int cptHomme = 0;
         int cptFemme = 0;
         for(Personne p : listeChargee){
+            p.initPersonneSoiree();
             listePersonneSoiree.add(p.getPersonneSoiree());
             if(p.getGenre().equals("M")){
                 p.setId(cptHomme);

@@ -34,8 +34,11 @@ public class Personne {
         this.ageMax = ageMax;
         this.releaseDate = releaseDate;
         this.idSite = idSite;
-        this.pSoiree = new PersonneSoiree(this);
         this.retard = 0;
+    }
+
+    public void initPersonneSoiree(){
+        this.pSoiree = new PersonneSoiree(this);
     }
 
     public void setNom(String nom){

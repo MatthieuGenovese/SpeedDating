@@ -29,15 +29,13 @@ public class CalculMatrice {
     }
 
     public void calculerMatriceCPLEX() {
-        int[][][] resultat;
         ArrayList<Integer> matrice = new ArrayList<>();
         for (PersonneSoiree Ps : listePersonnesSoiree) {
-            if (Ps.getPersonne().getGenre().equalsIgnoreCase("m")) {
+            if (Ps.getGenre().equalsIgnoreCase("m")) {
                 for (Affinite p : Ps.getConflits()) {
                     for (Affinite p2 : p.getPersonne().getPersonneSoiree().getConflits()) {
-                        if (p2.getPersonne().getId() == Ps.getPersonne().getId()) {
+                        if (p2.getPersonne().getId() == Ps.getId()) {
                             matrice.add(Math.min(p2.getAffinite(),p.getAffinite()));
-
                         }
                     }
                 }
@@ -47,7 +45,12 @@ public class CalculMatrice {
         Solver s = new Solver("src\\main\\opl\\modele2P.lp",nbCol,nbLigne);
         try {
             matriceResultat = s.exec();
-            organiserCrenaux();
+            if(matriceResultat[0][0][0] == -1){
+                System.out.println("le cplex n'a pas trouvé de solution !");
+            }
+            else {
+                organiserCrenaux();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

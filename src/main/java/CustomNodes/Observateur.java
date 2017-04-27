@@ -8,9 +8,3 @@ public interface Observateur {
     public void updated(Obs o);
 }
 
-/*
-
-A PAS OUBLIER SINON TABLEVIEW MARCHENT PAS
-
-
- */

@@ -120,7 +120,7 @@ public class Solver
         int iteration = 1;
         while (iteration < 5) {
             try {
-                IloOplFactory.setDebugMode(true);
+                IloOplFactory.setDebugMode(false);
                 IloOplFactory oplF = new IloOplFactory();
                 IloOplErrorHandler errHandler = oplF.createOplErrorHandler(System.out);
                 IloOplModelSource modelSource = oplF.createOplModelSource(chemin);
