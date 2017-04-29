@@ -1,6 +1,7 @@
 package cplex;
 
 import conflits.Affinite;
+import conflits.ICompatibility;
 import javafx.collections.ObservableList;
 import sample.*;
 
@@ -14,17 +15,17 @@ public class CalculMatrice {
     private CSVManager manager;
     private int[][][] matriceResultat;
     private int crenaux = 3;
-    private ObservableList<PersonneSoiree> hommeListe, femmeListe;
+    private ObservableList<IParticipants> hommeListe, femmeListe;
     private GestionnaireCrenaux gestionnaireCrenaux = new GestionnaireCrenaux(3);
-    public void setHommeListe(ObservableList<PersonneSoiree> hommeListe) {
+    public void setHommeListe(ObservableList<IParticipants> hommeListe) {
         this.hommeListe = hommeListe;
     }
 
-    public void setFemmeListe(ObservableList<PersonneSoiree> femmeListe) {
+    public void setFemmeListe(ObservableList<IParticipants> femmeListe) {
         this.femmeListe = femmeListe;
     }
 
-    public CalculMatrice(CSVManager manager, int nbLigne, int nbCol, ObservableList<PersonneSoiree> hommes, ObservableList<PersonneSoiree> femmes) {
+    public CalculMatrice(CSVManager manager, int nbLigne, int nbCol, ObservableList<IParticipants> hommes, ObservableList<IParticipants> femmes) {
         this.nbCol = nbCol;
         this.nbLigne = nbLigne;
         this.manager = manager;
@@ -35,9 +36,9 @@ public class CalculMatrice {
 
     public void calculerMatriceCPLEX() {
         ArrayList<Integer> matrice = new ArrayList<>();
-        for (PersonneSoiree homme : hommeListe) {
-            for (Affinite p : homme.getConflits()) {
-                for (Affinite p2 : p.getPersonneSoiree().getConflits()) {
+        for (IParticipants homme : hommeListe) {
+            for (ICompatibility p : homme.getConflits()) {
+                for (ICompatibility p2 : p.getPersonneSoiree().getConflits()) {
                     if (p2.getPersonneSoiree().getId() == homme.getId()) {
                         matrice.add(Math.min(p2.getAffinite(),p.getAffinite()));
                     }

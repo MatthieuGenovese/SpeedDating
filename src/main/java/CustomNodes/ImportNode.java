@@ -8,6 +8,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import sample.CSVManager;
+import sample.IParticipants;
 import sample.Personne;
 import sample.PersonneSoiree;
 
@@ -31,10 +32,10 @@ public class ImportNode extends Parent implements Obs {
 
     //Propriete metier
     CSVManager csvManager;
-    ArrayList<Personne> listeChargee;
-    ArrayList<PersonneSoiree> listePersonneSoiree ;
-    ObservableList<PersonneSoiree> hommes = observableArrayList();
-    ObservableList<PersonneSoiree> femmes = observableArrayList();
+    ArrayList<IParticipants> listeChargee;
+    ArrayList<IParticipants> listePersonneSoiree ;
+    ObservableList<IParticipants> hommes = observableArrayList();
+    ObservableList<IParticipants> femmes = observableArrayList();
 
     //Propriete graphique
     Text textImport;
@@ -112,7 +113,7 @@ public class ImportNode extends Parent implements Obs {
     public void remplir() throws Throwable{
         int cptHomme = 0;
         int cptFemme = 0;
-        for(Personne p : listeChargee){
+        for(IParticipants p : listeChargee){
             if(p.getGenre().equals("M")){
                 p.initPersonneSoiree(cptHomme);
                 listePersonneSoiree.add(p.getPersonneSoiree());
@@ -130,10 +131,10 @@ public class ImportNode extends Parent implements Obs {
             }
             System.out.println(p.toString());
         }
-        for(PersonneSoiree p : femmes){
+        for(IParticipants p : femmes){
             p.calculerConflits(hommes);
         }
-        for(PersonneSoiree p : hommes){
+        for(IParticipants p : hommes){
             p.calculerConflits(femmes);
         }
         nbCol = cptFemme;
@@ -173,15 +174,15 @@ public class ImportNode extends Parent implements Obs {
         this.csvManager = csvManager;
     }
 
-    public ArrayList<Personne> getListeChargee() {
+    public ArrayList<IParticipants> getListeChargee() {
         return listeChargee;
     }
 
-    public ArrayList<PersonneSoiree> getListePersonneSoiree(){
+    public ArrayList<IParticipants> getListePersonneSoiree(){
         return listePersonneSoiree;
     }
 
-    public void setListeChargee(ArrayList<Personne> listeChargee) {
+    public void setListeChargee(ArrayList<IParticipants> listeChargee) {
         this.listeChargee = listeChargee;
     }
 
@@ -217,11 +218,11 @@ public class ImportNode extends Parent implements Obs {
         this.btnValiderImport = btnValiderImport;
     }
 
-    public ObservableList<PersonneSoiree> getHommes() {
+    public ObservableList<IParticipants> getHommes() {
         return hommes;
     }
 
-    public ObservableList<PersonneSoiree> getFemmes() {
+    public ObservableList<IParticipants> getFemmes() {
         return femmes;
     }
 

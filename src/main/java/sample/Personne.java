@@ -1,5 +1,6 @@
 package sample;
 
+import conflits.ICompatibility;
 import javafx.util.Pair;
 
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ import java.util.function.ToLongFunction;
 /**
  * Created by Matthieu on 21/03/2017.
  */
-public class Personne {
+public class Personne implements IParticipants{
     private String nom;
     private String prenom;
     private int idSite;
@@ -34,6 +35,16 @@ public class Personne {
         this.releaseDate = releaseDate;
         this.idSite = idSite;
         this.retard = 0;
+    }
+
+    @Override
+    public ArrayList<ICompatibility> calculerConflits(Iterable<IParticipants> listeP) {
+        return null;
+    }
+
+    @Override
+    public ArrayList<ICompatibility> getConflits() {
+        return null;
     }
 
     public void initPersonneSoiree(int id){
@@ -112,6 +123,15 @@ public class Personne {
 
     public long getRetard() {return this.retard;}
 
+    @Override
+    public int getId() {
+        return 0;
+    }
+
+    @Override
+    public void setId(int id) {
+
+    }
 
 
     public String toString(){

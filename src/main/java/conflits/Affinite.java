@@ -1,19 +1,20 @@
 package conflits;
 
+import sample.IParticipants;
 import sample.PersonneSoiree;
 
 /**
  * Created by Matthieu on 25/04/2017.
  */
-public class Affinite{
-    private PersonneSoiree personne;
+public class Affinite implements ICompatibility{
+    IParticipants personne;
     private int affinite;
 
-    public PersonneSoiree getPersonneSoiree() {
+    public IParticipants getPersonneSoiree() {
         return personne;
     }
 
-    public void setPersonneSoiree(PersonneSoiree personne) {
+    public void setPersonneSoiree(IParticipants personne) {
         this.personne = personne;
     }
 
@@ -25,7 +26,7 @@ public class Affinite{
         this.affinite = affinite;
     }
 
-    public Affinite(PersonneSoiree personne, int affinite){
+    public Affinite(IParticipants personne, int affinite){
         this.affinite = affinite;
         this.personne = personne;
 

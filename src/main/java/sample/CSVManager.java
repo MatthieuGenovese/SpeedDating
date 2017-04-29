@@ -23,8 +23,8 @@ public class CSVManager {
     }
 
 
-    public ArrayList<Personne> getPersonnesFromCSV (){
-        ArrayList<Personne> listePersonnes = new ArrayList<>();
+    public ArrayList<IParticipants> getPersonnesFromCSV (){
+        ArrayList<IParticipants> listePersonnes = new ArrayList<>();
         String[] nextLine;
         try {
             while((nextLine = reader.readNext()) != null){

@@ -5,9 +5,9 @@ package sample;
  */
 public interface IMeeting {
 
-    public PersonneSoiree getHomme();
+    public IParticipants getHomme();
 
-    public PersonneSoiree getFemme();
+    public IParticipants getFemme();
 
     public int getCrenau();
 }

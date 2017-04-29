@@ -8,6 +8,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import javafx.util.Pair;
+import sample.IParticipants;
 import sample.Personne;
 import sample.PersonneSoiree;
 
@@ -28,7 +29,7 @@ public class TableauPersonnes extends Parent {
     Text textHommes;
 
     //Je crée mes talesviews
-    TableView<PersonneSoiree> list;
+    TableView<IParticipants> list;
     //Je crée mes colonnes
     TableColumn colNomsHommes;
     TableColumn colPrenomsHommes;
@@ -72,10 +73,10 @@ public class TableauPersonnes extends Parent {
 //            colRetardHommes.prefWidthProperty().bind(femmesList.widthProperty().multiply(0.5));
 
         //Je récupère l'élement nom de la classe Personne
-        colNomsHommes.setCellValueFactory(new PropertyValueFactory<Personne,String>("nom"));
-        colPrenomsHommes.setCellValueFactory(new PropertyValueFactory<Personne,String>("prenom"));
+        colNomsHommes.setCellValueFactory(new PropertyValueFactory<IParticipants,String>("nom"));
+        colPrenomsHommes.setCellValueFactory(new PropertyValueFactory<IParticipants,String>("prenom"));
         //Je récupère l'élement retard de la classe Personne
-        colRetardHommes.setCellValueFactory(new PropertyValueFactory<Personne,String>("retard"));
+        colRetardHommes.setCellValueFactory(new PropertyValueFactory<IParticipants,String>("retard"));
 
         //Je règle les propriétés de mon tableview d'hommes
         list.setLayoutX(posx * 10 / 100);
@@ -104,7 +105,7 @@ public class TableauPersonnes extends Parent {
         return textHommes;
     }
 
-    public TableView<PersonneSoiree> getList() {
+    public TableView<IParticipants> getList() {
         return list;
     }
 

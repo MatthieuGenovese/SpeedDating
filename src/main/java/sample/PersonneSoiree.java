@@ -1,6 +1,9 @@
 package sample;
 
+
 import conflits.Affinite;
+import conflits.ICompatibility;
+import conflits.ICompatibility;
 
 import java.util.ArrayList;
 
@@ -9,13 +12,13 @@ import java.util.ArrayList;
  */
 public class PersonneSoiree extends Personne{
     //private Date retard;
-    private ArrayList<Affinite> listeConflits;
-    private int id;
+    ArrayList<ICompatibility> listeConflits;
+    int id;
 
 
-    public PersonneSoiree (Personne personne, int id){
+    public PersonneSoiree (IParticipants personne, int id){
         super(personne.getIdSite(), personne.getNom(), personne.getPrenom(), personne.getGenre(), personne.getAge(), personne.getAgeMin(), personne.getAgeMax(), personne.getReleaseDate());
-        listeConflits = new ArrayList<>();
+        listeConflits = new ArrayList<ICompatibility>();
 
         this.id = id;
         //retard = new Date();
@@ -34,9 +37,9 @@ public class PersonneSoiree extends Personne{
         this.id = id;
     }
 
-    public ArrayList<Affinite> calculerConflits(Iterable<PersonneSoiree> listeP){
+    public ArrayList<ICompatibility> calculerConflits(Iterable<IParticipants> listeP){
         //on boucle sur la liste des personnes
-        for(PersonneSoiree p : listeP){
+        for(IParticipants p : listeP){
             //on s'exclue soit même (cela n'a pas de sens de calculer un conflit entre this et this
             if(p.getIdSite() != this.getIdSite()){
                 //si le critère d'age correspont, on ajoute la pair (p, 1)
@@ -52,7 +55,7 @@ public class PersonneSoiree extends Personne{
         return listeConflits;
     }
 
-    public ArrayList<Affinite> getConflits(){
+    public ArrayList<ICompatibility> getConflits(){
         return listeConflits;
     }
 

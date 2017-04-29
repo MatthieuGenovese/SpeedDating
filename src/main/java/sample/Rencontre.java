@@ -4,21 +4,21 @@ package sample;
  * Created by Matthieu on 26/04/2017.
  */
 public class Rencontre implements IMeeting{
-    private PersonneSoiree homme,femme;
+    private IParticipants homme,femme;
     private int numeroCrenau;
-    public PersonneSoiree getHomme() {
+    public IParticipants getHomme() {
         return homme;
     }
 
-    public void setHomme(PersonneSoiree homme) {
+    public void setHomme(IParticipants homme) {
         this.homme = homme;
     }
 
-    public PersonneSoiree getFemme() {
+    public IParticipants getFemme() {
         return femme;
     }
 
-    public void setFemme(PersonneSoiree femme) {
+    public void setFemme(IParticipants femme) {
         this.femme = femme;
     }
 
@@ -26,7 +26,7 @@ public class Rencontre implements IMeeting{
         return numeroCrenau;
     }
 
-    public Rencontre(PersonneSoiree homme, PersonneSoiree femme, int numeroCrenau){
+    public Rencontre(IParticipants homme, IParticipants femme, int numeroCrenau){
         this.homme = homme;
         this.femme = femme;
         this.numeroCrenau = numeroCrenau;

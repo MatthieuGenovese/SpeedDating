@@ -31,7 +31,7 @@ public class GestionnaireCrenaux implements IEventMeetings {
     }
 
 
-    public boolean hasMet(PersonneSoiree homme, PersonneSoiree femme){
+    public boolean hasMet(IParticipants homme, IParticipants femme){
         for(int i = 0; i < crenauCourant; i++){
             for(int j = 0; j < listeCrenaux.get(i).getNbRencontres(); j++){
                 if(listeCrenaux.get(i).getRencontre(j).getHomme().equals(homme) && listeCrenaux.get(i).getRencontre(j).getFemme().equals(femme)){
@@ -42,7 +42,7 @@ public class GestionnaireCrenaux implements IEventMeetings {
         return false;
     }
 
-    public boolean metAt(PersonneSoiree homme, PersonneSoiree femme, int slot){
+    public boolean metAt(IParticipants homme, IParticipants femme, int slot){
         for(int j = 0; j < listeCrenaux.get(slot-1).getNbRencontres(); j++){
             if(listeCrenaux.get(slot-1).getRencontre(j).getHomme().equals(homme) && listeCrenaux.get(slot-1).getRencontre(j).getFemme().equals(femme)){
                 return true;
