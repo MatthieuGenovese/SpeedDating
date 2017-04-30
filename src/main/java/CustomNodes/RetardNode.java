@@ -13,10 +13,7 @@ import java.util.Date;
 /**
  * Created by Jeremy on 06/04/2017.
  */
-public class RetardNode extends Parent {
-
-    double posx;
-    double posy;
+public class RetardNode extends CustomNode {
 
     //Partie metier
     private static boolean validRetard = false;

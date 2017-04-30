@@ -13,7 +13,7 @@ import java.util.ArrayList;
 /**
  * Created by Jeremy on 06/04/2017.
  */
-public class DoubleTabNode extends Parent implements Observateur {
+public class DoubleTabNode extends CustomNode implements Observateur {
 
     TableauPersonnes hommesList;
     TableauPersonnes femmesList;

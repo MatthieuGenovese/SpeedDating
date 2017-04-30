@@ -12,10 +12,7 @@ import java.util.ArrayList;
 /**
  * Created by Jeremy on 23/04/2017.
  */
-public class PreferenceNode extends Parent implements Obs {
-
-    double posx;
-    double posy;
+public class PreferenceNode extends CustomNode implements Obs {
 
     ArrayList<Observateur> observateurs = new ArrayList<Observateur>();
 

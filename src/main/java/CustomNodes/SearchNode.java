@@ -18,10 +18,7 @@ import static javafx.collections.FXCollections.observableArrayList;
 /**
  * Created by Jeremy on 19/04/2017.
  */
-public class SearchNode extends Parent implements Observateur {
-
-    double posx;
-    double posy;
+public class SearchNode extends CustomNode implements Observateur {
 
     //Partie metier
     ObservableList<IParticipants> entries = observableArrayList();

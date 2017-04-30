@@ -20,14 +20,13 @@ import static javafx.collections.FXCollections.observableArrayList;
 /**
  * Created by Jeremy on 06/04/2017.
  */
-public class ImportNode extends Parent implements Obs {
+public class ImportNode extends CustomNode implements Obs {
 
     //obs
     ArrayList<Observateur> observateurs = new ArrayList<Observateur>();
 
     //Position de ce noeud dans la fenetre
-    double posx;
-    double posy;
+
     int nbCol,nbLigne;
 
     //Propriete metier

@@ -17,10 +17,7 @@ import java.util.ArrayList;
 /**
  * Created by Jeremy on 06/04/2017.
  */
-public class TableauPersonnes extends Parent {
-
-    double posx;
-    double posy;
+public class TableauPersonnes extends CustomNode {
 
     //Partie metier
 
