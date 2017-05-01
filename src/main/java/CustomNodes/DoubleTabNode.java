@@ -13,8 +13,8 @@ import java.util.ArrayList;
 /**
  * Created by Jeremy on 06/04/2017.
  */
-public class DoubleTabNode extends CustomNode implements Observateur {
-
+public class DoubleTabNode extends CustomNode implements Observateur, Obs {
+    ArrayList<Observateur> observateurs = new ArrayList<Observateur>();
     TableauPersonnes hommesList;
     TableauPersonnes femmesList;
     Button calcul;
@@ -25,7 +25,7 @@ public class DoubleTabNode extends CustomNode implements Observateur {
     public DoubleTabNode(String s1, double posx1, double posy1, String s2, double posx2, double posy2){
         hommesList = new TableauPersonnes(s1,posx1,posy1);
         femmesList = new TableauPersonnes(s2,posx2,posy2);
-        calcul = new Button("Calcul des crénaux");
+        calcul = new Button("Calcul des créneaux");
 
         calcul.setLayoutX(240);
         calcul.setLayoutY(540);
@@ -74,6 +74,7 @@ public class DoubleTabNode extends CustomNode implements Observateur {
 
         calcul.setOnAction(actionEvent->{
             calculateur.calculerMatriceCPLEX();
+            notifier();
         });
     }
 
@@ -150,6 +151,27 @@ public class DoubleTabNode extends CustomNode implements Observateur {
             tp.getColRetardHommes().setCellValueFactory(new PropertyValueFactory<PersonneSoiree,String>("retard"));
             RetardNode.setValidRetard(false);
             tp.getList().refresh();
+        }
+    }
+
+    public CalculMatrice getCalculMatrice(){
+        return calculateur;
+    }
+
+    @Override
+    public void ajouterObservateur(Observateur o) {
+        observateurs.add(o);
+    }
+
+    @Override
+    public void supprimerObservateur(Observateur o) {
+        observateurs.remove(o);
+    }
+
+    @Override
+    public void notifier() {
+        for(Observateur o : observateurs){
+            o.updated(this);
         }
     }
 }
