@@ -1,6 +1,5 @@
 package cplex;
 
-import conflits.Affinite;
 import conflits.ICompatibility;
 import javafx.collections.ObservableList;
 import sample.*;
@@ -16,7 +15,7 @@ public class CalculMatrice {
     private int[][][] matriceResultat;
     private int crenaux = 3;
     private ObservableList<IParticipants> hommeListe, femmeListe;
-    private GestionnaireCrenaux gestionnaireCrenaux = new GestionnaireCrenaux(3);
+    private GestionnaireCreneaux gestionnaireCrenaux = new GestionnaireCreneaux(3);
     public void setHommeListe(ObservableList<IParticipants> hommeListe) {
         this.hommeListe = hommeListe;
     }
@@ -73,5 +72,9 @@ public class CalculMatrice {
         for(int cpt = 0; cpt < gestionnaireCrenaux.getNbCrenaux(); cpt++){
             System.out.println("Crenaux numero : " + cpt + gestionnaireCrenaux.getCrenau(cpt));
         }
+    }
+
+    public GestionnaireCreneaux getGestionnaireCrenaux(){
+        return this.gestionnaireCrenaux;
     }
 }

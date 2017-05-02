@@ -32,8 +32,6 @@ public class TableauPersonnes extends CustomNode {
     TableColumn colPrenomsHommes;
     TableColumn colRetardHommes;
 
-
-
     public TableauPersonnes(String genre, double posx, double posy){
         this.posx = posx;
         this.posy = posy;
@@ -85,9 +83,6 @@ public class TableauPersonnes extends CustomNode {
         list.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         //Je change la couleur CSS de background de selection
         list.setStyle("-fx-selection-bar-non-focused: #21c3ff;");
-
-        //Je règle les propriétés de mon tableview de femmes
-
     }
 
     public double getPosx() {

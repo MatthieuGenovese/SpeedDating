@@ -1,21 +1,22 @@
 package sample;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Matthieu on 26/04/2017.
  */
-public class Crenau {
+public class Creneau {
     private ArrayList<IMeeting> listeRencontres;
     private int nbRencontres;
-    private int numeroCrenau;
+    private int numeroCreneau;
 
     public int getNumeroCrenau() {
-        return numeroCrenau;
+        return numeroCreneau;
     }
 
-    public Crenau(int numeroCrenau){
-        this.numeroCrenau = numeroCrenau;
+    public Creneau(int numeroCreneau){
+        this.numeroCreneau = numeroCreneau;
         listeRencontres = new ArrayList<>();
     }
 

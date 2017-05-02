@@ -59,6 +59,7 @@ public class Main extends Application {
         groupImport.getChildren().add(importnode);
 
         DoubleTabNode doubletab = new DoubleTabNode("Hommes",sw,sh,"Femmes",sw,sh);
+
         importnode.ajouterObservateur(doubletab);
         groupImport.getChildren().add(doubletab);
 
@@ -79,6 +80,11 @@ public class Main extends Application {
         ongletCreneaux.setContent(groupCreneaux);
         ongletCreneaux.setClosable(false);
         searchNode.setTableaux(doubletab);
+
+        //Ajout du creneauNode à l'interface
+        CreneauxNode creneauxNode = new CreneauxNode(250, 100);
+        doubletab.ajouterObservateur(creneauxNode);
+        groupCreneaux.getChildren().add(creneauxNode);
 
         //ajout du gestionnaire d'onglet au root
         root.getChildren().add(gestionnaireDonglet);
