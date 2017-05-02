@@ -118,54 +118,45 @@ public class Solver
         //getModelFromFile();
         int[][][] resultat = {{{-1}}};
         int iteration = 1;
-        while (iteration < 5) {
-            try {
-                IloOplFactory.setDebugMode(false);
-                IloOplFactory oplF = new IloOplFactory();
-                IloOplErrorHandler errHandler = oplF.createOplErrorHandler(System.out);
-                IloOplModelSource modelSource = oplF.createOplModelSource(chemin);
-                IloOplSettings settings = oplF.createOplSettings(errHandler);
-                IloOplModelDefinition def = oplF.createOplModelDefinition(modelSource, settings);
-                IloCP cp = oplF.createCP();
-                IloOplModel opl = oplF.createOplModel(def, cp);
-                IloOplDataSource dataSource=new MyData(oplF);
-                String nomDonnees = "src\\main\\opl\\donnees" + Integer.toString(iteration);
-                //IloOplDataSource dataSource = new IloOplDataSource(oplF.getEnv(), nomDonnees + ".dat");
-                opl.addDataSource(dataSource);
-                opl.generate();
-                if (cp.solve()) {
-                    System.out.println("OBJECTIVE: " + opl.getCP().getObjValue());
-                    opl.postProcess();
-                    opl.printSolution(System.out);
-                    System.out.println("FOO" + opl.getElement("rencontres").asIntMap().toString());
-                    String res;
-                    ByteArrayOutputStream os = new ByteArrayOutputStream();
-                    opl.printSolution(os);
-                    res = os.toString();
-                    os.close();
-                    resultat = extraireResultats(res, 2);
-                    status = 0;
-                } else {
-                    System.out.println("No solution!");
-                    status = 1;
-                }
-
-                oplF.end();
+        try {
+            IloOplFactory.setDebugMode(false);
+            IloOplFactory oplF = new IloOplFactory();
+            IloOplErrorHandler errHandler = oplF.createOplErrorHandler(System.out);
+            IloOplModelSource modelSource = oplF.createOplModelSource(chemin);
+            IloOplSettings settings = oplF.createOplSettings(errHandler);
+            IloOplModelDefinition def = oplF.createOplModelDefinition(modelSource, settings);
+            IloCP cp = oplF.createCP();
+            cp.setOut(null);
+            IloOplModel opl = oplF.createOplModel(def, cp);
+            IloOplDataSource dataSource=new MyData(oplF);
+            String nomDonnees = "src\\main\\opl\\donnees" + Integer.toString(iteration);
+            //IloOplDataSource dataSource = new IloOplDataSource(oplF.getEnv(), nomDonnees + ".dat");
+            opl.addDataSource(dataSource);
+            opl.generate();
+            if (cp.solve()) {
+                opl.postProcess();
+                String res = opl.getElement("rencontres").asIntMap().toString();
+                resultat = extraireResultats(res, 2);
+                status = 0;
+            } else {
+                System.out.println("No solution!");
+                status = 1;
             }
-            catch(IloOplException ex){
-                System.err.println("### OPL exception: " + ex.getMessage());
-                ex.printStackTrace();
-                status = 2;
-            } catch(IloException ex){
+
+            oplF.end();
+        }
+        catch(IloOplException ex){
+            System.err.println("### OPL exception: " + ex.getMessage());
+            ex.printStackTrace();
+            status = 2;
+        } catch(IloException ex){
             System.err.println("### CONCERT exception: " + ex.getMessage());
             ex.printStackTrace();
             status = 3;
-            } catch(Exception ex){
+        } catch(Exception ex){
             System.err.println("### UNEXPECTED UNKNOWN ERROR ...");
             ex.printStackTrace();
             status = 4;
-            }
-        iteration++;
         }
 
         return resultat;
