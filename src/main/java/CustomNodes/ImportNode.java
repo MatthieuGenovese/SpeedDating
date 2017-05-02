@@ -1,16 +1,13 @@
 package CustomNodes;
 
-import cplex.CalculMatrice;
 import javafx.collections.ObservableList;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
-import sample.CSVManager;
-import sample.IParticipants;
-import sample.Personne;
-import sample.PersonneSoiree;
+import utilitaire.CSVManager;
+import personnes.IParticipants;
+import personnes.PersonneSoiree;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -131,10 +128,10 @@ public class ImportNode extends CustomNode implements Obs {
             System.out.println(p.toString());
         }
         for(IParticipants p : femmes){
-            p.calculerConflits(hommes);
+            ((PersonneSoiree) p).calculerConflits(hommes);
         }
         for(IParticipants p : hommes){
-            p.calculerConflits(femmes);
+            ((PersonneSoiree) p).calculerConflits(femmes);
         }
         nbCol = cptFemme;
         nbLigne = cptHomme;

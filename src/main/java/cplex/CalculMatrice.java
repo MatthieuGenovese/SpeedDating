@@ -2,7 +2,11 @@ package cplex;
 
 import conflits.ICompatibility;
 import javafx.collections.ObservableList;
-import sample.*;
+import personnes.IParticipants;
+import personnes.PersonneSoiree;
+import recontres.GestionnaireCreneaux;
+import recontres.Rencontre;
+import utilitaire.CSVManager;
 
 import java.util.ArrayList;
 
@@ -28,7 +32,6 @@ public class CalculMatrice {
         this.nbCol = nbCol;
         this.nbLigne = nbLigne;
         this.manager = manager;
-
         this.hommeListe = hommes;
         this.femmeListe = femmes;
     }
@@ -36,9 +39,9 @@ public class CalculMatrice {
     public void calculerMatriceCPLEX() {
         ArrayList<Integer> matrice = new ArrayList<>();
         for (IParticipants homme : hommeListe) {
-            for (ICompatibility p : homme.getConflits()) {
-                for (ICompatibility p2 : p.getPersonneSoiree().getConflits()) {
-                    if (p2.getPersonneSoiree().getId() == homme.getId()) {
+            for (ICompatibility p : ((PersonneSoiree) homme).getConflits()) {
+                for (ICompatibility p2 : ((PersonneSoiree) p.getPersonneSoiree()).getConflits()) {
+                    if (p2.getPersonneSoiree().getId() == ((PersonneSoiree) homme).getId()) {
                         matrice.add(Math.min(p2.getAffinite(),p.getAffinite()));
                     }
                 }
@@ -64,13 +67,13 @@ public class CalculMatrice {
             for(int femme = 0; femme < nbCol; femme++){
                 for(int k = 0; k < crenaux; k++) {
                     if(matriceResultat[homme][femme][k] == 1 ) {
-                        gestionnaireCrenaux.ajouterRencontre(new Rencontre(hommeListe.get(homme), femmeListe.get(femme), k),k);
+                        gestionnaireCrenaux.ajouterRencontre(new Rencontre(hommeListe.get(homme), femmeListe.get(femme), gestionnaireCrenaux.getCrenau(k).getNumeroCrenau()),k);
                     }
                 }
             }
         }
         for(int cpt = 0; cpt < gestionnaireCrenaux.getNbCrenaux(); cpt++){
-            System.out.println("Crenaux numero : " + cpt + gestionnaireCrenaux.getCrenau(cpt));
+            System.out.println("Crenaux numero : " + gestionnaireCrenaux.getCrenau(cpt).getNumeroCrenau()+ gestionnaireCrenaux.getCrenau(cpt));
         }
     }
 

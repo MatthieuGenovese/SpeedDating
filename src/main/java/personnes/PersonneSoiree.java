@@ -1,8 +1,7 @@
-package sample;
+package personnes;
 
 
 import conflits.Affinite;
-import conflits.ICompatibility;
 import conflits.ICompatibility;
 
 import java.util.ArrayList;
@@ -37,7 +36,7 @@ public class PersonneSoiree extends Personne{
         this.id = id;
     }
 
-    public ArrayList<ICompatibility> calculerConflits(Iterable<IParticipants> listeP){
+    public void calculerConflits(Iterable<IParticipants> listeP){
         //on boucle sur la liste des personnes
         for(IParticipants p : listeP){
             //on s'exclue soit même (cela n'a pas de sens de calculer un conflit entre this et this
@@ -52,7 +51,6 @@ public class PersonneSoiree extends Personne{
                 }
             }
         }
-        return listeConflits;
     }
 
     public ArrayList<ICompatibility> getConflits(){

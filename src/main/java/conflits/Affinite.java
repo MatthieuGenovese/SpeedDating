@@ -1,7 +1,6 @@
 package conflits;
 
-import sample.IParticipants;
-import sample.PersonneSoiree;
+import personnes.IParticipants;
 
 /**
  * Created by Matthieu on 25/04/2017.

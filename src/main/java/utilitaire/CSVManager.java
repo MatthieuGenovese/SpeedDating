@@ -1,7 +1,9 @@
-package sample;
+package utilitaire;
 
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
+import personnes.IParticipants;
+import personnes.Personne;
 
 import java.io.FileReader;
 import java.io.FileWriter;

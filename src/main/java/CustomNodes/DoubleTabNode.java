@@ -1,12 +1,11 @@
 package CustomNodes;
 
 import conflits.ICompatibility;
-import cplex.CalculMatrice;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.cell.PropertyValueFactory;
-import sample.IParticipants;
-import sample.PersonneSoiree;
+import personnes.IParticipants;
+import personnes.PersonneSoiree;
+import utilitaire.Utility;
 
 import java.util.ArrayList;
 
@@ -20,13 +19,13 @@ public class DoubleTabNode extends CustomNode implements Observateur, Obs {
     Button calcul;
     IParticipants historiqueH;
     IParticipants historiqueF;
-    CalculMatrice calculateur;
+    Utility utilitaire;
 
-    public DoubleTabNode(String s1, double posx1, double posy1, String s2, double posx2, double posy2){
+    public DoubleTabNode(String s1, double posx1, double posy1, String s2, double posx2, double posy2, Utility utilitaire){
         hommesList = new TableauPersonnes(s1,posx1,posy1);
         femmesList = new TableauPersonnes(s2,posx2,posy2);
         calcul = new Button("Calcul des créneaux");
-
+        this.utilitaire = utilitaire;
         calcul.setLayoutX(240);
         calcul.setLayoutY(540);
         femmesList.afficheFemme();
@@ -54,7 +53,7 @@ public class DoubleTabNode extends CustomNode implements Observateur, Obs {
                 historiqueF = femmesList.getList().getSelectionModel().getSelectedItem();
                 femmesList.getList().getSelectionModel().clearSelection();
 
-                faireMatriceConflit(personneFocus, femmesList);
+                utilitaire.faireMatriceConflit(personneFocus, femmesList);
 
             }
         });
@@ -68,23 +67,14 @@ public class DoubleTabNode extends CustomNode implements Observateur, Obs {
                 historiqueH = hommesList.getList().getSelectionModel().getSelectedItem();
                 hommesList.getList().getSelectionModel().clearSelection();
 
-                faireMatriceConflit(personneFocus,hommesList);
+                utilitaire.faireMatriceConflit(personneFocus,hommesList);
             }
         });
 
         calcul.setOnAction(actionEvent->{
-            calculateur.calculerMatriceCPLEX();
+            utilitaire.getCalculateur().calculerMatriceCPLEX();
             notifier();
         });
-    }
-
-    private void faireMatriceConflit(IParticipants personneFocus, TableauPersonnes tp) {
-        ArrayList<ICompatibility> matriceConflits = personneFocus.getConflits();
-        for(ICompatibility couple : matriceConflits){
-            if(couple.getAffinite() > 0){
-                tp.getList().getSelectionModel().select(couple.getPersonneSoiree());
-            }
-        }
     }
 
 
@@ -94,7 +84,7 @@ public class DoubleTabNode extends CustomNode implements Observateur, Obs {
         if(o instanceof ImportNode){
             ImportNode in =(ImportNode)o;
             afficherCalcul();
-            calculateur = new CalculMatrice(in.getCsvManager(), in.getNbLigne(), in.getNbCol(), in.getHommes(), in.getFemmes());
+            utilitaire.initCalculateur(in.getCsvManager(), in.getNbLigne(), in.getNbCol(), in.getHommes(), in.getFemmes());
             hommesList.getList().setItems(in.getHommes());
             femmesList.getList().setItems(in.getFemmes());
         }
@@ -111,21 +101,21 @@ public class DoubleTabNode extends CustomNode implements Observateur, Obs {
             if(historiqueF != null && historiqueH != null){
 
 
-                for(ICompatibility pp : historiqueH.getConflits()){
+                for(ICompatibility pp : ((PersonneSoiree) historiqueH).getConflits()){
                     if(pp.getPersonneSoiree().getId() == historiqueF.getId()){
                         pp.setAffinite(value);
                         break;
                     }
                 }
 
-                for(ICompatibility pp : historiqueF.getConflits()){
+                for(ICompatibility pp : ((PersonneSoiree) historiqueF).getConflits()){
                     if(pp.getPersonneSoiree().getId() == historiqueH.getId()){
                         pp.setAffinite(value);
                         break;
                     }
                 }
-                calculateur.setFemmeListe(femmesList.getList().getItems());
-                calculateur.setHommeListe(hommesList.getList().getItems());
+                utilitaire.getCalculateur().setFemmeListe(femmesList.getList().getItems());
+                utilitaire.getCalculateur().setHommeListe(hommesList.getList().getItems());
             }
         }
 
@@ -154,9 +144,9 @@ public class DoubleTabNode extends CustomNode implements Observateur, Obs {
         }
     }
 
-    public CalculMatrice getCalculMatrice(){
+    /*public CalculMatrice getCalculMatrice(){
         return calculateur;
-    }
+    }*/
 
     @Override
     public void ajouterObservateur(Observateur o) {

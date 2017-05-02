@@ -1,18 +1,11 @@
 package CustomNodes;
 
-import javafx.collections.ObservableList;
-import javafx.scene.Parent;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
-import javafx.util.Pair;
-import sample.IParticipants;
-import sample.Personne;
-import sample.PersonneSoiree;
-
-import java.util.ArrayList;
+import personnes.IParticipants;
 
 /**
  * Created by Jeremy on 06/04/2017.

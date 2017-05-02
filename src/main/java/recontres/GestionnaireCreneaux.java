@@ -1,7 +1,6 @@
-package sample;
+package recontres;
 
-import CustomNodes.Obs;
-import CustomNodes.Observateur;
+import personnes.IParticipants;
 
 import java.util.ArrayList;
 import java.util.List;

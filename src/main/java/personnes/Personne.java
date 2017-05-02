@@ -1,14 +1,6 @@
-package sample;
+package personnes;
 
-import conflits.ICompatibility;
-import javafx.util.Pair;
-
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.function.Function;
-import java.util.function.ToDoubleFunction;
-import java.util.function.ToIntFunction;
-import java.util.function.ToLongFunction;
 
 /**
  * Created by Matthieu on 21/03/2017.
@@ -35,16 +27,6 @@ public class Personne implements IParticipants{
         this.releaseDate = releaseDate;
         this.idSite = idSite;
         this.retard = 0;
-    }
-
-    @Override
-    public ArrayList<ICompatibility> calculerConflits(Iterable<IParticipants> listeP) {
-        return null;
-    }
-
-    @Override
-    public ArrayList<ICompatibility> getConflits() {
-        return null;
     }
 
     public void initPersonneSoiree(int id){

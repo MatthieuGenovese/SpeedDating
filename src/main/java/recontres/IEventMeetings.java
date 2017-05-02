@@ -1,4 +1,6 @@
-package sample;
+package recontres;
+
+import personnes.IParticipants;
 
 import java.util.List;
 

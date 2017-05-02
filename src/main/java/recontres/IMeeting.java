@@ -1,4 +1,6 @@
-package sample;
+package recontres;
+
+import personnes.IParticipants;
 
 /**
  * Created by Matthieu on 27/04/2017.

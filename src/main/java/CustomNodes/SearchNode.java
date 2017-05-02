@@ -3,15 +3,11 @@ package CustomNodes;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.Parent;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import sample.IParticipants;
-import sample.Personne;
-import sample.PersonneSoiree;
+import personnes.IParticipants;
 
 import static javafx.collections.FXCollections.observableArrayList;
 

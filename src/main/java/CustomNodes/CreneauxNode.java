@@ -1,13 +1,15 @@
 package CustomNodes;
 
-import cplex.CalculMatrice;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
-import sample.*;
+import personnes.IParticipants;
+import recontres.GestionnaireCreneaux;
+import recontres.IMeeting;
+import utilitaire.Utility;
 
 import static javafx.collections.FXCollections.observableArrayList;
 
@@ -29,10 +31,9 @@ public class CreneauxNode extends CustomNode implements Observateur {
 
     TableColumn prenomh;
     TableColumn prenomf;
+    Utility utilitaire;
 
-    CalculMatrice calculateur;
-
-    public CreneauxNode(double posx, double posy){
+    public CreneauxNode(double posx, double posy, Utility utilitaire){
         this.posx = posx;
         this.posy = posy;
         initGraphique();
@@ -40,6 +41,7 @@ public class CreneauxNode extends CustomNode implements Observateur {
         //J'ajoute mes colonnes dans les tablesviews
         listHommes.getColumns().add(prenomh);
         listFemmes.getColumns().add(prenomf);
+        this.utilitaire = utilitaire;
 
         this.getChildren().add(listHommes);
         this.getChildren().add(listFemmes);
@@ -97,7 +99,7 @@ public class CreneauxNode extends CustomNode implements Observateur {
     public void updated(Obs o) {
         System.out.println("---------");
         if(o instanceof DoubleTabNode){
-            GestionnaireCreneaux gc = ((DoubleTabNode) o).getCalculMatrice().getGestionnaireCrenaux();
+            GestionnaireCreneaux gc = utilitaire.getCalculateur().getGestionnaireCrenaux();
             numCreneau.setText("Numéro du creneau : " + gc.getCurrentMeetings().get(0).getCrenau());
             for(IMeeting c : gc.getCurrentMeetings()){
                 hommesCreneau.add(c.getHomme());

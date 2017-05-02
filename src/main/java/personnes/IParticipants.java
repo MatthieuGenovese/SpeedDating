@@ -1,19 +1,11 @@
-package sample;
+package personnes;
 
-import conflits.Affinite;
-import conflits.ICompatibility;
-
-import java.util.ArrayList;
 import java.util.Date;
 
 /**
  * Created by Elia on 29/04/2017.
  */
 public interface IParticipants {
-
-    ArrayList<ICompatibility> calculerConflits(Iterable<IParticipants> listeP);
-
-    ArrayList<ICompatibility> getConflits();
 
     void initPersonneSoiree(int id);
 
@@ -60,5 +52,4 @@ public interface IParticipants {
     void setId(int id);
 
     String affichageNomPrenom();
-
 }

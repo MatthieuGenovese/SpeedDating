@@ -1,32 +1,13 @@
 package sample;
 
 import CustomNodes.*;
-import com.sun.javafx.scene.text.TextLine;
-import cplex.Carseq;
-import cplex.Solver;
 import javafx.application.Application;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.event.EventType;
-import javafx.geometry.Orientation;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.util.Pair;
-
-import java.io.File;
-import java.util.ArrayList;
+import utilitaire.Utility;
 
 import static javafx.collections.FXCollections.observableArrayList;
 
@@ -44,6 +25,7 @@ public class Main extends Application {
     final Tab ongletCreneaux = new Tab("Creneaux");
     //le gestionnaire d'onglet (tous les onglets seront ajoutés sur lui
     final TabPane gestionnaireDonglet = new TabPane();
+    Utility utilitaire = new Utility();
 
     @Override
     public void start(Stage primaryStage) {
@@ -58,7 +40,7 @@ public class Main extends Application {
         ImportNode importnode = new ImportNode(sw,sh);
         groupImport.getChildren().add(importnode);
 
-        DoubleTabNode doubletab = new DoubleTabNode("Hommes",sw,sh,"Femmes",sw,sh);
+        DoubleTabNode doubletab = new DoubleTabNode("Hommes",sw,sh,"Femmes",sw,sh, utilitaire);
 
         importnode.ajouterObservateur(doubletab);
         groupImport.getChildren().add(doubletab);
@@ -82,7 +64,7 @@ public class Main extends Application {
         searchNode.setTableaux(doubletab);
 
         //Ajout du creneauNode à l'interface
-        CreneauxNode creneauxNode = new CreneauxNode(250, 100);
+        CreneauxNode creneauxNode = new CreneauxNode(250, 100, utilitaire);
         doubletab.ajouterObservateur(creneauxNode);
         groupCreneaux.getChildren().add(creneauxNode);
 
