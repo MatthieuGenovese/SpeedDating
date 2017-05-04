@@ -111,13 +111,13 @@ public class ImportNode extends CustomNode implements Obs {
         int cptFemme = 0;
         for(IParticipants p : listeChargee){
             if(p.getGenre().equals("M")){
-                p.initPersonneSoiree(cptHomme);
+                p.initPersonneSoiree(cptHomme, csvManager.getTimeWindow(cptHomme+cptFemme));
                 listePersonneSoiree.add(p.getPersonneSoiree());
                 hommes.add(p.getPersonneSoiree());
                 cptHomme++;
             }
             else if(p.getGenre().equals("F")) {
-                p.initPersonneSoiree(cptFemme);
+                p.initPersonneSoiree(cptFemme,csvManager.getTimeWindow(cptHomme+cptFemme));
                 listePersonneSoiree.add(p.getPersonneSoiree());
                 femmes.add(p.getPersonneSoiree());
                 cptFemme++;

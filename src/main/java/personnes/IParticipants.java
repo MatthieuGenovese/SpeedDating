@@ -1,5 +1,7 @@
 package personnes;
 
+import recontres.ITimeWindows;
+
 import java.util.Date;
 
 /**
@@ -7,7 +9,7 @@ import java.util.Date;
  */
 public interface IParticipants {
 
-    void initPersonneSoiree(int id);
+    void initPersonneSoiree(int id, ITimeWindows time);
 
     void setNom(String nom);
 

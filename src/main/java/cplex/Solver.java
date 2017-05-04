@@ -26,12 +26,13 @@ public class Solver
 {
     private static String chemin;
     private static int colonnes, lignes;
-    private static int crenaux = 3;
+    private static int creneaux;
 
-    public Solver(String chemin, int colonnes, int lignes){
+    public Solver(String chemin, int colonnes, int lignes, int creneaux){
         this.chemin = chemin;
         this.lignes = lignes;
         this.colonnes = colonnes;
+        this.creneaux = creneaux;
     }
 
     static class MyData extends IloCustomOplDataSource
@@ -47,7 +48,7 @@ public class Solver
             //lignes = 3;
             int f = colonnes;
             int h = lignes;
-            int c = crenaux;
+            int c = creneaux;
             int mini = 1;
 
             IloOplDataHandler handler = getDataHandler();
@@ -65,23 +66,25 @@ public class Solver
             handler.endElement();
 
             int scores[][] = importerMatrice();
+            int dispoH[][] = importerDispoH();
+            int dispoF[][] = importerDispoF();
 
            /* int scores[][] = {{1, 5, 0},
                     {5, 0, 1},
                     {0, 1, 5}};*/
 
-            int dispoF[][] ={{1, 3},
+            /*int dispoF[][] ={{1, 3},
                     {1, 3},
                     {1, 3}};
             int dispoH[][] ={{1, 3},
                     {1, 3},
-                    {1, 3}};
+                    {1, 3}};*/
 
             handler.startElement("scores");
             handler.startArray();
-            for (int i = 0 ; i< f ; i++) {
+            for (int i = 0 ; i < h ; i++) {
                 handler.startArray();
-                for (int j = 0 ; j< h ; j++)
+                for (int j = 0 ; j< f ; j++)
                     handler.addIntItem(scores[i][j]);
                 handler.endArray();
             }
@@ -181,7 +184,67 @@ public class Solver
                 nbLignes++;
             }
             r.close();
-            res = new int [nbCol][nbLignes];
+            res = new int [nbLignes][nbCol];
+            for(int i = 0; i < listeSArray.size(); i++){
+                for(int j = 0; j < listeSArray.get(i).length; j++){
+                    res[i][j] = Integer.parseInt(listeSArray.get(i)[j]);
+                }
+            }
+
+        } catch (Exception e) {
+            throw new Error(e);
+        }
+        return res;
+    }
+
+    static int[][] importerDispoH(){
+        ArrayList<String[]> listeSArray = new ArrayList<>();
+        int res[][];
+        int nbLigne = 0;
+        try {
+            FileReader c = new FileReader("dispoH.csv");
+            BufferedReader r = new BufferedReader(c);
+            String ligne = r.readLine();
+
+
+            while (ligne != null) {
+                nbLigne++;
+                String[] decompose = ligne.split(",");
+                listeSArray.add(decompose);
+                ligne = r.readLine();
+            }
+            r.close();
+            res = new int [nbLigne][2];
+            for(int i = 0; i < listeSArray.size(); i++){
+                for(int j = 0; j < listeSArray.get(i).length; j++){
+                    res[i][j] = Integer.parseInt(listeSArray.get(i)[j]);
+                }
+            }
+
+        } catch (Exception e) {
+            throw new Error(e);
+        }
+        return res;
+    }
+
+    static int[][] importerDispoF(){
+        ArrayList<String[]> listeSArray = new ArrayList<>();
+        int res[][];
+        int nbLigne = 0;
+        try {
+            FileReader c = new FileReader("dispoF.csv");
+            BufferedReader r = new BufferedReader(c);
+            String ligne = r.readLine();
+
+
+            while (ligne != null) {
+                nbLigne++;
+                String[] decompose = ligne.split(",");
+                listeSArray.add(decompose);
+                ligne = r.readLine();
+            }
+            r.close();
+            res = new int [nbLigne][2];
             for(int i = 0; i < listeSArray.size(); i++){
                 for(int j = 0; j < listeSArray.get(i).length; j++){
                     res[i][j] = Integer.parseInt(listeSArray.get(i)[j]);
@@ -207,7 +270,7 @@ public class Solver
             taillef = colonnes;
         }
 
-        int results[][][] = new int[tailleh][taillef][crenaux];
+        int results[][][] = new int[tailleh][taillef][creneaux];
         int cpt1 = 0;
         int cpt2 = 0;
         int cpt3 = 0;
@@ -244,7 +307,7 @@ public class Solver
         }
         for(int i = 0; i < tailleh; i++){
             for(int j = 0; j < taillef; j++){
-                for(int k = 0; k < crenaux; k++) {
+                for(int k = 0; k < creneaux; k++) {
                     System.out.print(results[i][j][k] + ",");
                 }
                 System.out.println();

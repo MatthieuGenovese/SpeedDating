@@ -1,5 +1,7 @@
 package personnes;
 
+import recontres.ITimeWindows;
+
 import java.util.Date;
 
 /**
@@ -17,20 +19,19 @@ public class Personne implements IParticipants{
     private Date releaseDate;
     private PersonneSoiree pSoiree;
 
-    public Personne(int idSite, String nom, String prenom, String genre, int age, int ageMin, int ageMax, Date releaseDate){
+    public Personne(int idSite, String nom, String prenom, String genre, int age, int ageMin, int ageMax){
         this.prenom = prenom;
         this.nom = nom;
         this.genre = genre;
         this.age = age;
         this.ageMin = ageMin;
         this.ageMax = ageMax;
-        this.releaseDate = releaseDate;
         this.idSite = idSite;
         this.retard = 0;
     }
 
-    public void initPersonneSoiree(int id){
-        this.pSoiree = new PersonneSoiree(this,id);
+    public void initPersonneSoiree(int id, ITimeWindows time){
+        this.pSoiree = new PersonneSoiree(this,id,time);
     }
 
     public void setNom(String nom){
@@ -117,7 +118,7 @@ public class Personne implements IParticipants{
 
 
     public String toString(){
-        return "Nom : " + nom + " Prenom : " + prenom + " " + genre + " Age : " + Integer.toString(age) + " Age Min : " + Integer.toString(ageMin) + " Age Max : " + Integer.toString(ageMax) + " " + releaseDate.toString();
+        return "Nom : " + nom + " Prenom : " + prenom + " " + genre + " Age : " + Integer.toString(age) + " Age Min : " + Integer.toString(ageMin) + " Age Max : " + Integer.toString(ageMax);
      }
 
      public String affichageNomPrenom(){
