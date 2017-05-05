@@ -8,16 +8,17 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
  * Created by Jeremy on 06/04/2017.
  */
-public class RetardNode extends CustomNode {
-
+public class RetardNode extends CustomNode implements Obs{
+    ArrayList<Observateur> observateurs = new ArrayList<Observateur>();
     //Partie metier
     private static boolean validRetard = false;
-
+    private int retardInt = 0;
     //Partie Graphique
     Button btnValiderRetard = new Button("OK");
 
@@ -47,7 +48,7 @@ public class RetardNode extends CustomNode {
         labelT = new Label("0");
         labelT2 = new Label("min");
 
-        retard  = new Slider(0, 120, 0);
+        retard  = new Slider(1, 3, 1);
     }
 
     public void initPositionElementsGraphiques(){
@@ -69,6 +70,7 @@ public class RetardNode extends CustomNode {
         retard.valueProperty().addListener(new ChangeListener() {
             @Override
             public void changed(ObservableValue arg0, Object arg1, Object arg2) {
+                retardInt = (int) retard.getValue();
                 labelT.textProperty().setValue(
                         String.valueOf((int) retard.getValue()));
             }
@@ -82,8 +84,30 @@ public class RetardNode extends CustomNode {
     public void initListeners(){
         btnValiderRetard.setOnAction(actionEvent -> {
             validRetard = true;
+            notifier();
         });
     }
 
-    public static long getRetard(){return (long)retard.getValue();}
+    public static int getRetard(){return (int)retard.getValue();}
+
+    @Override
+    public void ajouterObservateur(Observateur o) {
+        observateurs.add(o);
+    }
+
+    @Override
+    public void supprimerObservateur(Observateur o) {
+        observateurs.remove(o);
+    }
+
+    @Override
+    public void notifier() {
+        for(Observateur o : observateurs){
+            o.updated(this);
+        }
+    }
+
+    public int getRetardInt() {
+        return retardInt;
+    }
 }

@@ -5,6 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
+import recontres.TimeWindow;
 import utilitaire.CSVManager;
 import personnes.IParticipants;
 import personnes.PersonneSoiree;
@@ -111,13 +112,13 @@ public class ImportNode extends CustomNode implements Obs {
         int cptFemme = 0;
         for(IParticipants p : listeChargee){
             if(p.getGenre().equals("M")){
-                p.initPersonneSoiree(cptHomme, csvManager.getTimeWindow(cptHomme+cptFemme));
+                p.initPersonneSoiree(cptHomme, new TimeWindow(1,3));
                 listePersonneSoiree.add(p.getPersonneSoiree());
                 hommes.add(p.getPersonneSoiree());
                 cptHomme++;
             }
             else if(p.getGenre().equals("F")) {
-                p.initPersonneSoiree(cptFemme,csvManager.getTimeWindow(cptHomme+cptFemme));
+                p.initPersonneSoiree(cptFemme,new TimeWindow(1,3));
                 listePersonneSoiree.add(p.getPersonneSoiree());
                 femmes.add(p.getPersonneSoiree());
                 cptFemme++;

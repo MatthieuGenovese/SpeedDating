@@ -45,9 +45,9 @@ public interface IParticipants {
 
     Date getReleaseDate();
 
-    void setRetard(long r);
+    void setRetard(int r);
 
-    long getRetard();
+    int getRetard();
 
     int getId();
 

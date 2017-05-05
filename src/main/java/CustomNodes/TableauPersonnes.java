@@ -6,6 +6,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import personnes.IParticipants;
+import personnes.PersonneSoiree;
 
 /**
  * Created by Jeremy on 06/04/2017.
@@ -24,11 +25,21 @@ public class TableauPersonnes extends CustomNode {
     TableColumn colNomsHommes;
     TableColumn colPrenomsHommes;
     TableColumn colRetardHommes;
+    private boolean focus = false;
+
+    public boolean isFocus() {
+        return focus;
+    }
+
+    public void setFocus(boolean focus) {
+        this.focus = focus;
+    }
 
     public TableauPersonnes(String genre, double posx, double posy){
         this.posx = posx;
         this.posy = posy;
         initGraphique(genre);
+
         initPositionElementsGraphiques();
         //J'ajoute mes colonnes dans les tablesviews
         list.getColumns().add(colNomsHommes);
@@ -64,7 +75,7 @@ public class TableauPersonnes extends CustomNode {
         colNomsHommes.setCellValueFactory(new PropertyValueFactory<IParticipants,String>("nom"));
         colPrenomsHommes.setCellValueFactory(new PropertyValueFactory<IParticipants,String>("prenom"));
         //Je récupère l'élement retard de la classe Personne
-        colRetardHommes.setCellValueFactory(new PropertyValueFactory<IParticipants,String>("retard"));
+        colRetardHommes.setCellValueFactory(new PropertyValueFactory<PersonneSoiree,String>("retard"));
 
         //Je règle les propriétés de mon tableview d'hommes
         list.setLayoutX(posx * 10 / 100);

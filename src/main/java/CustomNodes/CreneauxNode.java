@@ -100,7 +100,7 @@ public class CreneauxNode extends CustomNode implements Observateur {
         System.out.println("---------");
         if(o instanceof DoubleTabNode){
             GestionnaireCreneaux gc = utilitaire.getCalculateur().getGestionnaireCrenaux();
-            numCreneau.setText("Numéro du creneau : " + gc.getCurrentMeetings().get(0).getCrenau());
+            numCreneau.setText("Numéro du creneau : " + gc.getCreneauCourant());
             for(IMeeting c : gc.getCurrentMeetings()){
                 hommesCreneau.add(c.getHomme());
                 femmesCreneau.add(c.getFemme());

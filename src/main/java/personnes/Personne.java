@@ -14,7 +14,7 @@ public class Personne implements IParticipants{
     private int age;
     private int ageMin;
     private int ageMax;
-    private long retard;
+    private int retard;
     private String genre;
     private Date releaseDate;
     private PersonneSoiree pSoiree;
@@ -102,9 +102,9 @@ public class Personne implements IParticipants{
         return releaseDate;
     }
 
-    public void setRetard(long r) {this.retard = r;}
+    public void setRetard(int r) {this.retard = r;}
 
-    public long getRetard() {return this.retard;}
+    public int getRetard() {return this.retard;}
 
     @Override
     public int getId() {

@@ -85,7 +85,15 @@ public class CalculMatrice {
             }
         }
         for(int cpt = 0; cpt < gestionnaireCrenaux.getNbCrenaux(); cpt++){
-            System.out.println("Crenaux numero : " + gestionnaireCrenaux.getCrenau(cpt).getNumeroCrenau()+ gestionnaireCrenaux.getCrenau(cpt));
+            if(gestionnaireCrenaux.getCrenau(cpt).getNbRencontres() == 0){
+                gestionnaireCrenaux.setCreneauCourant(gestionnaireCrenaux.getCreneauCourant()+1);
+            }
+            else{
+                break;
+            }
+        }
+        if(gestionnaireCrenaux.getCreneauCourant() > creneaux){
+            gestionnaireCrenaux.setCreneauCourant(creneaux);
         }
     }
 

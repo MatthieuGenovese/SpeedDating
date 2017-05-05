@@ -21,30 +21,24 @@ import java.util.List;
 public class CSVManager {
     private CSVReader reader;
     private CSVWriter writer;
-    private ArrayList<ITimeWindows> listeTimeWindows;
 
     public CSVManager (String filePath) throws Exception{
         reader = new CSVReader(new FileReader(filePath),'\t');
-        listeTimeWindows = new ArrayList<>();
     }
 
 
-    public ArrayList<IParticipants> getPersonnesFromCSV (){
+    public ArrayList<IParticipants> getPersonnesFromCSV () {
         ArrayList<IParticipants> listePersonnes = new ArrayList<>();
         String[] nextLine;
         try {
-            while((nextLine = reader.readNext()) != null){
+            while ((nextLine = reader.readNext()) != null) {
                 try {
                     listePersonnes.add(new Personne(Integer.parseInt(nextLine[0]), nextLine[1], nextLine[2], nextLine[3], Integer.parseInt(nextLine[4]), Integer.parseInt(nextLine[5]), Integer.parseInt(nextLine[6])));
-                    listeTimeWindows.add(new TimeWindow(Integer.parseInt(nextLine[7]), Integer.parseInt(nextLine[8])));
-                }
-                catch(IllegalFormatException e){
+                } catch (IllegalFormatException e) {
                     System.out.println("Mauvaise entrée, personne illisible ! \n");
-                }
-                catch(IllegalArgumentException e){
+                } catch (IllegalArgumentException e) {
                     System.out.println("Mauvaise entrée, personne illisible ! \n");
-                }
-                catch(ArrayIndexOutOfBoundsException e) {
+                } catch (ArrayIndexOutOfBoundsException e) {
                     System.out.println("Mauvaise entrée, personne illisible ! \n");
                 }
             }
@@ -52,10 +46,6 @@ public class CSVManager {
             e.printStackTrace();
         }
         return listePersonnes;
-    }
-
-    public ITimeWindows getTimeWindow(int i){
-        return listeTimeWindows.get(i);
     }
 
     public void ecrireDispos(ArrayList<ITimeWindows> dispoH, ArrayList<ITimeWindows> dispoF){

@@ -94,7 +94,13 @@ public class GestionnaireCreneaux implements IEventMeetings {
         return nextMeetings;
     }
 
-    //public List<IMeeting> getScheduledMeetings();
+    public void setCreneauCourant(int i){
+        creneauCourant = i;
+    }
+
+    public int getCreneauCourant(){
+        return creneauCourant;
+    }
 
     public List<IMeeting> getAllMeetings(){
         ArrayList<IMeeting> res = new ArrayList<IMeeting>(getNextMeetings());

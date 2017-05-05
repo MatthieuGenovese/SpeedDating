@@ -46,6 +46,7 @@ public class Main extends Application {
         groupImport.getChildren().add(doubletab);
 
         RetardNode retardnode = new RetardNode(sw,sh);
+        retardnode.ajouterObservateur(doubletab);
         groupImport.getChildren().add(retardnode);
 
         SearchNode searchNode = new SearchNode(250,100);

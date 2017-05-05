@@ -66,24 +66,10 @@ public class Solver
             handler.endElement();
 
             int scores[][] = importerMatrice();
-            System.out.println(scores.length);
             int dispoH[][] = importerDispoH();
             int dispoF[][] = importerDispoF();
-
-           /* int scores[][] = {{1, 5, 0},
-                    {5, 0, 1},
-                    {0, 1, 5}};*/
-
-            /*int dispoF[][] ={{1, 3},
-                    {1, 3},
-                    {1, 3}};
-            int dispoH[][] ={{1, 3},
-                    {1, 3},
-                    {1, 3}};*/
-
             handler.startElement("scores");
             handler.startArray();
-            //System.out.println(f + " " + h);
             for (int i = 0 ; i < f ; i++) {
                 handler.startArray();
                 for (int j = 0 ; j< h ; j++)
@@ -139,7 +125,6 @@ public class Solver
             opl.addDataSource(dataSource);
             opl.generate();
 
-            System.out.println(opl.getElement("dispoF").asIntMap().toString());
             if (cp.solve()) {
                 opl.postProcess();
                 String res = opl.getElement("rencontres").asIntMap().toString();

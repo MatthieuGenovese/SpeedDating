@@ -4,7 +4,9 @@ import conflits.ICompatibility;
 import javafx.scene.control.Button;
 import javafx.scene.control.cell.PropertyValueFactory;
 import personnes.IParticipants;
+import personnes.Personne;
 import personnes.PersonneSoiree;
+import recontres.TimeWindow;
 import utilitaire.Utility;
 
 import java.util.ArrayList;
@@ -45,14 +47,15 @@ public class DoubleTabNode extends CustomNode implements Observateur, Obs {
     public void initListeners(){
         //ecouteur du clic sur le tableview d'hommes
         hommesList.getList().setOnMouseClicked(event -> {
+            //femmesList.getList().getFocusModel().
             IParticipants personneFocus = hommesList.getList().getSelectionModel().getSelectedItem();
+            hommesList.setFocus(true);
+            femmesList.setFocus(false);
             if(personneFocus != null) {
-                faireRetard(personneFocus, hommesList);
-
+                //faireRetard(personneFocus, hommesList);
                 historiqueH = personneFocus;
                 historiqueF = femmesList.getList().getSelectionModel().getSelectedItem();
                 femmesList.getList().getSelectionModel().clearSelection();
-
                 utilitaire.faireMatriceConflit(personneFocus, femmesList);
 
             }
@@ -60,13 +63,13 @@ public class DoubleTabNode extends CustomNode implements Observateur, Obs {
         //ecouteur du clic sur le tableview des femmes
         femmesList.getList().setOnMouseClicked(event -> {
             IParticipants personneFocus = femmesList.getList().getSelectionModel().getSelectedItem();
+            hommesList.setFocus(false);
+            femmesList.setFocus(true);
             if(personneFocus != null) {
-                faireRetard(personneFocus,femmesList);
-
+               // faireRetard(personneFocus,femmesList);
                 historiqueF = personneFocus;
                 historiqueH = hommesList.getList().getSelectionModel().getSelectedItem();
                 hommesList.getList().getSelectionModel().clearSelection();
-
                 utilitaire.faireMatriceConflit(personneFocus,hommesList);
             }
         });
@@ -89,7 +92,22 @@ public class DoubleTabNode extends CustomNode implements Observateur, Obs {
             femmesList.getList().setItems(in.getFemmes());
         }
         if(o instanceof RetardNode){
-            int index = hommesList.getList().getSelectionModel().getSelectedIndex();
+            if(historiqueF != null || historiqueH != null) {
+                if( hommesList.isFocus() && hommesList.getList().getFocusModel().getFocusedItem()!= null){
+                    PersonneSoiree personneFocus = ((PersonneSoiree) hommesList.getList().getSelectionModel().getSelectedItem());
+                    ((TimeWindow) personneFocus.getTimeWindow()).setArrivalSlot(((RetardNode) o).getRetardInt());
+                    personneFocus.setRetard(RetardNode.getRetard());
+                    hommesList.getColRetardHommes().setCellValueFactory(new PropertyValueFactory<PersonneSoiree,String>("retard"));
+                    hommesList.getList().refresh();
+                }
+                if( femmesList.isFocus() && femmesList.getList().getFocusModel().getFocusedItem()!= null){
+                    PersonneSoiree personneFocus = ((PersonneSoiree) femmesList.getList().getSelectionModel().getSelectedItem());
+                    ((TimeWindow) personneFocus.getTimeWindow()).setArrivalSlot(((RetardNode) o).getRetardInt());
+                    personneFocus.setRetard(RetardNode.getRetard());
+                    femmesList.getColRetardHommes().setCellValueFactory(new PropertyValueFactory<PersonneSoiree,String>("retard"));
+                    femmesList.getList().refresh();
+                }
+            }
         }
 
         if(o instanceof PreferenceNode){
@@ -135,17 +153,13 @@ public class DoubleTabNode extends CustomNode implements Observateur, Obs {
         femmesList.getList().getSelectionModel().clearSelection();
     }
 
-    public void faireRetard(IParticipants personnefocus, TableauPersonnes tp){
+    /*public void faireRetard(IParticipants personnefocus, TableauPersonnes tp){
         if(RetardNode.getValidRetard()){
             personnefocus.setRetard(RetardNode.getRetard());
             tp.getColRetardHommes().setCellValueFactory(new PropertyValueFactory<PersonneSoiree,String>("retard"));
             RetardNode.setValidRetard(false);
             tp.getList().refresh();
         }
-    }
-
-    /*public CalculMatrice getCalculMatrice(){
-        return calculateur;
     }*/
 
     @Override
