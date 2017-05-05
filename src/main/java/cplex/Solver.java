@@ -46,8 +46,8 @@ public class Solver
         {
             //colonnes = 3;
             //lignes = 3;
-            int f = colonnes;
-            int h = lignes;
+            int f = lignes;
+            int h = colonnes;
             int c = creneaux;
             int mini = 1;
 
@@ -66,6 +66,7 @@ public class Solver
             handler.endElement();
 
             int scores[][] = importerMatrice();
+            System.out.println(scores.length);
             int dispoH[][] = importerDispoH();
             int dispoF[][] = importerDispoF();
 
@@ -82,9 +83,10 @@ public class Solver
 
             handler.startElement("scores");
             handler.startArray();
-            for (int i = 0 ; i < h ; i++) {
+            //System.out.println(f + " " + h);
+            for (int i = 0 ; i < f ; i++) {
                 handler.startArray();
-                for (int j = 0 ; j< f ; j++)
+                for (int j = 0 ; j< h ; j++)
                     handler.addIntItem(scores[i][j]);
                 handler.endArray();
             }
@@ -136,6 +138,8 @@ public class Solver
             //IloOplDataSource dataSource = new IloOplDataSource(oplF.getEnv(), nomDonnees + ".dat");
             opl.addDataSource(dataSource);
             opl.generate();
+
+            System.out.println(opl.getElement("dispoF").asIntMap().toString());
             if (cp.solve()) {
                 opl.postProcess();
                 String res = opl.getElement("rencontres").asIntMap().toString();
@@ -177,11 +181,12 @@ public class Solver
 
 
             while (ligne != null) {
+
+                nbLignes++;
                 String[] decompose = ligne.split(",");
                 nbCol = decompose.length;
                 listeSArray.add(decompose);
                 ligne = r.readLine();
-                nbLignes++;
             }
             r.close();
             res = new int [nbLignes][nbCol];
@@ -261,16 +266,16 @@ public class Solver
         char[] tableau = res.toCharArray();
         int taillef,tailleh;
         if(model ==3) {
-            tailleh = lignes+2;
-            taillef = colonnes+2;
+            taillef = lignes+2;
+            tailleh = colonnes+2;
         }
         else{
 
-            tailleh = lignes;
-            taillef = colonnes;
+            taillef = lignes;
+            tailleh = colonnes;
         }
 
-        int results[][][] = new int[tailleh][taillef][creneaux];
+        int results[][][] = new int[taillef][tailleh][creneaux];
         int cpt1 = 0;
         int cpt2 = 0;
         int cpt3 = 0;
@@ -305,8 +310,8 @@ public class Solver
                 cpt3++;
             }
         }
-        for(int i = 0; i < tailleh; i++){
-            for(int j = 0; j < taillef; j++){
+        for(int i = 0; i < taillef; i++){
+            for(int j = 0; j < tailleh; j++){
                 for(int k = 0; k < creneaux; k++) {
                     System.out.print(results[i][j][k] + ",");
                 }

@@ -133,8 +133,8 @@ public class ImportNode extends CustomNode implements Obs {
         for(IParticipants p : hommes){
             ((PersonneSoiree) p).calculerConflits(femmes);
         }
-        nbCol = cptFemme;
-        nbLigne = cptHomme;
+        nbCol = cptHomme;
+        nbLigne = cptFemme;
         notifier();
     }
 

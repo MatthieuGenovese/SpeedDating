@@ -42,18 +42,18 @@ public class CalculMatrice {
         ArrayList<Integer> matrice = new ArrayList<>();
         ArrayList<ITimeWindows> dispoF = new ArrayList<>();
         ArrayList<ITimeWindows> dispoH = new ArrayList<>();
-        for (IParticipants homme : hommeListe) {
-            dispoH.add(((PersonneSoiree) homme).getTimeWindow());
-            for (ICompatibility p : ((PersonneSoiree) homme).getConflits()) {
+        for (IParticipants femme : femmeListe) {
+            dispoF.add(((PersonneSoiree) femme).getTimeWindow());
+            for (ICompatibility p : ((PersonneSoiree) femme).getConflits()) {
                 for (ICompatibility p2 : ((PersonneSoiree) p.getPersonneSoiree()).getConflits()) {
-                    if (p2.getPersonneSoiree().getId() ==  homme.getId()) {
+                    if (p2.getPersonneSoiree().getId() ==  femme.getId()) {
                         matrice.add(Math.min(p2.getAffinite(),p.getAffinite()));
                     }
                 }
             }
         }
-        for(IParticipants femme : femmeListe){
-            dispoF.add(((PersonneSoiree) femme).getTimeWindow());
+        for(IParticipants homme : hommeListe){
+            dispoH.add(((PersonneSoiree) homme).getTimeWindow());
         }
         manager.ecrireMatriceCPLEX(matrice, nbCol);
         manager.ecrireDispos(dispoH,dispoF);
@@ -75,10 +75,10 @@ public class CalculMatrice {
     }
 
     public void organiserCrenaux(){
-        for(int homme = 0; homme < nbLigne; homme++){
-            for(int femme = 0; femme < nbCol; femme++){
+        for(int femme = 0; femme < nbLigne; femme++){
+            for(int homme = 0; homme < nbCol; homme++){
                 for(int k = 0; k < creneaux; k++) {
-                    if(matriceResultat[homme][femme][k] == 1 ) {
+                    if(matriceResultat[femme][homme][k] == 1 ) {
                         gestionnaireCrenaux.ajouterRencontre(new Rencontre(hommeListe.get(homme), femmeListe.get(femme), gestionnaireCrenaux.getCrenau(k).getNumeroCrenau()),k);
                     }
                 }
