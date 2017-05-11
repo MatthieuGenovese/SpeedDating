@@ -60,12 +60,12 @@ using CP;
  	forall(f in F, h in H){                  				 //Au plus 1 rencontre par couple
  		(sum(c in C) rencontres[f][h][c]) <= 1;
  	}
-	forall(f in F){
-		(sum(h in H, c in C) rencontres[f][h][c]) >= mini;   //minimum de rencontre pour chq femme
-	}
-	forall(h in H){
-		(sum(f in F, c in C) rencontres[f][h][c]) >= mini;   //minimum de rencontre pour chq homme
-	}
+	//forall(f in F){
+	//	(sum(h in H, c in C) rencontres[f][h][c]) >= mini;   //minimum de rencontre pour chq femme
+	//}
+	//forall(h in H){
+	//	(sum(f in F, c in C) rencontres[f][h][c]) >= mini;   //minimum de rencontre pour chq homme
+	//}
 	forall(f in F, c in C){
 		(sum(h in H) rencontres[f][h][c]) <= 1; //au plus 1 rencontres par femme et par créneau
 	}
