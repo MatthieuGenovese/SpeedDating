@@ -11,9 +11,7 @@ import utilitaire.Utility;
 
 import java.util.ArrayList;
 
-/**
- * Created by Jeremy on 06/04/2017.
- */
+
 public class DoubleTabNode extends CustomNode implements Observateur, Obs {
     ArrayList<Observateur> observateurs = new ArrayList<Observateur>();
     TableauPersonnes hommesList;
@@ -87,9 +85,9 @@ public class DoubleTabNode extends CustomNode implements Observateur, Obs {
         if(o instanceof ImportNode){
             ImportNode in =(ImportNode)o;
             afficherCalcul();
-            utilitaire.initCalculateur(in.getCsvManager(), in.getNbLigne(), in.getNbCol(), in.getHommes(), in.getFemmes());
-            hommesList.getList().setItems(in.getHommes());
-            femmesList.getList().setItems(in.getFemmes());
+            utilitaire.initCalculateur(in.getNbLigne(), in.getNbCol());
+            hommesList.getList().setItems(utilitaire.getHommes());
+            femmesList.getList().setItems(utilitaire.getFemmes());
         }
         if(o instanceof RetardNode){
             if(historiqueF != null || historiqueH != null) {

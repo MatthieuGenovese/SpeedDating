@@ -8,23 +8,29 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import personnes.IParticipants;
+import utilitaire.Utility;
+
+import java.util.ArrayList;
 
 import static javafx.collections.FXCollections.observableArrayList;
 
 /**
  * Created by Jeremy on 19/04/2017.
  */
-public class SearchNode extends CustomNode implements Observateur {
+public class SearchNode extends CustomNode implements Obs {
+
+    ArrayList<Observateur> observateurs = new ArrayList<Observateur>();
 
     //Partie metier
-    ObservableList<IParticipants> entries = observableArrayList();
-    ListView<IParticipants> list = new ListView();
+    Utility utilitaire;
     DoubleTabNode tableaux;
 
     //Partie graphique
     TextField txt = new TextField();
+    ListView<IParticipants> list = new ListView();
 
-    public SearchNode(double posx, double posy){
+
+    public SearchNode(double posx, double posy, Utility u){
         this.posx = posx;
         this.posy = posy;
         initElementsGraphiques();
@@ -34,6 +40,8 @@ public class SearchNode extends CustomNode implements Observateur {
         this.getChildren().add(list);
         cacherTexte();
         cacherlist();
+
+        this.utilitaire = u;
     }
 
     public void setTableaux(DoubleTabNode tableaux){
@@ -45,7 +53,7 @@ public class SearchNode extends CustomNode implements Observateur {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 list.getSelectionModel().clearSelection();
-                tableaux.unselectall();
+                //tableaux.unselectall();
                 handleSearchByKey(oldValue,newValue);
             }
         });
@@ -57,7 +65,7 @@ public class SearchNode extends CustomNode implements Observateur {
                 if(list.getSelectionModel().getSelectedItem() != null) {
                     System.out.println(list.getSelectionModel().getSelectedItem().getPrenom());
                     if(list.getSelectionModel().getSelectedItem().getGenre().equalsIgnoreCase("m")){
-                        for(IParticipants p : tableaux.hommesList.getList().getItems()){
+                        for(IParticipants p : utilitaire.getHommes()){
                             if(p.equals(list.getSelectionModel().getSelectedItem())){
                                 break;
                             }
@@ -81,7 +89,7 @@ public class SearchNode extends CustomNode implements Observateur {
                         });
                     }
                     else{
-                        for(IParticipants p : tableaux.femmesList.getList().getItems()){
+                        for(IParticipants p : utilitaire.getFemmes()){
                             if(p.equals(list.getSelectionModel().getSelectedItem())){
                                 break;
                             }
@@ -127,14 +135,14 @@ public class SearchNode extends CustomNode implements Observateur {
     }
 
     private void handleSearchByKey(String oldValue, String newValue) {
-        if(!entries.isEmpty()) {
+        if(!utilitaire.getListePersonneSoiree().isEmpty()) {
             if (newValue.length() == 0) {
                 cacherlist();
             } else {
                 afficherlist();
             }
             if (oldValue != null || (newValue.length() < oldValue.length())) {
-                list.setItems(entries);
+                list.setItems((ObservableList<IParticipants>)utilitaire.getListePersonneSoiree());
             }
 
             newValue = newValue.toLowerCase();
@@ -160,14 +168,6 @@ public class SearchNode extends CustomNode implements Observateur {
         list.maxHeight(5);
     }
 
-    @Override
-    public void updated(Obs o) {
-        ImportNode in = (ImportNode) o;
-        afficherTexte();
-        entries.setAll(in.getHommes());
-        entries.addAll(in.getFemmes());
-    }
-
     public void cacherlist(){
         list.setDisable(true);
         list.setVisible(false);
@@ -184,5 +184,22 @@ public class SearchNode extends CustomNode implements Observateur {
 
     public void afficherTexte(){
         txt.setVisible(true);
+    }
+
+    @Override
+    public void ajouterObservateur(Observateur o) {
+        this.observateurs.add(o);
+    }
+
+    @Override
+    public void supprimerObservateur(Observateur o) {
+        this.observateurs.remove(o);
+    }
+
+    @Override
+    public void notifier() {
+        for(Observateur o : observateurs){
+            o.updated(this); // Idée : Sortir le doubleNode de SearchNode
+        }
     }
 }

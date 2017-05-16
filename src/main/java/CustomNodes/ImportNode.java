@@ -9,15 +9,13 @@ import recontres.TimeWindow;
 import utilitaire.CSVManager;
 import personnes.IParticipants;
 import personnes.PersonneSoiree;
+import utilitaire.Utility;
 
 import java.io.File;
 import java.util.ArrayList;
 
 import static javafx.collections.FXCollections.observableArrayList;
 
-/**
- * Created by Jeremy on 06/04/2017.
- */
 public class ImportNode extends CustomNode implements Obs {
 
     //obs
@@ -28,11 +26,7 @@ public class ImportNode extends CustomNode implements Obs {
     int nbCol,nbLigne;
 
     //Propriete metier
-    CSVManager csvManager;
-    ArrayList<IParticipants> listeChargee;
-    ArrayList<IParticipants> listePersonneSoiree ;
-    ObservableList<IParticipants> hommes = observableArrayList();
-    ObservableList<IParticipants> femmes = observableArrayList();
+    Utility utilitaire;
 
     //Propriete graphique
     Text textImport;
@@ -42,7 +36,7 @@ public class ImportNode extends CustomNode implements Obs {
     Button btnImport;
     Button btnValiderImport;
 
-    public ImportNode(double posx, double posy){
+    public ImportNode(double posx, double posy, Utility u){
         this.posx = posx;
         this.posy = posy;
         initsElementsGrapiques();
@@ -50,11 +44,12 @@ public class ImportNode extends CustomNode implements Obs {
         initListeners();
         nbCol = 0;
         nbLigne = 0;
-        listePersonneSoiree = new ArrayList<>();
         this.getChildren().add(getBtnImport());
         this.getChildren().add(getBtnValiderImport());
         this.getChildren().add(getTextImport());
         this.getChildren().add(getTextFilePath());
+
+        this.utilitaire = u;
     }
 
     public void initsElementsGrapiques(){
@@ -97,30 +92,29 @@ public class ImportNode extends CustomNode implements Obs {
 
         btnValiderImport.setOnAction(actionEvent -> {
             try {
-                csvManager = new CSVManager(textFilePath.getText());
-                listeChargee = new ArrayList<>();
-                listeChargee = csvManager.getPersonnesFromCSV();
-                remplir();
+                utilitaire.setCsvManager(new CSVManager(textFilePath.getText()));
+                utilitaire.setListeChargee(utilitaire.getCsvManager().getPersonnesFromCSV());
+                remplir(utilitaire);
             } catch (Throwable e) {
                 e.printStackTrace();
             }
         });
     }
 
-    public void remplir() throws Throwable{
+    public void remplir(Utility u) throws Throwable{
         int cptHomme = 0;
         int cptFemme = 0;
-        for(IParticipants p : listeChargee){
+        for(IParticipants p : u.getListeChargee()){
             if(p.getGenre().equals("M")){
                 p.initPersonneSoiree(cptHomme, new TimeWindow(1,3));
-                listePersonneSoiree.add(p.getPersonneSoiree());
-                hommes.add(p.getPersonneSoiree());
+                u.getListePersonneSoiree().add(p.getPersonneSoiree());
+                u.getHommes().add(p.getPersonneSoiree());
                 cptHomme++;
             }
             else if(p.getGenre().equals("F")) {
                 p.initPersonneSoiree(cptFemme,new TimeWindow(1,3));
-                listePersonneSoiree.add(p.getPersonneSoiree());
-                femmes.add(p.getPersonneSoiree());
+                u.getListePersonneSoiree().add(p.getPersonneSoiree());
+                u.getFemmes().add(p.getPersonneSoiree());
                 cptFemme++;
             }
             else {
@@ -128,11 +122,11 @@ public class ImportNode extends CustomNode implements Obs {
             }
             System.out.println(p.toString());
         }
-        for(IParticipants p : femmes){
-            ((PersonneSoiree) p).calculerConflits(hommes);
+        for(IParticipants p : u.getFemmes()){
+            ((PersonneSoiree) p).calculerConflits(u.getHommes());
         }
-        for(IParticipants p : hommes){
-            ((PersonneSoiree) p).calculerConflits(femmes);
+        for(IParticipants p : u.getHommes()){
+            ((PersonneSoiree) p).calculerConflits(u.getFemmes());
         }
         nbCol = cptHomme;
         nbLigne = cptFemme;
@@ -161,26 +155,6 @@ public class ImportNode extends CustomNode implements Obs {
 
     public void setPosy(double posy) {
         this.posy = posy;
-    }
-
-    public CSVManager getCsvManager() {
-        return csvManager;
-    }
-
-    public void setCsvManager(CSVManager csvManager) {
-        this.csvManager = csvManager;
-    }
-
-    public ArrayList<IParticipants> getListeChargee() {
-        return listeChargee;
-    }
-
-    public ArrayList<IParticipants> getListePersonneSoiree(){
-        return listePersonneSoiree;
-    }
-
-    public void setListeChargee(ArrayList<IParticipants> listeChargee) {
-        this.listeChargee = listeChargee;
     }
 
     public Text getTextImport() {
@@ -213,14 +187,6 @@ public class ImportNode extends CustomNode implements Obs {
 
     public void setBtnValiderImport(Button btnValiderImport) {
         this.btnValiderImport = btnValiderImport;
-    }
-
-    public ObservableList<IParticipants> getHommes() {
-        return hommes;
-    }
-
-    public ObservableList<IParticipants> getFemmes() {
-        return femmes;
     }
 
     @Override

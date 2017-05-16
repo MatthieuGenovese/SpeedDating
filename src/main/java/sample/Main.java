@@ -37,25 +37,30 @@ public class Main extends Application {
         //ajout de l'onglet "import" au gestionnaire d'onglet
         gestionnaireDonglet.getTabs().setAll(ongletImport, ongletCreneaux);
 
-        ImportNode importnode = new ImportNode(sw,sh);
+        ImportNode importnode = new ImportNode(sw,sh,utilitaire);
         groupImport.getChildren().add(importnode);
 
         DoubleTabNode doubletab = new DoubleTabNode("Hommes",sw,sh,"Femmes",sw,sh, utilitaire);
-
-        importnode.ajouterObservateur(doubletab);
         groupImport.getChildren().add(doubletab);
 
         RetardNode retardnode = new RetardNode(sw,sh);
-        retardnode.ajouterObservateur(doubletab);
         groupImport.getChildren().add(retardnode);
 
-        SearchNode searchNode = new SearchNode(250,100);
+        SearchNode searchNode = new SearchNode(250,100, utilitaire);
         groupImport.getChildren().add(searchNode);
-        importnode.ajouterObservateur(searchNode);
 
         PreferenceNode preferenceNode = new PreferenceNode(100,500);
         groupImport.getChildren().add(preferenceNode);
+
+        //Ajout des observateurs
+        importnode.ajouterObservateur(doubletab);
+
+        retardnode.ajouterObservateur(doubletab);
+
         preferenceNode.ajouterObservateur(doubletab);
+
+
+
 
         //assignation du groupe "groupImport" a l'onglet Import
         ongletImport.setContent(groupImport);
