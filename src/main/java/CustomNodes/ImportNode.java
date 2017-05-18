@@ -1,6 +1,5 @@
 package CustomNodes;
 
-import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
@@ -9,7 +8,7 @@ import recontres.TimeWindow;
 import utilitaire.CSVManager;
 import personnes.IParticipants;
 import personnes.PersonneSoiree;
-import utilitaire.Utility;
+import utilitaire.SpeedDating;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -26,7 +25,7 @@ public class ImportNode extends CustomNode implements Obs {
     int nbCol,nbLigne;
 
     //Propriete metier
-    Utility utilitaire;
+    SpeedDating utilitaire;
 
     //Propriete graphique
     Text textImport;
@@ -36,7 +35,7 @@ public class ImportNode extends CustomNode implements Obs {
     Button btnImport;
     Button btnValiderImport;
 
-    public ImportNode(double posx, double posy, Utility u){
+    public ImportNode(double posx, double posy, SpeedDating u){
         this.posx = posx;
         this.posy = posy;
         initsElementsGrapiques();
@@ -101,7 +100,7 @@ public class ImportNode extends CustomNode implements Obs {
         });
     }
 
-    public void remplir(Utility u) throws Throwable{
+    public void remplir(SpeedDating u) throws Throwable{
         int cptHomme = 0;
         int cptFemme = 0;
         for(IParticipants p : u.getListeChargee()){

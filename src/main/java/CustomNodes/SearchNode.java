@@ -8,7 +8,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import personnes.IParticipants;
-import utilitaire.Utility;
+import utilitaire.SpeedDating;
 
 import java.util.ArrayList;
 
@@ -22,7 +22,7 @@ public class SearchNode extends CustomNode implements Obs {
     ArrayList<Observateur> observateurs = new ArrayList<Observateur>();
 
     //Partie metier
-    Utility utilitaire;
+    SpeedDating utilitaire;
     DoubleTabNode tableaux;
 
     //Partie graphique
@@ -30,7 +30,7 @@ public class SearchNode extends CustomNode implements Obs {
     ListView<IParticipants> list = new ListView();
 
 
-    public SearchNode(double posx, double posy, Utility u){
+    public SearchNode(double posx, double posy, SpeedDating u){
         this.posx = posx;
         this.posy = posy;
         initElementsGraphiques();

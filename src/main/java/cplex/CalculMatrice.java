@@ -21,7 +21,7 @@ public class CalculMatrice {
     private int[][][] matriceResultat;
     private int creneaux = 3;
     private ObservableList<IParticipants> hommeListe, femmeListe;
-    private GestionnaireCreneaux gestionnaireCrenaux = new GestionnaireCreneaux(3);
+    private GestionnaireCreneaux gestionnaireCrenaux;
     public void setHommeListe(ObservableList<IParticipants> hommeListe) {
         this.hommeListe = hommeListe;
     }
@@ -30,12 +30,13 @@ public class CalculMatrice {
         this.femmeListe = femmeListe;
     }
 
-    public CalculMatrice(CSVManager manager, int nbLigne, int nbCol, ObservableList<IParticipants> hommes, ObservableList<IParticipants> femmes) {
+    public CalculMatrice(CSVManager manager, int nbLigne, int nbCol, ObservableList<IParticipants> hommes, ObservableList<IParticipants> femmes,GestionnaireCreneaux gc) {
         this.nbCol = nbCol;
         this.nbLigne = nbLigne;
         this.manager = manager;
         this.hommeListe = hommes;
         this.femmeListe = femmes;
+        this.gestionnaireCrenaux = gc;
     }
 
     public void calculerMatriceCPLEX() {

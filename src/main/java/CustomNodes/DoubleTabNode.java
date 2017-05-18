@@ -4,36 +4,30 @@ import conflits.ICompatibility;
 import javafx.scene.control.Button;
 import javafx.scene.control.cell.PropertyValueFactory;
 import personnes.IParticipants;
-import personnes.Personne;
 import personnes.PersonneSoiree;
 import recontres.TimeWindow;
-import utilitaire.Utility;
+import utilitaire.SpeedDating;
 
 import java.util.ArrayList;
 
 
-public class DoubleTabNode extends CustomNode implements Observateur, Obs {
+public class DoubleTabNode extends CustomNode implements Observateur {
     ArrayList<Observateur> observateurs = new ArrayList<Observateur>();
     TableauPersonnes hommesList;
     TableauPersonnes femmesList;
-    Button calcul;
     IParticipants historiqueH;
     IParticipants historiqueF;
-    Utility utilitaire;
+    SpeedDating utilitaire;
 
-    public DoubleTabNode(String s1, double posx1, double posy1, String s2, double posx2, double posy2, Utility utilitaire){
+    public DoubleTabNode(String s1, double posx1, double posy1, String s2, double posx2, double posy2, SpeedDating utilitaire){
         hommesList = new TableauPersonnes(s1,posx1,posy1);
         femmesList = new TableauPersonnes(s2,posx2,posy2);
-        calcul = new Button("Calcul des créneaux");
         this.utilitaire = utilitaire;
-        calcul.setLayoutX(240);
-        calcul.setLayoutY(540);
+
         femmesList.afficheFemme();
 
         this.getChildren().add(hommesList);
         this.getChildren().add(femmesList);
-        this.getChildren().add(calcul);
-        cacherCalcul();
 
         historiqueH = null;
         historiqueF = null;
@@ -72,10 +66,7 @@ public class DoubleTabNode extends CustomNode implements Observateur, Obs {
             }
         });
 
-        calcul.setOnAction(actionEvent->{
-            utilitaire.getCalculateur().calculerMatriceCPLEX();
-            notifier();
-        });
+
     }
 
 
@@ -84,7 +75,6 @@ public class DoubleTabNode extends CustomNode implements Observateur, Obs {
         System.out.println("-----------");
         if(o instanceof ImportNode){
             ImportNode in =(ImportNode)o;
-            afficherCalcul();
             utilitaire.initCalculateur(in.getNbLigne(), in.getNbCol());
             hommesList.getList().setItems(utilitaire.getHommes());
             femmesList.getList().setItems(utilitaire.getFemmes());
@@ -138,13 +128,7 @@ public class DoubleTabNode extends CustomNode implements Observateur, Obs {
 
     }
 
-    private void afficherCalcul(){
-        calcul.setVisible(true);
-    }
 
-    private void cacherCalcul(){
-        calcul.setVisible(false);
-    }
 
     public void unselectall() {
         hommesList.getList().getSelectionModel().clearSelection();
@@ -160,20 +144,4 @@ public class DoubleTabNode extends CustomNode implements Observateur, Obs {
         }
     }*/
 
-    @Override
-    public void ajouterObservateur(Observateur o) {
-        observateurs.add(o);
-    }
-
-    @Override
-    public void supprimerObservateur(Observateur o) {
-        observateurs.remove(o);
-    }
-
-    @Override
-    public void notifier() {
-        for(Observateur o : observateurs){
-            o.updated(this);
-        }
-    }
 }

@@ -9,7 +9,7 @@ import javafx.scene.text.Text;
 import personnes.IParticipants;
 import recontres.GestionnaireCreneaux;
 import recontres.IMeeting;
-import utilitaire.Utility;
+import utilitaire.SpeedDating;
 
 import static javafx.collections.FXCollections.observableArrayList;
 
@@ -31,9 +31,9 @@ public class CreneauxNode extends CustomNode implements Observateur {
 
     TableColumn prenomh;
     TableColumn prenomf;
-    Utility utilitaire;
+    SpeedDating utilitaire;
 
-    public CreneauxNode(double posx, double posy, Utility utilitaire){
+    public CreneauxNode(double posx, double posy, SpeedDating utilitaire){
         this.posx = posx;
         this.posy = posy;
         initGraphique();
@@ -98,7 +98,7 @@ public class CreneauxNode extends CustomNode implements Observateur {
     @Override
     public void updated(Obs o) {
         System.out.println("---------");
-        if(o instanceof DoubleTabNode){
+        if(o instanceof CalculCreneauxNode){
             GestionnaireCreneaux gc = utilitaire.getCalculateur().getGestionnaireCrenaux();
             numCreneau.setText("Numéro du creneau : " + gc.getCreneauCourant());
             for(IMeeting c : gc.getCurrentMeetings()){

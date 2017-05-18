@@ -6,23 +6,29 @@ import cplex.CalculMatrice;
 import javafx.collections.ObservableList;
 import personnes.IParticipants;
 import personnes.PersonneSoiree;
+import recontres.Creneau;
+import recontres.GestionnaireCreneaux;
+import recontres.IEventMeetings;
+import recontres.IMeeting;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static javafx.collections.FXCollections.observableArrayList;
 
 
-public class Utility {
+public class SpeedDating implements ISpeedDating {
 
     CSVManager csvManager;
     ArrayList<IParticipants> listeChargee;
     ArrayList<IParticipants> listePersonneSoiree ;
     ObservableList<IParticipants> hommes = observableArrayList();
     ObservableList<IParticipants> femmes = observableArrayList();
+    GestionnaireCreneaux gc = new GestionnaireCreneaux(3);
 
     private CalculMatrice calculateur;
 
-    public Utility(){
+    public SpeedDating(){
         listePersonneSoiree = new ArrayList<>();
         listeChargee = new ArrayList<>();
 
@@ -30,7 +36,7 @@ public class Utility {
     }
 
     public void initCalculateur( int nbLigne, int nbCol){
-        calculateur = new CalculMatrice(csvManager, nbLigne, nbCol, hommes, femmes);
+        calculateur = new CalculMatrice(csvManager, nbLigne, nbCol, hommes, femmes,gc);
     }
     public CalculMatrice getCalculateur() {
         return calculateur;
@@ -83,5 +89,20 @@ public class Utility {
 
     public ObservableList<IParticipants> getFemmes() {
         return femmes;
+    }
+
+    @Override
+    public List<IMeeting> getMeetings() {
+        return gc.getAllMeetings();
+    }
+
+    @Override
+    public ArrayList<IParticipants> getParticipants() {
+        return this.listePersonneSoiree;
+    }
+
+    @Override
+    public IEventMeetings getSlots() {
+        return this.gc;
     }
 }

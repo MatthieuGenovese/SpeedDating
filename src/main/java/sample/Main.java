@@ -7,7 +7,8 @@ import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import utilitaire.Utility;
+import utilitaire.ISpeedDating;
+import utilitaire.SpeedDating;
 
 import static javafx.collections.FXCollections.observableArrayList;
 
@@ -25,7 +26,7 @@ public class Main extends Application {
     final Tab ongletCreneaux = new Tab("Creneaux");
     //le gestionnaire d'onglet (tous les onglets seront ajoutés sur lui
     final TabPane gestionnaireDonglet = new TabPane();
-    Utility utilitaire = new Utility();
+    SpeedDating utilitaire = new SpeedDating();
 
     @Override
     public void start(Stage primaryStage) {
@@ -52,6 +53,13 @@ public class Main extends Application {
         PreferenceNode preferenceNode = new PreferenceNode(100,500);
         groupImport.getChildren().add(preferenceNode);
 
+        CalculCreneauxNode calculCreneauxNode = new CalculCreneauxNode(540,540,utilitaire);
+        groupImport.getChildren().add(calculCreneauxNode);
+
+        //Ajout du creneauNode à l'interface
+        CreneauxNode creneauxNode = new CreneauxNode(250, 100, utilitaire);
+        groupCreneaux.getChildren().add(creneauxNode);
+
         //Ajout des observateurs
         importnode.ajouterObservateur(doubletab);
 
@@ -59,6 +67,7 @@ public class Main extends Application {
 
         preferenceNode.ajouterObservateur(doubletab);
 
+        calculCreneauxNode.ajouterObservateur(creneauxNode);
 
 
 
@@ -69,10 +78,7 @@ public class Main extends Application {
         ongletCreneaux.setClosable(false);
         searchNode.setTableaux(doubletab);
 
-        //Ajout du creneauNode à l'interface
-        CreneauxNode creneauxNode = new CreneauxNode(250, 100, utilitaire);
-        doubletab.ajouterObservateur(creneauxNode);
-        groupCreneaux.getChildren().add(creneauxNode);
+
 
         //ajout du gestionnaire d'onglet au root
         root.getChildren().add(gestionnaireDonglet);
