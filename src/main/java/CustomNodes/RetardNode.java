@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+import utilitaire.SpeedDating;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -17,6 +18,8 @@ import java.util.Date;
 public class RetardNode extends CustomNode implements Obs{
     ArrayList<Observateur> observateurs = new ArrayList<Observateur>();
     //Partie metier
+
+    SpeedDating utilitaire;
     private static boolean validRetard = false;
     private int retardInt = 0;
     //Partie Graphique
@@ -28,7 +31,8 @@ public class RetardNode extends CustomNode implements Obs{
     Label labelT;
     Label labelT2;
 
-    public RetardNode(double posx, double posy){
+    public RetardNode(double posx, double posy,SpeedDating u){
+        this.utilitaire = u;
         this.posx = posx;
         this.posy = posy;
         initElementsGraphiques();
@@ -84,6 +88,9 @@ public class RetardNode extends CustomNode implements Obs{
     public void initListeners(){
         btnValiderRetard.setOnAction(actionEvent -> {
             validRetard = true;
+            utilitaire.getCurrent().setRetard(getRetard());
+            //((TimeWindow) personneFocus.getTimeWindow()).setArrivalSlot(((RetardNode) o).getRetardInt());
+
             notifier();
         });
     }

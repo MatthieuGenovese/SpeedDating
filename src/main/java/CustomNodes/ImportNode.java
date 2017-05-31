@@ -94,6 +94,7 @@ public class ImportNode extends CustomNode implements Obs {
                 utilitaire.setCsvManager(new CSVManager(textFilePath.getText()));
                 utilitaire.setListeChargee(utilitaire.getCsvManager().getPersonnesFromCSV());
                 remplir(utilitaire);
+                utilitaire.initCalculateur(this.getNbLigne(), this.getNbCol());
             } catch (Throwable e) {
                 e.printStackTrace();
             }

@@ -26,11 +26,21 @@ public class SpeedDating implements ISpeedDating {
     ObservableList<IParticipants> femmes = observableArrayList();
     GestionnaireCreneaux gc = new GestionnaireCreneaux(3);
 
+
+
+    IParticipants selectHomme;
+    IParticipants selectF;
+    IParticipants current;
+
     private CalculMatrice calculateur;
 
     public SpeedDating(){
         listePersonneSoiree = new ArrayList<>();
         listeChargee = new ArrayList<>();
+
+        selectF = null;
+        selectHomme = null;
+        current = null;
 
 
     }
@@ -104,5 +114,29 @@ public class SpeedDating implements ISpeedDating {
     @Override
     public IEventMeetings getSlots() {
         return this.gc;
+    }
+
+    public IParticipants getSelectHomme() {
+        return selectHomme;
+    }
+
+    public IParticipants getSelectF() {
+        return selectF;
+    }
+
+    public IParticipants getCurrent() {
+        return current;
+    }
+
+    public void setSelectHomme(IParticipants selectHomme) {
+        this.selectHomme = selectHomme;
+    }
+
+    public void setSelectF(IParticipants selectF) {
+        this.selectF = selectF;
+    }
+
+    public void setCurrent(IParticipants current) {
+        this.current = current;
     }
 }

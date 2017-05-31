@@ -44,13 +44,13 @@ public class Main extends Application {
         DoubleTabNode doubletab = new DoubleTabNode("Hommes",sw,sh,"Femmes",sw,sh, utilitaire);
         groupImport.getChildren().add(doubletab);
 
-        RetardNode retardnode = new RetardNode(sw,sh);
+        RetardNode retardnode = new RetardNode(sw,sh,utilitaire);
         groupImport.getChildren().add(retardnode);
 
         SearchNode searchNode = new SearchNode(250,100, utilitaire);
         groupImport.getChildren().add(searchNode);
 
-        PreferenceNode preferenceNode = new PreferenceNode(100,500);
+        PreferenceNode preferenceNode = new PreferenceNode(100,500,utilitaire);
         groupImport.getChildren().add(preferenceNode);
 
         CalculCreneauxNode calculCreneauxNode = new CalculCreneauxNode(540,540,utilitaire);
@@ -62,9 +62,8 @@ public class Main extends Application {
 
         //Ajout des observateurs
         importnode.ajouterObservateur(doubletab);
-
+        importnode.ajouterObservateur(searchNode);
         retardnode.ajouterObservateur(doubletab);
-
         preferenceNode.ajouterObservateur(doubletab);
 
         calculCreneauxNode.ajouterObservateur(creneauxNode);

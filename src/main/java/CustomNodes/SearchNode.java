@@ -17,13 +17,14 @@ import static javafx.collections.FXCollections.observableArrayList;
 /**
  * Created by Jeremy on 19/04/2017.
  */
-public class SearchNode extends CustomNode implements Obs {
+public class SearchNode extends CustomNode implements Observateur {
 
-    ArrayList<Observateur> observateurs = new ArrayList<Observateur>();
 
     //Partie metier
     SpeedDating utilitaire;
     DoubleTabNode tableaux;
+    ObservableList<IParticipants> listeall = observableArrayList();
+
 
     //Partie graphique
     TextField txt = new TextField();
@@ -38,9 +39,8 @@ public class SearchNode extends CustomNode implements Obs {
 
         this.getChildren().add(txt);
         this.getChildren().add(list);
-        cacherTexte();
+        //cacherTexte();
         cacherlist();
-
         this.utilitaire = u;
     }
 
@@ -53,7 +53,7 @@ public class SearchNode extends CustomNode implements Obs {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 list.getSelectionModel().clearSelection();
-                //tableaux.unselectall();
+                tableaux.unselectall();
                 handleSearchByKey(oldValue,newValue);
             }
         });
@@ -78,6 +78,7 @@ public class SearchNode extends CustomNode implements Obs {
                             {
                                 tableaux.hommesList.getList().requestFocus();
                                 tableaux.hommesList.getList().getSelectionModel().clearAndSelect(i);
+                                tableaux.hommesList.getList().getSelectionModel().select(i);
                                 tableaux.hommesList.getList().getFocusModel().focus(i);
                                 int focus = tableaux.hommesList.getList().getSelectionModel().getFocusedIndex();
                                 tableaux.hommesList.getList().scrollTo(focus);
@@ -142,7 +143,7 @@ public class SearchNode extends CustomNode implements Obs {
                 afficherlist();
             }
             if (oldValue != null || (newValue.length() < oldValue.length())) {
-                list.setItems((ObservableList<IParticipants>)utilitaire.getListePersonneSoiree());
+                list.setItems(listeall);
             }
 
             newValue = newValue.toLowerCase();
@@ -186,20 +187,10 @@ public class SearchNode extends CustomNode implements Obs {
         txt.setVisible(true);
     }
 
-    @Override
-    public void ajouterObservateur(Observateur o) {
-        this.observateurs.add(o);
-    }
 
     @Override
-    public void supprimerObservateur(Observateur o) {
-        this.observateurs.remove(o);
-    }
-
-    @Override
-    public void notifier() {
-        for(Observateur o : observateurs){
-            o.updated(this); // Idée : Sortir le doubleNode de SearchNode
-        }
+    public void updated(Obs o) {
+        listeall.setAll(utilitaire.getFemmes());
+        listeall.addAll(utilitaire.getHommes());
     }
 }
