@@ -7,7 +7,8 @@ import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import utilitaire.Utility;
+import utilitaire.ISpeedDating;
+import utilitaire.SpeedDating;
 
 import static javafx.collections.FXCollections.observableArrayList;
 
@@ -25,7 +26,7 @@ public class Main extends Application {
     final Tab ongletCreneaux = new Tab("Creneaux");
     //le gestionnaire d'onglet (tous les onglets seront ajoutés sur lui
     final TabPane gestionnaireDonglet = new TabPane();
-    Utility utilitaire = new Utility();
+    SpeedDating utilitaire = new SpeedDating();
 
     @Override
     public void start(Stage primaryStage) {
@@ -37,25 +38,37 @@ public class Main extends Application {
         //ajout de l'onglet "import" au gestionnaire d'onglet
         gestionnaireDonglet.getTabs().setAll(ongletImport, ongletCreneaux);
 
-        ImportNode importnode = new ImportNode(sw,sh);
+        ImportNode importnode = new ImportNode(sw,sh,utilitaire);
         groupImport.getChildren().add(importnode);
 
         DoubleTabNode doubletab = new DoubleTabNode("Hommes",sw,sh,"Femmes",sw,sh, utilitaire);
-
-        importnode.ajouterObservateur(doubletab);
         groupImport.getChildren().add(doubletab);
 
-        RetardNode retardnode = new RetardNode(sw,sh);
-        retardnode.ajouterObservateur(doubletab);
+        RetardNode retardnode = new RetardNode(sw,sh,utilitaire);
         groupImport.getChildren().add(retardnode);
 
-        SearchNode searchNode = new SearchNode(250,100);
+        SearchNode searchNode = new SearchNode(250,100, utilitaire);
         groupImport.getChildren().add(searchNode);
-        importnode.ajouterObservateur(searchNode);
 
-        PreferenceNode preferenceNode = new PreferenceNode(100,500);
+        PreferenceNode preferenceNode = new PreferenceNode(100,500,utilitaire);
         groupImport.getChildren().add(preferenceNode);
+
+        CalculCreneauxNode calculCreneauxNode = new CalculCreneauxNode(540,540,utilitaire);
+        groupImport.getChildren().add(calculCreneauxNode);
+
+        //Ajout du creneauNode à l'interface
+        CreneauxNode creneauxNode = new CreneauxNode(250, 100, utilitaire);
+        groupCreneaux.getChildren().add(creneauxNode);
+
+        //Ajout des observateurs
+        importnode.ajouterObservateur(doubletab);
+        importnode.ajouterObservateur(searchNode);
+        retardnode.ajouterObservateur(doubletab);
         preferenceNode.ajouterObservateur(doubletab);
+
+        calculCreneauxNode.ajouterObservateur(creneauxNode);
+
+
 
         //assignation du groupe "groupImport" a l'onglet Import
         ongletImport.setContent(groupImport);
@@ -64,10 +77,7 @@ public class Main extends Application {
         ongletCreneaux.setClosable(false);
         searchNode.setTableaux(doubletab);
 
-        //Ajout du creneauNode à l'interface
-        CreneauxNode creneauxNode = new CreneauxNode(250, 100, utilitaire);
-        doubletab.ajouterObservateur(creneauxNode);
-        groupCreneaux.getChildren().add(creneauxNode);
+
 
         //ajout du gestionnaire d'onglet au root
         root.getChildren().add(gestionnaireDonglet);

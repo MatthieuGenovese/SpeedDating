@@ -66,10 +66,8 @@ public class TableauPersonnes extends CustomNode {
         textHommes.setLayoutY(posy * 20 / 100);
 
 
-        //Je definis la taille de mes colonnes, multiply par 1 = 100% de la taille du tableview, 0.9 = 90% ...
         colNomsHommes.prefWidthProperty().bind(list.widthProperty().multiply(0.5));
-//            colPrenomsHommes.prefWidthProperty().bind(femmesList.widthProperty().multiply(0.5));
-//            colRetardHommes.prefWidthProperty().bind(femmesList.widthProperty().multiply(0.5));
+
 
         //Je récupère l'élement nom de la classe Personne
         colNomsHommes.setCellValueFactory(new PropertyValueFactory<IParticipants,String>("nom"));

@@ -12,9 +12,10 @@ public class GestionnaireCreneaux implements IEventMeetings {
     /*ArrayList<Observateur> observateurs = new ArrayList<Observateur>();*/
     ArrayList<Creneau> listeCreneaux;
     int creneauCourant;
-
+    int nbcreneaux;
 
     public GestionnaireCreneaux(int nbCrenaux){
+        this.nbcreneaux = nbCrenaux;
         creneauCourant = 1;
         listeCreneaux = new ArrayList<>();
         for(int i = 1; i <= nbCrenaux; i++){

@@ -1,11 +1,14 @@
 package CustomNodes;
 
+import conflits.ICompatibility;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+import personnes.PersonneSoiree;
+import utilitaire.SpeedDating;
 
 import java.util.ArrayList;
 
@@ -18,6 +21,7 @@ public class PreferenceNode extends CustomNode implements Obs {
 
     //Partie metier
     boolean modification;
+    SpeedDating utilitaire;
 
     //Partie graphique
     Slider slider;
@@ -30,10 +34,11 @@ public class PreferenceNode extends CustomNode implements Obs {
 
     Button modif;
 
-    public PreferenceNode(double posx, double posy){
+    public PreferenceNode(double posx, double posy, SpeedDating u){
         this.posx = posx;
         this.posy = posy;
         this.modification = false;
+        this.utilitaire = u;
         initElementsGraphiques();
         initPositionElementsGraphiques();
         initListeners();
@@ -130,6 +135,7 @@ public class PreferenceNode extends CustomNode implements Obs {
 
         modif.setOnAction(actionEvent->{
                     modification=true;
+                    modifpref();
                     notifier();
                 }
         );
@@ -141,6 +147,29 @@ public class PreferenceNode extends CustomNode implements Obs {
         bcp.setVisible(false);
         passionement.setVisible(false);
         folie.setVisible(false);
+    }
+
+    private void modifpref(){
+        if(utilitaire.getSelectF() != null && utilitaire.getSelectHomme() != null){
+
+
+            for(ICompatibility pp : ((PersonneSoiree) utilitaire.getSelectHomme()).getConflits()){
+                if(pp.getPersonneSoiree().getId() == utilitaire.getSelectF().getId()){
+                    pp.setAffinite(getValue());
+                    break;
+                }
+            }
+
+            for(ICompatibility pp : ((PersonneSoiree) utilitaire.getSelectF()).getConflits()){
+                if(pp.getPersonneSoiree().getId() == utilitaire.getSelectHomme().getId()){
+                    pp.setAffinite(getValue());
+                    break;
+                }
+            }
+            //A quoi sert ce bout de code ?
+            // utilitaire.getCalculateur().setFemmeListe(femmesList.getList().getItems());
+            //utilitaire.getCalculateur().setHommeListe(hommesList.getList().getItems());
+        }
     }
 
     private void afficherL0(){
