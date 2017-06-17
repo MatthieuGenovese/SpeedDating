@@ -6,14 +6,20 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.paint.*;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
-import javafx.stage.FileChooser;
 import personnes.IParticipants;
 import recontres.GestionnaireCreneaux;
 import recontres.IMeeting;
 import utilitaire.SpeedDating;
+import javafx.scene.control.TableCell;
 
-import java.io.File;
+import java.awt.*;
+import java.util.ArrayList;
+import javafx.scene.shape.*;
+
 
 import static javafx.collections.FXCollections.observableArrayList;
 
@@ -22,7 +28,8 @@ import static javafx.collections.FXCollections.observableArrayList;
  */
 public class CreneauxNode extends CustomNode implements Observateur {
     //Partie Graphique
-    Text titleCreneauTab;
+    Text titleCreneauTab, legende1, legende2, legende3;
+    Rectangle r1, r2, r3;
     Label numCreneau;
 
     //Je crée mes talesviews
@@ -52,6 +59,12 @@ public class CreneauxNode extends CustomNode implements Observateur {
         this.getChildren().add(listHommes);
         this.getChildren().add(listFemmes);
         this.getChildren().add(getTitle());
+        this.getChildren().add(legende1);
+        this.getChildren().add(legende2);
+        this.getChildren().add(legende3);
+        this.getChildren().add(r1);
+        this.getChildren().add(r2);
+        this.getChildren().add(r3);
         this.getChildren().add(getNumCreneau());
         this.getChildren().add(allCreneaux);
         this.getChildren().add(creneauCourant);
@@ -78,6 +91,23 @@ public class CreneauxNode extends CustomNode implements Observateur {
         creneauPrecedent = new Button("Créneau précédent");
         creneauSuivant = new Button("Créneau suivant");
         validerCreneau = new Button("Valider créneau");
+
+        r1 = new Rectangle(20,20);
+        r1.setFill(Color.GREEN);
+        r2 = new Rectangle(20,20);
+        r2.setFill(Color.RED);
+        r3 = new Rectangle(20,20);
+        r3.setFill(Color.BLUE);
+        r1.setVisible(false);
+        r2.setVisible(false);
+        r3.setVisible(false);
+
+        legende1 = new Text("Créneau 1 :");
+        legende2 = new Text("Créneau 2 :");
+        legende3 = new Text("Créneau 3 :");
+        legende1.setVisible(false);
+        legende2.setVisible(false);
+        legende3.setVisible(false);
     }
 
     public void initPositionElementsGraphiques(){
@@ -118,6 +148,19 @@ public class CreneauxNode extends CustomNode implements Observateur {
         creneauPrecedent.setLayoutY(allCreneaux.getLayoutY());
         validerCreneau.setLayoutX(creneauPrecedent.getLayoutX()+200);
         validerCreneau.setLayoutY(creneauPrecedent.getLayoutY());
+
+        legende1.setLayoutX(listHommes.getLayoutX()-100);
+        legende1.setLayoutY(listHommes.getLayoutY()+50);
+        r1.setLayoutX(legende1.getLayoutX()+70);
+        r1.setLayoutY(legende1.getLayoutY()-10);
+        legende2.setLayoutX(legende1.getLayoutX());
+        legende2.setLayoutY(legende1.getLayoutY()+20);
+        r2.setLayoutX(legende2.getLayoutX()+70);
+        r2.setLayoutY(legende2.getLayoutY()-10);
+        legende3.setLayoutX(legende1.getLayoutX());
+        legende3.setLayoutY(legende2.getLayoutY()+20);
+        r3.setLayoutX(legende3.getLayoutX()+70);
+        r3.setLayoutY(legende3.getLayoutY()-10);
         //J'autorise la multi selection des items
         //listCreneaux.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
     }
@@ -126,6 +169,8 @@ public class CreneauxNode extends CustomNode implements Observateur {
         allCreneaux.setOnAction(actionEvent -> {
             hommesCreneau.clear();
             femmesCreneau.clear();
+            setColorFactory();
+            afficherLegende();
             listFemmes.getItems().clear();
             listHommes.getItems().clear();
             listHommes.refresh();
@@ -137,6 +182,8 @@ public class CreneauxNode extends CustomNode implements Observateur {
         creneauCourant.setOnAction(actionEvent -> {
             hommesCreneau.clear();
             femmesCreneau.clear();
+            setNoneColorFactory();
+            cacherLegende();
             listFemmes.getItems().clear();
             listHommes.getItems().clear();
             listHommes.refresh();
@@ -149,6 +196,8 @@ public class CreneauxNode extends CustomNode implements Observateur {
         creneauSuivant.setOnAction(actionEvent -> {
             hommesCreneau.clear();
             femmesCreneau.clear();
+            setNoneColorFactory();
+            cacherLegende();
             listFemmes.getItems().clear();
             listHommes.getItems().clear();
             listHommes.refresh();
@@ -165,6 +214,8 @@ public class CreneauxNode extends CustomNode implements Observateur {
         creneauPrecedent.setOnAction(actionEvent -> {
             hommesCreneau.clear();
             femmesCreneau.clear();
+            setNoneColorFactory();
+            cacherLegende();
             listFemmes.getItems().clear();
             listHommes.getItems().clear();
             listHommes.refresh();
@@ -179,6 +230,8 @@ public class CreneauxNode extends CustomNode implements Observateur {
             }
         });
         validerCreneau.setOnAction(actionEvent -> {
+            setNoneColorFactory();
+            cacherLegende();
             if(creneauActuel <= gc.getNbCrenaux()) {
                 gc.setCreneauCourant(creneauActuel);
                 utilitaire.setLog(gc.getCreneau(creneauActuel - 1) + "\n");
@@ -201,7 +254,113 @@ public class CreneauxNode extends CustomNode implements Observateur {
 
     }
 
+    public void afficherLegende(){
+        if(!legende1.isVisible()){
+            legende1.setVisible(true);
+            legende2.setVisible(true);
+            legende3.setVisible(true);
+            r1.setVisible(true);
+            r2.setVisible(true);
+            r3.setVisible(true);
+        }
+    }
+
+    public void cacherLegende(){
+        if(legende1.isVisible()){
+            legende1.setVisible(false);
+            legende2.setVisible(false);
+            legende3.setVisible(false);
+            r1.setVisible(false);
+            r2.setVisible(false);
+            r3.setVisible(false);
+        }
+    }
+
     public Text getTitle(){return this.titleCreneauTab;}
+
+    public void setColorFactory(){
+        ArrayList<IMeeting> allMettings = (ArrayList<IMeeting>) gc.getAllMeetings();
+        prenomf.setCellFactory(column -> {
+            return new TableCell<IParticipants, String>() {
+                @Override
+                protected void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (item == null || empty) {
+                        setText(null);
+                        setStyle("");
+                    } else {
+                        int index = getTableRow().getIndex();
+                        if(allMettings.get(index).getCrenau() == 1){
+                            setStyle("-fx-background-color: green");
+                        }
+                        if(allMettings.get(index).getCrenau() == 2){
+                            setStyle("-fx-background-color: red");
+                        }
+                        if(allMettings.get(index).getCrenau() == 3){
+                            setStyle("-fx-background-color: blue");
+                        }
+                        setText(item);
+                    }
+                }
+            };
+        });
+        prenomh.setCellFactory(column -> {
+            return new TableCell<IParticipants, String>() {
+                @Override
+                protected void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (item == null || empty) {
+                        setText(null);
+                        setStyle("");
+                    } else {
+                        int index = getTableRow().getIndex();
+                        if(allMettings.get(index).getCrenau() == 1){
+                            setStyle("-fx-background-color: green");
+                        }
+                        if(allMettings.get(index).getCrenau() == 2){
+                            setStyle("-fx-background-color: red");
+                        }
+                        if(allMettings.get(index).getCrenau() == 3){
+                            setStyle("-fx-background-color: blue");
+                        }
+                        setText(item);
+                    }
+                }
+            };
+        });
+        //allMettings.clear();
+    }
+
+    public void setNoneColorFactory(){
+        prenomf.setCellFactory(column -> {
+            return new TableCell<IParticipants, String>() {
+                @Override
+                protected void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (item == null || empty) {
+                        setText(null);
+                        setStyle("");
+                    } else {
+                        setText(item);
+                    }
+                }
+            };
+        });
+        prenomh.setCellFactory(column -> {
+            return new TableCell<IParticipants, String>() {
+                @Override
+                protected void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (item == null || empty) {
+                        setText(null);
+                        setStyle("");
+                    } else {
+                        setText(item);
+                    }
+                }
+            };
+        });
+    }
 
     public Label getNumCreneau(){return this.numCreneau;}
 

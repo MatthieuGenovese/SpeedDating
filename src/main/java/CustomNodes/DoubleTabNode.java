@@ -83,13 +83,4 @@ public class DoubleTabNode extends CustomNode implements Observateur {
         femmesList.getList().getSelectionModel().clearSelection();
     }
 
-    /*public void faireRetard(IParticipants personnefocus, TableauPersonnes tp){
-        if(RetardNode.getValidRetard()){
-            personnefocus.setRetard(RetardNode.getRetard());
-            tp.getColRetardHommes().setCellValueFactory(new PropertyValueFactory<PersonneSoiree,String>("retard"));
-            RetardNode.setValidRetard(false);
-            tp.getList().refresh();
-        }
-    }*/
-
 }
