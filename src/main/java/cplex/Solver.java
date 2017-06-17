@@ -128,7 +128,7 @@ public class Solver
             if (cp.solve()) {
                 opl.postProcess();
                 String res = opl.getElement("rencontres").asIntMap().toString();
-                resultat = extraireResultats(res, 2);
+                resultat = extraireResultats(res, 3);
                 status = 0;
             } else {
                 System.out.println("No solution!");

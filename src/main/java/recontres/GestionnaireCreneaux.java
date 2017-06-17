@@ -69,7 +69,7 @@ public class GestionnaireCreneaux implements IEventMeetings {
 
     public List<IMeeting> getPastMeetings(){
         ArrayList<IMeeting> pastMeetings = new ArrayList<>();
-        for(int i = 0; i < creneauCourant; i++){
+        for(int i = 0; i < creneauCourant-1; i++){
             for(int j = 0; j < listeCreneaux.get(i).getNbRencontres(); j++){
                 pastMeetings.add(listeCreneaux.get(i).getRencontre(j));
             }
@@ -104,9 +104,9 @@ public class GestionnaireCreneaux implements IEventMeetings {
     }
 
     public List<IMeeting> getAllMeetings(){
-        ArrayList<IMeeting> res = new ArrayList<IMeeting>(getNextMeetings());
+        ArrayList<IMeeting> res = new ArrayList<IMeeting>(getPastMeetings());
         res.addAll(getCurrentMeetings());
-        res.addAll(getPastMeetings());
+        res.addAll(getNextMeetings());
         return res;
     }
 

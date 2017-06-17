@@ -61,7 +61,7 @@ public class CalculMatrice {
         dispoF.clear();
         dispoH.clear();
         matrice.clear();
-        Solver s = new Solver("src\\main\\opl\\modele2P.lp",nbCol,nbLigne,creneaux);
+        Solver s = new Solver("src\\main\\opl\\modele3.lp",nbCol,nbLigne,creneaux);
         try {
             matriceResultat = s.exec();
             if(matriceResultat[0][0][0] == -1){
