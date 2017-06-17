@@ -80,13 +80,13 @@ public class CalculMatrice {
             for(int homme = 0; homme < nbCol; homme++){
                 for(int k = 0; k < creneaux; k++) {
                     if(matriceResultat[femme][homme][k] == 1 ) {
-                        gestionnaireCrenaux.ajouterRencontre(new Rencontre(hommeListe.get(homme), femmeListe.get(femme), gestionnaireCrenaux.getCrenau(k).getNumeroCrenau()),k);
+                        gestionnaireCrenaux.ajouterRencontre(new Rencontre(hommeListe.get(homme), femmeListe.get(femme), gestionnaireCrenaux.getCreneau(k).getNumeroCrenau()),k);
                     }
                 }
             }
         }
         for(int cpt = 0; cpt < gestionnaireCrenaux.getNbCrenaux(); cpt++){
-            if(gestionnaireCrenaux.getCrenau(cpt).getNbRencontres() == 0){
+            if(gestionnaireCrenaux.getCreneau(cpt).getNbRencontres() == 0){
                 gestionnaireCrenaux.setCreneauCourant(gestionnaireCrenaux.getCreneauCourant()+1);
             }
             else{

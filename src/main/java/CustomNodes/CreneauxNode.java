@@ -36,7 +36,7 @@ public class CreneauxNode extends CustomNode implements Observateur {
     TableColumn prenomh;
     TableColumn prenomf;
     SpeedDating utilitaire;
-    Button allCreneaux, creneauCourant, creneauSuivant, creneauPrecedent;
+    Button allCreneaux, creneauCourant, creneauSuivant, creneauPrecedent, validerCreneau;
     int creneauActuel, creneauGraphiqueActuel;
 
     public CreneauxNode(double posx, double posy, SpeedDating utilitaire){
@@ -57,6 +57,7 @@ public class CreneauxNode extends CustomNode implements Observateur {
         this.getChildren().add(creneauCourant);
         this.getChildren().add(creneauSuivant);
         this.getChildren().add(creneauPrecedent);
+        this.getChildren().add(validerCreneau);
     }
 
     public void initGraphique(){
@@ -76,6 +77,7 @@ public class CreneauxNode extends CustomNode implements Observateur {
         creneauCourant = new Button("Créneau courant");
         creneauPrecedent = new Button("Créneau précédent");
         creneauSuivant = new Button("Créneau suivant");
+        validerCreneau = new Button("Valider créneau");
     }
 
     public void initPositionElementsGraphiques(){
@@ -114,6 +116,8 @@ public class CreneauxNode extends CustomNode implements Observateur {
         creneauSuivant.setLayoutY(creneauCourant.getLayoutY());
         creneauPrecedent.setLayoutX(allCreneaux.getLayoutX()+200);
         creneauPrecedent.setLayoutY(allCreneaux.getLayoutY());
+        validerCreneau.setLayoutX(creneauPrecedent.getLayoutX()+200);
+        validerCreneau.setLayoutY(creneauPrecedent.getLayoutY());
         //J'autorise la multi selection des items
         //listCreneaux.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
     }
@@ -172,6 +176,26 @@ public class CreneauxNode extends CustomNode implements Observateur {
                     femmesCreneau.add(c.getFemme());
                 }
                 numCreneau.setText("Numéro du creneau : " + creneauGraphiqueActuel);
+            }
+        });
+        validerCreneau.setOnAction(actionEvent -> {
+            if(creneauActuel <= gc.getNbCrenaux()) {
+                gc.setCreneauCourant(creneauActuel);
+                utilitaire.setLog(gc.getCreneau(creneauActuel - 1) + "\n");
+                creneauActuel++;
+                creneauGraphiqueActuel++;
+                utilitaire.exporterLog();
+                hommesCreneau.clear();
+                femmesCreneau.clear();
+                listFemmes.getItems().clear();
+                listHommes.getItems().clear();
+                listHommes.refresh();
+                gc.setCreneauCourant(creneauActuel);
+                for(IMeeting c : gc.getCurrentMeetings()){
+                    hommesCreneau.add(c.getHomme());
+                    femmesCreneau.add(c.getFemme());
+                }
+                numCreneau.setText("Numéro du creneau : " + creneauActuel);
             }
         });
 

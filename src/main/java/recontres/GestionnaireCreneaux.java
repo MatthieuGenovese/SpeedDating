@@ -32,7 +32,7 @@ public class GestionnaireCreneaux implements IEventMeetings {
         return listeCreneaux.size();
     }
 
-    public Creneau getCrenau(int i ){
+    public Creneau getCreneau(int i ){
         return listeCreneaux.get(i);
     }
 

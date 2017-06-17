@@ -33,9 +33,9 @@ public class Creneau {
     }
 
     public String toString(){
-        String res = "";
+        String res = "Creneau " + getNumeroCrenau() + " \n";
         for(int i = 0; i < listeRencontres.size(); i++){
-            res+= "//" + listeRencontres.get(i).toString();
+            res+= listeRencontres.get(i).toString();
         }
         return res;
     }

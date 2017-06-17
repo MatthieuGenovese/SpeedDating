@@ -11,8 +11,12 @@ import recontres.GestionnaireCreneaux;
 import recontres.IEventMeetings;
 import recontres.IMeeting;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Date;
+import java.util.Locale;
+import java.text.SimpleDateFormat;
 
 import static javafx.collections.FXCollections.observableArrayList;
 
@@ -33,6 +37,7 @@ public class SpeedDating implements ISpeedDating {
     IParticipants current;
 
     private CalculMatrice calculateur;
+    private String log;
 
     public SpeedDating(){
         listePersonneSoiree = new ArrayList<>();
@@ -41,6 +46,7 @@ public class SpeedDating implements ISpeedDating {
         selectF = null;
         selectHomme = null;
         current = null;
+        log = "";
 
 
     }
@@ -58,6 +64,26 @@ public class SpeedDating implements ISpeedDating {
             if(couple.getAffinite() > 0){
                 tp.getList().getSelectionModel().select(couple.getPersonneSoiree());
             }
+        }
+    }
+
+    public void setLog(String s){
+        log+= s;
+    }
+
+    public void exporterLog(){
+        String txtDate=new SimpleDateFormat("dd-MM-yyyy", Locale.FRANCE).format(new Date());
+        String nomFic = "log" + txtDate + ".log";
+        System.out.println(nomFic);
+        FileWriter fw = null;
+        try {
+            fw = new FileWriter(nomFic, false);
+            BufferedWriter output = new BufferedWriter(fw);
+            output.write(log);
+            output.flush();
+            output.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
