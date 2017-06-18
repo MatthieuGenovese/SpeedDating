@@ -93,11 +93,11 @@ public class CreneauxNode extends CustomNode implements Observateur {
         validerCreneau = new Button("Valider créneau");
 
         r1 = new Rectangle(20,20);
-        r1.setFill(Color.GREEN);
+        r1.setFill(Color.PALEGREEN);
         r2 = new Rectangle(20,20);
-        r2.setFill(Color.RED);
+        r2.setFill(Color.ORANGERED);
         r3 = new Rectangle(20,20);
-        r3.setFill(Color.BLUE);
+        r3.setFill(Color.MEDIUMTURQUOISE);
         r1.setVisible(false);
         r2.setVisible(false);
         r3.setVisible(false);
@@ -169,6 +169,9 @@ public class CreneauxNode extends CustomNode implements Observateur {
         allCreneaux.setOnAction(actionEvent -> {
             hommesCreneau.clear();
             femmesCreneau.clear();
+            creneauPrecedent.setVisible(false);
+            creneauSuivant.setVisible(false);
+            validerCreneau.setVisible(false);
             setColorFactory();
             afficherLegende();
             listFemmes.getItems().clear();
@@ -178,10 +181,15 @@ public class CreneauxNode extends CustomNode implements Observateur {
                 hommesCreneau.add(c.getHomme());
                 femmesCreneau.add(c.getFemme());
             }
+            numCreneau.setText("Tous les créneaux de la soirée");
         });
         creneauCourant.setOnAction(actionEvent -> {
             hommesCreneau.clear();
             femmesCreneau.clear();
+
+            creneauPrecedent.setVisible(true);
+            creneauSuivant.setVisible(true);
+            validerCreneau.setVisible(true);
             setNoneColorFactory();
             cacherLegende();
             listFemmes.getItems().clear();
@@ -192,6 +200,7 @@ public class CreneauxNode extends CustomNode implements Observateur {
                 hommesCreneau.add(c.getHomme());
                 femmesCreneau.add(c.getFemme());
             }
+            numCreneau.setText("Numéro du creneau : " + creneauActuel);
         });
         creneauSuivant.setOnAction(actionEvent -> {
             hommesCreneau.clear();
@@ -291,13 +300,13 @@ public class CreneauxNode extends CustomNode implements Observateur {
                     } else {
                         int index = getTableRow().getIndex();
                         if(allMettings.get(index).getCrenau() == 1){
-                            setStyle("-fx-background-color: green");
+                            setStyle("-fx-background-color: palegreen");
                         }
                         if(allMettings.get(index).getCrenau() == 2){
-                            setStyle("-fx-background-color: red");
+                            setStyle("-fx-background-color: orangered");
                         }
                         if(allMettings.get(index).getCrenau() == 3){
-                            setStyle("-fx-background-color: blue");
+                            setStyle("-fx-background-color: mediumturquoise");
                         }
                         setText(item);
                     }
@@ -315,20 +324,19 @@ public class CreneauxNode extends CustomNode implements Observateur {
                     } else {
                         int index = getTableRow().getIndex();
                         if(allMettings.get(index).getCrenau() == 1){
-                            setStyle("-fx-background-color: green");
+                            setStyle("-fx-background-color: palegreen");
                         }
                         if(allMettings.get(index).getCrenau() == 2){
-                            setStyle("-fx-background-color: red");
+                            setStyle("-fx-background-color: orangered");
                         }
                         if(allMettings.get(index).getCrenau() == 3){
-                            setStyle("-fx-background-color: blue");
+                            setStyle("-fx-background-color: mediumturquoise");
                         }
                         setText(item);
                     }
                 }
             };
         });
-        //allMettings.clear();
     }
 
     public void setNoneColorFactory(){

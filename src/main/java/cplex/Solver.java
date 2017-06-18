@@ -49,7 +49,7 @@ public class Solver
             int f = lignes;
             int h = colonnes;
             int c = creneaux;
-            int mini = 1;
+            int mini = 2;
 
             IloOplDataHandler handler = getDataHandler();
             handler.startElement("f");
