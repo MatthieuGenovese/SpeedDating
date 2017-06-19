@@ -241,7 +241,8 @@ public class CreneauxNode extends CustomNode implements Observateur {
                 creneauGraphiqueActuel = creneauActuel-1;
             }
             else{
-                alertValiderCreneau.setContentText("Tous les créneaux ont été validés !");
+                alertValiderCreneau.setContentText("Tous les créneaux ont été validés !" + "\n" +
+                "Le fichier " +utilitaire.getNomFic() +" est prêt.");
                 alertValiderCreneau.show();
             }
         });

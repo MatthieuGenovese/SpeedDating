@@ -37,6 +37,10 @@ public class SpeedDating implements ISpeedDating {
     IParticipants current;
 
     private CalculMatrice calculateur;
+    String nomFic;
+    String txtDate;
+
+
     private String log;
 
     public SpeedDating(){
@@ -47,6 +51,9 @@ public class SpeedDating implements ISpeedDating {
         selectHomme = null;
         current = null;
         log = "";
+        txtDate=new SimpleDateFormat("dd-MM-yyyy", Locale.FRANCE).format(new Date());
+        nomFic = "Rencontres" + txtDate + ".csv";
+
 
 
     }
@@ -72,16 +79,12 @@ public class SpeedDating implements ISpeedDating {
     }
 
     public void exporterLog(){
-        String txtDate=new SimpleDateFormat("dd-MM-yyyy", Locale.FRANCE).format(new Date());
-        String nomFic = "log" + txtDate + ".log";
         System.out.println(nomFic);
-        FileWriter fw = null;
+        PrintWriter pw = null;
         try {
-            fw = new FileWriter(nomFic, false);
-            BufferedWriter output = new BufferedWriter(fw);
-            output.write(log);
-            output.flush();
-            output.close();
+            pw = new PrintWriter(new File(nomFic));
+            pw.write(log);
+            pw.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -168,5 +171,17 @@ public class SpeedDating implements ISpeedDating {
 
     public void setCurrent(IParticipants current) {
         this.current = current;
+    }
+
+    public GestionnaireCreneaux getGc() {
+        return gc;
+    }
+
+    public String getNomFic() {
+        return nomFic;
+    }
+
+    public String getTxtDate() {
+        return txtDate;
     }
 }

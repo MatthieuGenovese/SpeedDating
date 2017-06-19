@@ -36,6 +36,6 @@ public class Rencontre implements IMeeting{
     }
 
     public String toString(){
-        return homme.getPrenom() + " " + homme.getNom() + " // " + femme.getPrenom() + " " + femme.getNom() + "\n";
+        return homme.getPrenom() + " " + homme.getNom() + " , " + femme.getPrenom() + " " + femme.getNom() + "\n";
     }
 }
