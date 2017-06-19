@@ -1,10 +1,9 @@
 package CustomNodes;
 
 import javafx.collections.ObservableList;
+import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.paint.*;
 import javafx.scene.paint.Color;
@@ -14,10 +13,11 @@ import personnes.IParticipants;
 import recontres.GestionnaireCreneaux;
 import recontres.IMeeting;
 import utilitaire.SpeedDating;
-import javafx.scene.control.TableCell;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Optional;
+
 import javafx.scene.shape.*;
 
 
@@ -36,6 +36,7 @@ public class CreneauxNode extends CustomNode implements Observateur {
     TableView<IParticipants> listHommes;
     TableView<IParticipants> listFemmes;
 
+    Alert alertPrecedent, alertSuivant, alertValiderCreneau;
     ObservableList<IParticipants> hommesCreneau = observableArrayList();
     ObservableList<IParticipants> femmesCreneau = observableArrayList();
     //Je crée mes colonnes
@@ -52,6 +53,7 @@ public class CreneauxNode extends CustomNode implements Observateur {
         initGraphique();
         initPositionElementsGraphiques();
         initListeners();
+        initDialogBox();
         //J'ajoute mes colonnes dans les tablesviews
         listHommes.getColumns().add(prenomh);
         listFemmes.getColumns().add(prenomf);
@@ -203,14 +205,14 @@ public class CreneauxNode extends CustomNode implements Observateur {
             numCreneau.setText("Numéro du creneau : " + creneauActuel);
         });
         creneauSuivant.setOnAction(actionEvent -> {
-            hommesCreneau.clear();
-            femmesCreneau.clear();
-            setNoneColorFactory();
-            cacherLegende();
-            listFemmes.getItems().clear();
-            listHommes.getItems().clear();
-            listHommes.refresh();
             if(gc.getNbCrenaux() >= creneauGraphiqueActuel + 1){
+                hommesCreneau.clear();
+                femmesCreneau.clear();
+                setNoneColorFactory();
+                cacherLegende();
+                listFemmes.getItems().clear();
+                listHommes.getItems().clear();
+                listHommes.refresh();
                 creneauGraphiqueActuel++;
                 gc.setCreneauCourant(creneauGraphiqueActuel);
                 for(IMeeting c : gc.getCurrentMeetings()){
@@ -219,16 +221,19 @@ public class CreneauxNode extends CustomNode implements Observateur {
                 }
                 numCreneau.setText("Numéro du creneau : " + creneauGraphiqueActuel);
             }
+            else{
+                alertSuivant.show();
+            }
         });
         creneauPrecedent.setOnAction(actionEvent -> {
-            hommesCreneau.clear();
-            femmesCreneau.clear();
-            setNoneColorFactory();
-            cacherLegende();
-            listFemmes.getItems().clear();
-            listHommes.getItems().clear();
-            listHommes.refresh();
             if(creneauGraphiqueActuel - 1 >= 1){
+                hommesCreneau.clear();
+                femmesCreneau.clear();
+                setNoneColorFactory();
+                cacherLegende();
+                listFemmes.getItems().clear();
+                listHommes.getItems().clear();
+                listHommes.refresh();
                 creneauGraphiqueActuel--;
                 gc.setCreneauCourant(creneauGraphiqueActuel);
                 for(IMeeting c : gc.getCurrentMeetings()){
@@ -237,6 +242,9 @@ public class CreneauxNode extends CustomNode implements Observateur {
                 }
                 numCreneau.setText("Numéro du creneau : " + creneauGraphiqueActuel);
             }
+            else{
+                alertPrecedent.show();
+            }
         });
         validerCreneau.setOnAction(actionEvent -> {
             setNoneColorFactory();
@@ -244,8 +252,6 @@ public class CreneauxNode extends CustomNode implements Observateur {
             if(creneauActuel <= gc.getNbCrenaux()) {
                 gc.setCreneauCourant(creneauActuel);
                 utilitaire.setLog(gc.getCreneau(creneauActuel - 1) + "\n");
-                creneauActuel++;
-                creneauGraphiqueActuel++;
                 utilitaire.exporterLog();
                 hommesCreneau.clear();
                 femmesCreneau.clear();
@@ -258,8 +264,31 @@ public class CreneauxNode extends CustomNode implements Observateur {
                     femmesCreneau.add(c.getFemme());
                 }
                 numCreneau.setText("Numéro du creneau : " + creneauActuel);
+                alertValiderCreneau.setContentText("Le créneau " + creneauActuel + " a été validé avec succès !");
+                alertValiderCreneau.show();
+                creneauActuel++;
+                creneauGraphiqueActuel++;
+            }
+            else{
+                alertValiderCreneau.setContentText("Tous les créneaux ont été validés !");
+                alertValiderCreneau.show();
             }
         });
+
+    }
+
+    public void initDialogBox(){
+        alertSuivant = new Alert(Alert.AlertType.INFORMATION);
+        alertPrecedent = new Alert(Alert.AlertType.INFORMATION);
+        alertValiderCreneau = new Alert(Alert.AlertType.INFORMATION);
+        alertSuivant.setTitle("SpeedDating");
+        alertSuivant.setHeaderText("Informations");
+        alertSuivant.setContentText("Il n'y a plus de créneaux suivants !");
+        alertPrecedent.setTitle("SpeedDating");
+        alertPrecedent.setHeaderText("Informations");
+        alertPrecedent.setContentText("Il n'y a plus de créneaux précédents !");
+        alertValiderCreneau.setTitle("SpeedDating");
+        alertValiderCreneau.setHeaderText("Informations");
 
     }
 

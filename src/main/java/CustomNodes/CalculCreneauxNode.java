@@ -1,6 +1,7 @@
 package CustomNodes;
 
 
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import utilitaire.SpeedDating;
 
@@ -16,6 +17,7 @@ public class CalculCreneauxNode extends CustomNode implements Obs {
 
     //Partie graphique
     Button calcul;
+    Alert alertCalcul;
 
 
     public CalculCreneauxNode(double posx, double posy, SpeedDating sd){
@@ -33,7 +35,15 @@ public class CalculCreneauxNode extends CustomNode implements Obs {
 
     private void initListeners(){
         calcul.setOnAction(actionEvent->{
-            speedating.getCalculateur().calculerMatriceCPLEX();
+            int res = speedating.getCalculateur().calculerMatriceCPLEX();
+            if(res == -1 ){
+                alertCalcul.setContentText("Aucune solution n'a été trouvée pour cette configuration !");
+            }
+            else{
+                alertCalcul.setContentText("Les créneaux ont été calculés avec succès et sont disponibles dans l'onglet créneaux !");
+
+            }
+            alertCalcul.show();
             notifier();
         });
     }
@@ -42,6 +52,10 @@ public class CalculCreneauxNode extends CustomNode implements Obs {
         calcul = new Button("Calcul des créneaux");
         calcul.setLayoutX(posX);
         calcul.setLayoutY(posY);
+        alertCalcul = new Alert(Alert.AlertType.INFORMATION);
+        alertCalcul.setTitle("SpeedDating");
+        alertCalcul.setHeaderText("Informations");
+        alertCalcul.setContentText("Les créneaux ont été calculés avec succès et sont disponibles dans l'onglet créneaux !");
 
     }
 

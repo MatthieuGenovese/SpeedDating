@@ -39,7 +39,7 @@ public class CalculMatrice {
         this.gestionnaireCrenaux = gc;
     }
 
-    public void calculerMatriceCPLEX() {
+    public int calculerMatriceCPLEX() {
         ArrayList<Integer> matrice = new ArrayList<>();
         ArrayList<ITimeWindows> dispoF = new ArrayList<>();
         ArrayList<ITimeWindows> dispoH = new ArrayList<>();
@@ -65,14 +65,16 @@ public class CalculMatrice {
         try {
             matriceResultat = s.exec();
             if(matriceResultat[0][0][0] == -1){
-                System.out.println("le cplex n'a pas trouvé de solution !");
+                return -1;
             }
             else {
                 organiserCrenaux();
+                return 1;
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return 0;
     }
 
     public void organiserCrenaux(){
