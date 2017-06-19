@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 import javafx.scene.shape.*;
+import java.lang.reflect.Field;
 
 
 import static javafx.collections.FXCollections.observableArrayList;
@@ -28,10 +29,11 @@ import static javafx.collections.FXCollections.observableArrayList;
  */
 public class CreneauxNode extends CustomNode implements Observateur {
     //Partie Graphique
-    Text titleCreneauTab, legende1, legende2, legende3;
-    Rectangle r1, r2, r3;
+    Text titleCreneauTab;
     Label numCreneau;
-
+    ArrayList<Text> legendes;
+    ArrayList<Rectangle> rectangles;
+    ArrayList<Color> couleurs;
     //Je crée mes talesviews
     TableView<IParticipants> listHommes;
     TableView<IParticipants> listFemmes;
@@ -50,6 +52,9 @@ public class CreneauxNode extends CustomNode implements Observateur {
     public CreneauxNode(double posx, double posy, SpeedDating utilitaire){
         this.posx = posx;
         this.posy = posy;
+        legendes = new ArrayList<>();
+        rectangles = new ArrayList<>();
+        couleurs = new ArrayList<>();
         initGraphique();
         initPositionElementsGraphiques();
         initListeners();
@@ -61,12 +66,6 @@ public class CreneauxNode extends CustomNode implements Observateur {
         this.getChildren().add(listHommes);
         this.getChildren().add(listFemmes);
         this.getChildren().add(getTitle());
-        this.getChildren().add(legende1);
-        this.getChildren().add(legende2);
-        this.getChildren().add(legende3);
-        this.getChildren().add(r1);
-        this.getChildren().add(r2);
-        this.getChildren().add(r3);
         this.getChildren().add(getNumCreneau());
         this.getChildren().add(allCreneaux);
         this.getChildren().add(creneauCourant);
@@ -94,22 +93,6 @@ public class CreneauxNode extends CustomNode implements Observateur {
         creneauSuivant = new Button("Créneau suivant");
         validerCreneau = new Button("Valider créneau");
 
-        r1 = new Rectangle(20,20);
-        r1.setFill(Color.PALEGREEN);
-        r2 = new Rectangle(20,20);
-        r2.setFill(Color.ORANGERED);
-        r3 = new Rectangle(20,20);
-        r3.setFill(Color.MEDIUMTURQUOISE);
-        r1.setVisible(false);
-        r2.setVisible(false);
-        r3.setVisible(false);
-
-        legende1 = new Text("Créneau 1 :");
-        legende2 = new Text("Créneau 2 :");
-        legende3 = new Text("Créneau 3 :");
-        legende1.setVisible(false);
-        legende2.setVisible(false);
-        legende3.setVisible(false);
     }
 
     public void initPositionElementsGraphiques(){
@@ -150,19 +133,6 @@ public class CreneauxNode extends CustomNode implements Observateur {
         creneauPrecedent.setLayoutY(allCreneaux.getLayoutY());
         validerCreneau.setLayoutX(creneauPrecedent.getLayoutX()+200);
         validerCreneau.setLayoutY(creneauPrecedent.getLayoutY());
-
-        legende1.setLayoutX(listHommes.getLayoutX()-100);
-        legende1.setLayoutY(listHommes.getLayoutY()+50);
-        r1.setLayoutX(legende1.getLayoutX()+70);
-        r1.setLayoutY(legende1.getLayoutY()-10);
-        legende2.setLayoutX(legende1.getLayoutX());
-        legende2.setLayoutY(legende1.getLayoutY()+20);
-        r2.setLayoutX(legende2.getLayoutX()+70);
-        r2.setLayoutY(legende2.getLayoutY()-10);
-        legende3.setLayoutX(legende1.getLayoutX());
-        legende3.setLayoutY(legende2.getLayoutY()+20);
-        r3.setLayoutX(legende3.getLayoutX()+70);
-        r3.setLayoutY(legende3.getLayoutY()-10);
         //J'autorise la multi selection des items
         //listCreneaux.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
     }
@@ -292,26 +262,65 @@ public class CreneauxNode extends CustomNode implements Observateur {
 
     }
 
+    public void initLegende(){
+        try {
+            couleurs = allColors();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        for(int i = 0; i < gc.getNbCrenaux(); i++){
+            legendes.add(new Text("Creneau " + (i+1)));
+            if(i == 0){
+                legendes.get(i).setLayoutX(listHommes.getLayoutX()-100);
+                legendes.get(i).setLayoutY(listHommes.getLayoutY()+50);
+            }
+            else{
+                legendes.get(i).setLayoutX(legendes.get(0).getLayoutX());
+                legendes.get(i).setLayoutY(legendes.get(i-1).getLayoutY()+20);
+            }
+            rectangles.add(new Rectangle(20,20));
+            rectangles.get(i).setFill(couleurs.get(((i+11)%couleurs.size())));
+            rectangles.get(i).setLayoutX(legendes.get(i).getLayoutX()+70);
+            rectangles.get(i).setLayoutY(legendes.get(i).getLayoutY()-10);
+            this.getChildren().add(legendes.get(i));
+            this.getChildren().add(rectangles.get(i));
+        }
+    }
+
     public void afficherLegende(){
-        if(!legende1.isVisible()){
-            legende1.setVisible(true);
-            legende2.setVisible(true);
-            legende3.setVisible(true);
-            r1.setVisible(true);
-            r2.setVisible(true);
-            r3.setVisible(true);
+        if(!legendes.get(0).isVisible()){
+            for(int i = 0; i < legendes.size(); i++){
+                legendes.get(i).setVisible(true);
+                rectangles.get(i).setVisible(true);
+            }
         }
     }
 
     public void cacherLegende(){
-        if(legende1.isVisible()){
-            legende1.setVisible(false);
-            legende2.setVisible(false);
-            legende3.setVisible(false);
-            r1.setVisible(false);
-            r2.setVisible(false);
-            r3.setVisible(false);
+        if(legendes.get(0).isVisible()){
+            for(int i = 0; i < legendes.size(); i++){
+                legendes.get(i).setVisible(false);
+                rectangles.get(i).setVisible(false);
+            }
         }
+    }
+
+    private static ArrayList<Color> allColors() throws ClassNotFoundException, IllegalAccessException {
+        ArrayList<Color> colors = new ArrayList<>();
+        Class couleur = Class.forName("javafx.scene.paint.Color");
+        if (couleur != null) {
+            Field[] field = couleur.getFields();
+            for (int i = 0; i < field.length; i++) {
+                Field f = field[i];
+                Object obj = f.get(null);
+                if(obj instanceof Color){
+                    colors.add((Color) obj);
+                }
+            }
+        }
+        return colors;
     }
 
     public Text getTitle(){return this.titleCreneauTab;}
@@ -328,14 +337,10 @@ public class CreneauxNode extends CustomNode implements Observateur {
                         setStyle("");
                     } else {
                         int index = getTableRow().getIndex();
-                        if(allMettings.get(index).getCrenau() == 1){
-                            setStyle("-fx-background-color: palegreen");
-                        }
-                        if(allMettings.get(index).getCrenau() == 2){
-                            setStyle("-fx-background-color: orangered");
-                        }
-                        if(allMettings.get(index).getCrenau() == 3){
-                            setStyle("-fx-background-color: mediumturquoise");
+                        for(int i = 0; i < gc.getNbCrenaux(); i++){
+                            if(allMettings.get(index).getCrenau() == i+1){
+                                setTextFill(couleurs.get((i+11)%couleurs.size()));
+                            }
                         }
                         setText(item);
                     }
@@ -352,14 +357,10 @@ public class CreneauxNode extends CustomNode implements Observateur {
                         setStyle("");
                     } else {
                         int index = getTableRow().getIndex();
-                        if(allMettings.get(index).getCrenau() == 1){
-                            setStyle("-fx-background-color: palegreen");
-                        }
-                        if(allMettings.get(index).getCrenau() == 2){
-                            setStyle("-fx-background-color: orangered");
-                        }
-                        if(allMettings.get(index).getCrenau() == 3){
-                            setStyle("-fx-background-color: mediumturquoise");
+                        for(int i = 0; i < gc.getNbCrenaux(); i++){
+                            if(allMettings.get(index).getCrenau() == i+1){
+                                setTextFill(couleurs.get((i+11)%couleurs.size()));
+                            }
                         }
                         setText(item);
                     }
@@ -415,6 +416,8 @@ public class CreneauxNode extends CustomNode implements Observateur {
             }
             listHommes.setItems(hommesCreneau);
             listFemmes.setItems(femmesCreneau);
+            initLegende();
+            cacherLegende();
         }
     }
 }
