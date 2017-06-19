@@ -14,12 +14,12 @@
 package cplex;
 
 
-import cplex.AssignmentConstraint;
-import ilog.concert.*;
+import ilog.concert.IloException;
 import ilog.cp.IloCP;
 import ilog.opl.*;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.util.ArrayList;
 
 public class Solver

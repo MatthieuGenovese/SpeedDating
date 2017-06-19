@@ -1,11 +1,6 @@
 package CustomNodes;
 
-import conflits.ICompatibility;
-import javafx.scene.control.Button;
-import javafx.scene.control.cell.PropertyValueFactory;
 import personnes.IParticipants;
-import personnes.PersonneSoiree;
-import recontres.TimeWindow;
 import utilitaire.SpeedDating;
 
 import java.util.ArrayList;

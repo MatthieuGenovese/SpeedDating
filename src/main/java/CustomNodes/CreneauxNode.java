@@ -2,10 +2,7 @@ package CustomNodes;
 
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.paint.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
@@ -14,13 +11,8 @@ import recontres.GestionnaireCreneaux;
 import recontres.IMeeting;
 import utilitaire.SpeedDating;
 
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.Optional;
-
-import javafx.scene.shape.*;
 import java.lang.reflect.Field;
-
+import java.util.ArrayList;
 
 import static javafx.collections.FXCollections.observableArrayList;
 

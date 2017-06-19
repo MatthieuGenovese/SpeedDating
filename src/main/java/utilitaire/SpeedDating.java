@@ -6,17 +6,18 @@ import cplex.CalculMatrice;
 import javafx.collections.ObservableList;
 import personnes.IParticipants;
 import personnes.PersonneSoiree;
-import recontres.Creneau;
 import recontres.GestionnaireCreneaux;
 import recontres.IEventMeetings;
 import recontres.IMeeting;
 
-import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Date;
-import java.util.Locale;
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 import static javafx.collections.FXCollections.observableArrayList;
 

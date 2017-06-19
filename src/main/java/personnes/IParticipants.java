@@ -2,8 +2,6 @@ package personnes;
 
 import recontres.ITimeWindows;
 
-import java.util.Date;
-
 /**
  * Created by Elia on 29/04/2017.
  */

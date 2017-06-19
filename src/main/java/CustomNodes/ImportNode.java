@@ -4,16 +4,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
-import recontres.TimeWindow;
-import utilitaire.CSVManager;
 import personnes.IParticipants;
 import personnes.PersonneSoiree;
+import utilitaire.CSVManager;
 import utilitaire.SpeedDating;
 
 import java.io.File;
 import java.util.ArrayList;
-
-import static javafx.collections.FXCollections.observableArrayList;
 
 public class ImportNode extends CustomNode implements Obs {
 

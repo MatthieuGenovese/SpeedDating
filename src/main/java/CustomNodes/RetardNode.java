@@ -3,14 +3,12 @@ package CustomNodes;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Orientation;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import utilitaire.SpeedDating;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * Created by Jeremy on 06/04/2017.

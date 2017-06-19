@@ -1,15 +1,11 @@
 package cplex;
 
-import java.util.Iterator;
-
-import ilog.concert.IloException;
-import ilog.concert.IloIntVar;
-import ilog.concert.IloIntervalVarMap;
-import ilog.concert.IloTuple;
-import ilog.concert.IloTupleSet;
+import ilog.concert.*;
 import ilog.cp.IloCP;
 import ilog.cp.IloCustomConstraint;
 import ilog.opl.IloOplModel;
+
+import java.util.Iterator;
 
 // https://leifengtechblog.wordpress.com/2015/11/14/setting-up-eclipse-for-java-api-of-ibm-ilog-cplex/
 // https://www.ibm.com/developerworks/community/forums/html/topic?id=77777777-0000-0000-0000-000014553046

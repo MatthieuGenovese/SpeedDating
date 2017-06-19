@@ -3,7 +3,6 @@ package personnes;
 
 import conflits.Affinite;
 import conflits.ICompatibility;
-import recontres.ITimeWindows;
 
 import java.util.ArrayList;
 

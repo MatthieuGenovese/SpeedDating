@@ -3,7 +3,6 @@ package cplex;
 import conflits.ICompatibility;
 import javafx.collections.ObservableList;
 import personnes.IParticipants;
-import personnes.Personne;
 import personnes.PersonneSoiree;
 import recontres.GestionnaireCreneaux;
 import recontres.ITimeWindows;

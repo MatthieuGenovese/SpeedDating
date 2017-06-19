@@ -10,8 +10,6 @@ import javafx.scene.control.TextField;
 import personnes.IParticipants;
 import utilitaire.SpeedDating;
 
-import java.util.ArrayList;
-
 import static javafx.collections.FXCollections.observableArrayList;
 
 /**
