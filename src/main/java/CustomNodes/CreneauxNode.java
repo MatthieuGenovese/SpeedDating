@@ -264,7 +264,17 @@ public class CreneauxNode extends CustomNode implements Observateur {
 
     public void initLegende(){
         try {
-            couleurs = allColors();
+            Class couleur = Class.forName("javafx.scene.paint.Color");
+            if (couleur != null) {
+                Field[] field = couleur.getFields();
+                for (int i = 0; i < field.length; i++) {
+                    Field f = field[i];
+                    Object obj = f.get(null);
+                    if(obj instanceof Color){
+                        couleurs.add((Color) obj);
+                    }
+                }
+            }
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
@@ -305,22 +315,6 @@ public class CreneauxNode extends CustomNode implements Observateur {
                 rectangles.get(i).setVisible(false);
             }
         }
-    }
-
-    private static ArrayList<Color> allColors() throws ClassNotFoundException, IllegalAccessException {
-        ArrayList<Color> colors = new ArrayList<>();
-        Class couleur = Class.forName("javafx.scene.paint.Color");
-        if (couleur != null) {
-            Field[] field = couleur.getFields();
-            for (int i = 0; i < field.length; i++) {
-                Field f = field[i];
-                Object obj = f.get(null);
-                if(obj instanceof Color){
-                    colors.add((Color) obj);
-                }
-            }
-        }
-        return colors;
     }
 
     public Text getTitle(){return this.titleCreneauTab;}
