@@ -18,6 +18,7 @@ public class CalculCreneauxNode extends CustomNode implements Obs {
     //Partie graphique
     Button calcul;
     Alert alertCalcul;
+    boolean dejaCalcule = false;
 
 
     public CalculCreneauxNode(double posx, double posy, SpeedDating sd){
@@ -35,15 +36,21 @@ public class CalculCreneauxNode extends CustomNode implements Obs {
 
     private void initListeners(){
         calcul.setOnAction(actionEvent->{
-            int res = speedating.getCalculateur().calculerMatriceCPLEX();
-            if(res == -1 ){
-                alertCalcul.setContentText("Aucune solution n'a été trouvée pour cette configuration !");
+            if(!dejaCalcule) {
+                int res = speedating.getCalculateur().calculerMatriceCPLEX();
+                if (res == -1) {
+                    alertCalcul.setContentText("Aucune solution n'a été trouvée pour cette configuration !");
+                } else {
+                    alertCalcul.setContentText("Les créneaux ont été calculés avec succès et sont disponibles dans l'onglet créneaux !");
+
+                }
+                alertCalcul.show();
+                dejaCalcule = true;
             }
             else{
-                alertCalcul.setContentText("Les créneaux ont été calculés avec succès et sont disponibles dans l'onglet créneaux !");
-
+                alertCalcul.setContentText("Les créneaux ont déjà été calculés !");
+                alertCalcul.show();
             }
-            alertCalcul.show();
             notifier();
         });
     }
