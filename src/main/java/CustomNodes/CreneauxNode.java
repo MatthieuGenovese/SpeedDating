@@ -267,7 +267,7 @@ public class CreneauxNode extends CustomNode implements Observateur {
                 alertValiderCreneau.setContentText("Le créneau " + creneauActuel + " a été validé avec succès !");
                 alertValiderCreneau.show();
                 creneauActuel++;
-                creneauGraphiqueActuel++;
+                creneauGraphiqueActuel = creneauActuel-1;
             }
             else{
                 alertValiderCreneau.setContentText("Tous les créneaux ont été validés !");
