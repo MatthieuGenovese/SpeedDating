@@ -17,9 +17,10 @@ public class Personne implements IParticipants{
     private int retard;
     private String genre;
     private Date releaseDate;
+    private ITimeWindows timeWindow;
     private PersonneSoiree pSoiree;
 
-    public Personne(int idSite, String nom, String prenom, String genre, int age, int ageMin, int ageMax){
+    public Personne(int idSite, String nom, String prenom, String genre, int age, int ageMin, int ageMax, ITimeWindows timeWindow){
         this.prenom = prenom;
         this.nom = nom;
         this.genre = genre;
@@ -28,10 +29,11 @@ public class Personne implements IParticipants{
         this.ageMax = ageMax;
         this.idSite = idSite;
         this.retard = 0;
+        this.timeWindow = timeWindow;
     }
 
-    public void initPersonneSoiree(int id, ITimeWindows time){
-        this.pSoiree = new PersonneSoiree(this,id,time);
+    public void initPersonneSoiree(int id){
+        this.pSoiree = new PersonneSoiree(this,id);
     }
 
     public void setNom(String nom){
@@ -40,6 +42,14 @@ public class Personne implements IParticipants{
 
     public String getNom(){
         return nom;
+    }
+
+    public ITimeWindows getTimeWindow(){
+        return timeWindow;
+    }
+
+    public void setTimeWindow(ITimeWindows time){
+        this.timeWindow = time;
     }
 
     public void setPrenom(String prenom){
@@ -94,14 +104,6 @@ public class Personne implements IParticipants{
         return ageMax;
     }
 
-    public void setReleaseDate(Date releaseDate){
-        this.releaseDate = releaseDate;
-    }
-
-    public Date getReleaseDate(){
-        return releaseDate;
-    }
-
     public void setRetard(int r) {this.retard = r;}
 
     public int getRetard() {return this.retard;}
@@ -118,7 +120,7 @@ public class Personne implements IParticipants{
 
 
     public String toString(){
-        return "Nom : " + nom + " Prenom : " + prenom + " " + genre + " Age : " + Integer.toString(age) + " Age Min : " + Integer.toString(ageMin) + " Age Max : " + Integer.toString(ageMax);
+        return "Nom : " + nom + " Prenom : " + prenom + " " + genre + " Age : " + Integer.toString(age) + " Age Min : " + Integer.toString(ageMin) + " Age Max : " + Integer.toString(ageMax) + " Arrivée : " + getTimeWindow().getArrivalSlot() + " Départ :" + getTimeWindow().getDepartureSlot();
      }
 
      public String affichageNomPrenom(){

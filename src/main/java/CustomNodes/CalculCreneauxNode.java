@@ -46,12 +46,12 @@ public class CalculCreneauxNode extends CustomNode implements Obs {
                 }
                 alertCalcul.show();
                 dejaCalcule = true;
+                notifier();
             }
             else{
                 alertCalcul.setContentText("Les créneaux ont déjà été calculés !");
                 alertCalcul.show();
             }
-            notifier();
         });
     }
 

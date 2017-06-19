@@ -9,7 +9,7 @@ import java.util.Date;
  */
 public interface IParticipants {
 
-    void initPersonneSoiree(int id, ITimeWindows time);
+    void initPersonneSoiree(int id);
 
     void setNom(String nom);
 
@@ -41,11 +41,11 @@ public interface IParticipants {
 
     int getAgeMax();
 
-    void setReleaseDate(Date releaseDate);
-
-    Date getReleaseDate();
-
     void setRetard(int r);
+
+    ITimeWindows getTimeWindow();
+
+    void setTimeWindow(ITimeWindows timeWindow);
 
     int getRetard();
 

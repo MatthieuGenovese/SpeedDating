@@ -14,12 +14,10 @@ public class PersonneSoiree extends Personne{
     //private Date retard;
     private ArrayList<ICompatibility> listeConflits;
     private int id;
-    private ITimeWindows timeWindow;
 
-    public PersonneSoiree (IParticipants personne, int id, ITimeWindows time){
-        super(personne.getIdSite(), personne.getNom(), personne.getPrenom(), personne.getGenre(), personne.getAge(), personne.getAgeMin(), personne.getAgeMax());
+    public PersonneSoiree (IParticipants personne, int id){
+        super(personne.getIdSite(), personne.getNom(), personne.getPrenom(), personne.getGenre(), personne.getAge(), personne.getAgeMin(), personne.getAgeMax(), personne.getTimeWindow());
         listeConflits = new ArrayList<ICompatibility>();
-        this.timeWindow = time;
         this.id = id;
         //retard = new Date();
     }
@@ -27,15 +25,6 @@ public class PersonneSoiree extends Personne{
     /*public void setRetard(Date r) {this.retard = r;}
 
     public Date getRetard() {return this.retard;}*/
-
-    public ITimeWindows getTimeWindow(){
-        return timeWindow;
-    }
-
-    public void setTimeWindow(ITimeWindows time){
-        this.timeWindow = time;
-    }
-
 
     public int getId() {
         return id;

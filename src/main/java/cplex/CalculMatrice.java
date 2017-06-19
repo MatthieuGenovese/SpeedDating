@@ -19,7 +19,7 @@ public class CalculMatrice {
     private int nbCol,nbLigne;
     private CSVManager manager;
     private int[][][] matriceResultat;
-    private int creneaux = 3;
+    private int creneaux;
     private ObservableList<IParticipants> hommeListe, femmeListe;
     private GestionnaireCreneaux gestionnaireCrenaux;
     public void setHommeListe(ObservableList<IParticipants> hommeListe) {
@@ -37,6 +37,7 @@ public class CalculMatrice {
         this.hommeListe = hommes;
         this.femmeListe = femmes;
         this.gestionnaireCrenaux = gc;
+        creneaux = gc.getNbCrenaux();
     }
 
     public int calculerMatriceCPLEX() {
@@ -44,7 +45,7 @@ public class CalculMatrice {
         ArrayList<ITimeWindows> dispoF = new ArrayList<>();
         ArrayList<ITimeWindows> dispoH = new ArrayList<>();
         for (IParticipants femme : femmeListe) {
-            dispoF.add(((PersonneSoiree) femme).getTimeWindow());
+            dispoF.add(femme.getTimeWindow());
             for (ICompatibility p : ((PersonneSoiree) femme).getConflits()) {
                 for (ICompatibility p2 : ((PersonneSoiree) p.getPersonneSoiree()).getConflits()) {
                     if (p2.getPersonneSoiree().getId() ==  femme.getId()) {
@@ -54,7 +55,7 @@ public class CalculMatrice {
             }
         }
         for(IParticipants homme : hommeListe){
-            dispoH.add(((PersonneSoiree) homme).getTimeWindow());
+            dispoH.add(homme.getTimeWindow());
         }
         manager.ecrireMatriceCPLEX(matrice, nbCol);
         manager.ecrireDispos(dispoH,dispoF);

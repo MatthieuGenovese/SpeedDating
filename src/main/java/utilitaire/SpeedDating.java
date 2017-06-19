@@ -28,7 +28,7 @@ public class SpeedDating implements ISpeedDating {
     ArrayList<IParticipants> listePersonneSoiree ;
     ObservableList<IParticipants> hommes = observableArrayList();
     ObservableList<IParticipants> femmes = observableArrayList();
-    GestionnaireCreneaux gc = new GestionnaireCreneaux(3);
+    GestionnaireCreneaux gc;
 
 
 
@@ -85,6 +85,10 @@ public class SpeedDating implements ISpeedDating {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void setNbCreneaux(int nb){
+        gc = new GestionnaireCreneaux(nb);
     }
 
     public CSVManager getCsvManager() {

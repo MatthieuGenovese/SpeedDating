@@ -104,15 +104,19 @@ public class ImportNode extends CustomNode implements Obs {
     public void remplir(SpeedDating u) throws Throwable{
         int cptHomme = 0;
         int cptFemme = 0;
+        int maxCreneaux = 0;
         for(IParticipants p : u.getListeChargee()){
+            if(p.getTimeWindow().getDepartureSlot() > maxCreneaux){
+                maxCreneaux = p.getTimeWindow().getDepartureSlot();
+            }
             if(p.getGenre().equals("M")){
-                p.initPersonneSoiree(cptHomme, new TimeWindow(1,3));
+                p.initPersonneSoiree(cptHomme);
                 u.getListePersonneSoiree().add(p.getPersonneSoiree());
                 u.getHommes().add(p.getPersonneSoiree());
                 cptHomme++;
             }
             else if(p.getGenre().equals("F")) {
-                p.initPersonneSoiree(cptFemme,new TimeWindow(1,3));
+                p.initPersonneSoiree(cptFemme);
                 u.getListePersonneSoiree().add(p.getPersonneSoiree());
                 u.getFemmes().add(p.getPersonneSoiree());
                 cptFemme++;
@@ -130,6 +134,7 @@ public class ImportNode extends CustomNode implements Obs {
         }
         nbCol = cptHomme;
         nbLigne = cptFemme;
+        utilitaire.setNbCreneaux(maxCreneaux);
         notifier();
     }
 
