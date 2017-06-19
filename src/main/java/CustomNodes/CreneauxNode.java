@@ -59,6 +59,7 @@ public class CreneauxNode extends CustomNode implements Observateur {
         initPositionElementsGraphiques();
         initListeners();
         initDialogBox();
+        generateColorList();
         //J'ajoute mes colonnes dans les tablesviews
         listHommes.getColumns().add(prenomh);
         listFemmes.getColumns().add(prenomf);
@@ -270,9 +271,9 @@ public class CreneauxNode extends CustomNode implements Observateur {
                 for (int i = 0; i < field.length; i++) {
                     Field f = field[i];
                     Object obj = f.get(null);
-                    if(obj instanceof Color){
+                   /* if(obj instanceof Color){
                         couleurs.add((Color) obj);
-                    }
+                    }*/
                 }
             }
         } catch (ClassNotFoundException e) {
@@ -395,6 +396,19 @@ public class CreneauxNode extends CustomNode implements Observateur {
     }
 
     public Label getNumCreneau(){return this.numCreneau;}
+
+    private void generateColorList(){
+        couleurs.add(Color.DARKRED);
+        couleurs.add(Color.LIMEGREEN);
+        couleurs.add(Color.DODGERBLUE);
+        couleurs.add(Color.MAGENTA);
+        couleurs.add(Color.ORANGERED);
+        couleurs.add(Color.DARKSEAGREEN);
+        couleurs.add(Color.ORANGE);
+        couleurs.add(Color.CHOCOLATE);
+        couleurs.add(Color.GOLDENROD);
+        couleurs.add(Color.INDIGO);
+    }
 
     @Override
     public void updated(Obs o) {
