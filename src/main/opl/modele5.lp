@@ -110,10 +110,10 @@ using CP;
     	rencontres[fw][he][c]==0;
     	rencontres[fw][hw][c]==0;
    }
-   	//ORDONNANCEMENT SEMI-ACTIF
+   	//ORDONNANCEMENT ACTIF
 	forall (f in F, h in H, c in C){
-		if (c !=1){
-			rencontres[f][h][c]*(rencontres[f][hw][c-1] + rencontres[fw][h][c-1]) <= rencontres[f][h][c];
-		}
+		forall(cr in 1..c){
+			rencontres[f][h][c]*(rencontres[f][hw][cr] + rencontres[fw][h][cr])<= rencontres[f][h][c];
+ 		}
 	}
 }

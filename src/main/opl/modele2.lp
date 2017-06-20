@@ -1,4 +1,5 @@
 using CP;
+//include pour les modèles modele2C et modele2P
  //DONNEES
 
  int f = ...; //nb de femmes
