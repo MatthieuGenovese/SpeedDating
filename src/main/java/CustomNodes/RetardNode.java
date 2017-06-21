@@ -48,9 +48,9 @@ public class RetardNode extends CustomNode implements Obs{
         btnValiderRetard = new Button("OK");
         labelR = new Label("Retard");
         labelT = new Label("0");
-        labelT2 = new Label("min");
+        labelT2 = new Label("créneaux");
 
-        retard  = new Slider(1, 3, 1);
+        retard  = new Slider(0, 3, 1);
     }
 
     public void initPositionElementsGraphiques(){
@@ -66,7 +66,7 @@ public class RetardNode extends CustomNode implements Obs{
         labelT.setLayoutY(posy * 85 / 100);
         labelT2.setLayoutX(posx * 47 / 100);
         labelT2.setLayoutY(posy * 85 / 100);
-        btnValiderRetard.setLayoutX(posx * 52 / 100);
+        btnValiderRetard.setLayoutX(posx * 55 / 100);
         btnValiderRetard.setLayoutY(posy * 85 / 100);
 
         retard.valueProperty().addListener(new ChangeListener() {
@@ -88,7 +88,6 @@ public class RetardNode extends CustomNode implements Obs{
             validRetard = true;
             utilitaire.getCurrent().setRetard(getRetard());
             //((TimeWindow) personneFocus.getTimeWindow()).setArrivalSlot(((RetardNode) o).getRetardInt());
-
             notifier();
         });
     }

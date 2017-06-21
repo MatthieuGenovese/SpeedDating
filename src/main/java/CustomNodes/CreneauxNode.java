@@ -161,6 +161,7 @@ public class CreneauxNode extends CustomNode implements Observateur {
             listHommes.getItems().clear();
             listHommes.refresh();
             gc.setCreneauCourant(creneauActuel);
+            creneauGraphiqueActuel = creneauActuel;
             for(IMeeting c : gc.getCurrentMeetings()){
                 hommesCreneau.add(c.getHomme());
                 femmesCreneau.add(c.getFemme());

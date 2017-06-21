@@ -35,10 +35,13 @@ public class CSVManager {
                     listePersonnes.add(new Personne(Integer.parseInt(nextLine[0]), nextLine[1], nextLine[2], nextLine[3], Integer.parseInt(nextLine[4]), Integer.parseInt(nextLine[5]), Integer.parseInt(nextLine[6]), new TimeWindow(Integer.parseInt(nextLine[7]), Integer.parseInt(nextLine[8]))));
                 } catch (IllegalFormatException e) {
                     System.out.println("Mauvaise entrée, personne illisible ! \n");
+                    //System.out.println(nextLine[0] +  nextLine[1] + nextLine[2]+  nextLine[3] + nextLine[4]+ nextLine[5]+ nextLine[6] +nextLine[7] +nextLine[8]);
                 } catch (IllegalArgumentException e) {
-                    System.out.println("Mauvaise entrée, personne illisible ! \n");
+                    //System.out.println("Mauvaise entrée, personne illisible ! \n");
+                    //System.out.println(nextLine[0] +  nextLine[1] + nextLine[2]+  nextLine[3] + nextLine[4]+ nextLine[5]+ nextLine[6] +nextLine[7] +nextLine[8]);
                 } catch (ArrayIndexOutOfBoundsException e) {
-                    System.out.println("Mauvaise entrée, personne illisible ! \n");
+                    //System.out.println("Mauvaise entrée, personne illisible ! \n");
+                    //System.out.println(nextLine[0] +  nextLine[1] + nextLine[2]+  nextLine[3] + nextLine[4]+ nextLine[5]+ nextLine[6] +nextLine[7] +nextLine[8]);
                 }
             }
         } catch (IOException e) {
