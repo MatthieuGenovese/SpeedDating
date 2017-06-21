@@ -6,6 +6,7 @@ import javafx.geometry.Orientation;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+import recontres.TimeWindow;
 import utilitaire.SpeedDating;
 
 import java.util.ArrayList;
@@ -87,6 +88,7 @@ public class RetardNode extends CustomNode implements Obs{
         btnValiderRetard.setOnAction(actionEvent -> {
             validRetard = true;
             utilitaire.getCurrent().setRetard(getRetard());
+            utilitaire.getCurrent().setTimeWindow(new TimeWindow(getRetard(), utilitaire.getCurrent().getTimeWindow().getDepartureSlot()));
             //((TimeWindow) personneFocus.getTimeWindow()).setArrivalSlot(((RetardNode) o).getRetardInt());
             notifier();
         });
