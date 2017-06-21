@@ -3,6 +3,7 @@ package CustomNodes;
 import conflits.ICompatibility;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
@@ -30,6 +31,7 @@ public class PreferenceNode extends CustomNode implements Obs {
     Label bcp;
     Label passionement;
     Label folie;
+    Alert alertModif;
 
     Button modif;
 
@@ -71,6 +73,9 @@ public class PreferenceNode extends CustomNode implements Obs {
         folie = new Label("A la folie");
 
         modif = new Button("Modifier Preference");
+        alertModif = new Alert(Alert.AlertType.INFORMATION);
+        alertModif.setTitle("SpeedDating");
+        alertModif.setHeaderText("Informations");
 
     }
 
@@ -165,6 +170,9 @@ public class PreferenceNode extends CustomNode implements Obs {
                     break;
                 }
             }
+
+            alertModif.setContentText("L'affinité entre " + ((PersonneSoiree) utilitaire.getSelectF()).getPrenom() + " " +  ((PersonneSoiree) utilitaire.getSelectF()).getNom()+ " et " + ((PersonneSoiree) utilitaire.getSelectHomme()).getPrenom() + " " +((PersonneSoiree) utilitaire.getSelectHomme()).getNom() + " a été modifiée à : " + getValue());
+            alertModif.show();
             //A quoi sert ce bout de code ?
             // utilitaire.getCalculateur().setFemmeListe(femmesList.getList().getItems());
             //utilitaire.getCalculateur().setHommeListe(hommesList.getList().getItems());
