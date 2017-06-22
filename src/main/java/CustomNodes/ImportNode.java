@@ -1,5 +1,6 @@
 package CustomNodes;
 
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
@@ -23,10 +24,12 @@ public class ImportNode extends CustomNode implements Obs {
 
     //Propriete metier
     SpeedDating utilitaire;
+    Alert fichierDejaCharge;
 
     //Propriete graphique
     Text textImport;
     TextField textFilePath;
+    ArrayList<String> oldFilePaths;
 
     //le bouton ... qui ouvre l'explorer pour chercher les fichiers csv
     Button btnImport;
@@ -38,6 +41,7 @@ public class ImportNode extends CustomNode implements Obs {
         initsElementsGrapiques();
         initPositionElementsGraphiques();
         initListeners();
+        oldFilePaths = new ArrayList<>();
         nbCol = 0;
         nbLigne = 0;
         this.getChildren().add(getBtnImport());
@@ -51,7 +55,9 @@ public class ImportNode extends CustomNode implements Obs {
     public void initsElementsGrapiques(){
         textImport  = new Text("Fichier à importer :");
         textFilePath = new TextField();
-
+        fichierDejaCharge = new Alert(Alert.AlertType.INFORMATION);
+        fichierDejaCharge.setTitle("SpeedDating");
+        fichierDejaCharge.setHeaderText("Informations");
         btnImport = new Button("...");
         btnValiderImport = new Button("Ouvrir");
     }
@@ -88,10 +94,24 @@ public class ImportNode extends CustomNode implements Obs {
 
         btnValiderImport.setOnAction(actionEvent -> {
             try {
-                utilitaire.setCsvManager(new CSVManager(textFilePath.getText()));
-                utilitaire.setListeChargee(utilitaire.getCsvManager().getPersonnesFromCSV());
-                remplir(utilitaire);
-                utilitaire.initCalculateur(this.getNbLigne(), this.getNbCol());
+                int i = 0;
+                while(i < oldFilePaths.size()) {
+                    if (textFilePath.getText().equalsIgnoreCase(oldFilePaths.get(i))) {
+                        break;
+                    }
+                    i++;
+                }
+                if(i == oldFilePaths.size()) {
+                    oldFilePaths.add(textFilePath.getText());
+                    utilitaire.setCsvManager(new CSVManager(textFilePath.getText()));
+                    utilitaire.setListeChargee(utilitaire.getCsvManager().getPersonnesFromCSV());
+                    remplir(utilitaire);
+                    utilitaire.initCalculateur(this.getNbLigne(), this.getNbCol());
+                }
+                else{
+                    fichierDejaCharge.setContentText("Le fichier " + textFilePath.getText() + " a déjà été chargé !");
+                    fichierDejaCharge.show();
+                }
             } catch (Throwable e) {
                 e.printStackTrace();
             }

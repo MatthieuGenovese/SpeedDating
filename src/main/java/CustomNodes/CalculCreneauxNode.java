@@ -36,20 +36,25 @@ public class CalculCreneauxNode extends CustomNode implements Obs {
 
     private void initListeners(){
         calcul.setOnAction(actionEvent->{
-            if(!dejaCalcule) {
-                int res = speedating.getCalculateur().calculerMatriceCPLEX();
-                if (res == -1) {
-                    alertCalcul.setContentText("Aucune solution n'a été trouvée pour cette configuration !");
-                } else {
-                    alertCalcul.setContentText("Les créneaux ont été calculés avec succès et sont disponibles dans l'onglet créneaux !");
+            if(!speedating.getFemmes().isEmpty()) {
+                if (!dejaCalcule) {
+                    int res = speedating.getCalculateur().calculerMatriceCPLEX();
+                    if (res == -1) {
+                        alertCalcul.setContentText("Aucune solution n'a été trouvée pour cette configuration !");
+                    } else {
+                        alertCalcul.setContentText("Les créneaux ont été calculés avec succès et sont disponibles dans l'onglet créneaux !");
 
+                    }
+                    alertCalcul.show();
+                    dejaCalcule = true;
+                    notifier();
+                } else {
+                    alertCalcul.setContentText("Les créneaux ont déjà été calculés !");
+                    alertCalcul.show();
                 }
-                alertCalcul.show();
-                dejaCalcule = true;
-                notifier();
             }
             else{
-                alertCalcul.setContentText("Les créneaux ont déjà été calculés !");
+                alertCalcul.setContentText("Il n'y a aucune personne de chargée !");
                 alertCalcul.show();
             }
         });
