@@ -1,23 +1,28 @@
 # Speed Dating : programme d'aide à la décision
 
+## 1. Téléchargement du solveur
+__
+Pour pouvoir compiler / exécuter le programme il faut tout d'abord télécharer le solveur d'ibm :__
+https://www-01.ibm.com/software/websphere/products/optimization/cplex-studio-community-edition/__
 
-Pour pouvoir compiler / exécuter le programme il faut tout d'abord télécharer le solveur d'ibm :
-https://www-01.ibm.com/software/websphere/products/optimization/cplex-studio-community-edition/
 
+## 2. Création des configurations
+__
 
-## 1. Création des configurations
-
-Il va falloir créer et exécuter dans l'ordre 3 configurations maven:
+Il va falloir créer et exécuter dans l'ordre 3 configurations maven:__
 
 ### 1ère commande
-install:install-file -DgroupId=com.ibm -DartifactId=opl -Dversion=12.6.3.0 -Dpackaging=jar -Dfile="chemin de votre lib oplall.jar"
-Par exemple pour moi le chemin était E:\ilog\opl\lib\oplall.jar, (à écrire sans les guillemets dans la commande)
+__
+install:install-file -DgroupId=com.ibm -DartifactId=opl -Dversion=12.6.3.0 -Dpackaging=jar -Dfile="chemin de votre lib oplall.jar"__
+Par exemple pour moi le chemin était E:\ilog\opl\lib\oplall.jar, (à écrire sans les guillemets dans la commande)__
 
 
 ### 2ème commande
+__
 clean package
 
 ### 3ème commande
+__
 exec:java
 
 Attention la 1ère commande n'est a exécuter qu'une seule fois à la première installation du programme.
