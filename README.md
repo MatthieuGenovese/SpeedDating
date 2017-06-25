@@ -15,7 +15,7 @@ Ainsi qu'avoir le jdk java d'installé sur sa machine.
 
 Accèdez aux variables d'environement système et cherchez celle qui s'apelle LD_LIBRARY_PATH  
 Ajouter lui le chemin suivant : "InstallationILOG"\opl\bin\x64_win64    
-pour reprendre mon example précédent, le mien est localisé à : E:\ilog\opl\bin\x64_win64  
+par exemple le mien est localisé à : E:\ilog\opl\bin\x64_win64  
 
 ### 2. Sous Linux / MAC
 
@@ -33,7 +33,7 @@ Il va falloir créer et exécuter dans l'ordre 3 configurations maven:
 ### 1ère commande
   
 install:install-file -DgroupId=com.ibm -DartifactId=opl -Dversion=12.6.3.0 -Dpackaging=jar -Dfile="chemin de votre lib oplall.jar"  
-Par exemple pour moi le chemin était E:\ilog\opl\lib\oplall.jar, (à écrire sans les guillemets dans la commande)  
+Pour reprendre mon exemple précédent, pour moi le chemin était E:\ilog\opl\lib\oplall.jar, (à écrire sans les guillemets dans la commande)  
 
 
 ### 2ème commande
