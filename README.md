@@ -47,4 +47,4 @@ exec:java
 Attention la 1ère commande n'est a exécuter qu'une seule fois à la première installation du programme.
 Voila le programme est prêt à être exécuté.    
 
-Si vous rencontrez l'erreur "cant find modele4.lp" sous linux / MAC ouvrez le fichier CalculMatrice.java, faites une recherche de "modele4.lp" et remplassez les "\" par des "/" dans le chemin du fichier  
+Si vous rencontrez l'erreur "cant find modele4.lp" sous linux / MAC ouvrez le fichier CalculMatrice.java, faites une recherche de "modele4.lp" et remplassez les "\\" par des "/" dans le chemin du fichier  
