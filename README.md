@@ -1,9 +1,11 @@
 # Speed Dating : programme d'aide à la décision
 
-## 1. Téléchargement du solveur
+## 1. Prérequis
   
 Pour pouvoir compiler / exécuter le programme il faut tout d'abord télécharer le solveur d'ibm :  
-https://www-01.ibm.com/software/websphere/products/optimization/cplex-studio-community-edition/__
+https://www-01.ibm.com/software/websphere/products/optimization/cplex-studio-community-edition/__  
+
+Ainsi qu'avoir le jdk java d'installé sur sa machine.  
 
 
 ## 2. Création des configurations
